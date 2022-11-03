@@ -11,11 +11,15 @@
 
 	<h2>Available items</h2>
 	
+	<input type="button" value="Add item"
+		onClick = "window.location.href='addItemForm'; return false;"/>
+	
 	<table border = "1">
 	
 		<tr>
 			<th>Item Name</th>
 			<th>Price</th>
+			<th>Expiry date</th>
 		</tr>
 		
 		<c:forEach var="item" items = "${shopList}">
@@ -23,6 +27,7 @@
 			<tr>
 				<td>${item.itemName}</td>
 				<td>Rs. ${item.price}</td>
+				<td>${item.expDate}</td>
 			</tr>
 			
 		</c:forEach>

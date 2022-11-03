@@ -7,4 +7,6 @@ import com.souravsahoo.SRSproj.entity.ShopItem;
 public interface ShopDAO {
 
 	List<ShopItem> getItems();
+
+	void addItem(ShopItem shopItem);
 }

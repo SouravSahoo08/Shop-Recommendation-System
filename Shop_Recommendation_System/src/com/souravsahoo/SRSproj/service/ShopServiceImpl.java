@@ -22,4 +22,10 @@ public class ShopServiceImpl implements ShopService{
 		return shopDao.getItems();
 	}
 
+	@Override
+	@Transactional
+	public void addItem(ShopItem shopItem) {
+		shopDao.addItem(shopItem);
+	}
+
 }

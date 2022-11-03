@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 
 @Entity
 @Table(name = "shop1_list")
@@ -22,15 +26,19 @@ public class ShopItem {
 	@Column(name = "item_id")
 	private int itemId;
 
+	@NotNull(message="Cannot be empty")
 	@Column(name = "item_type")
 	private String itemType;
 
+	@NotNull(message="Cannot be empty")
 	@Column(name = "item_name")
 	private String itemName;
 
+	@Positive(message="price cannot be zero")
 	@Column(name = "price")
 	private double price;
 
+	@NotNull(message="Cannot be empty")
 	@Column(name = "exp_date")
 	private String expDate;
 

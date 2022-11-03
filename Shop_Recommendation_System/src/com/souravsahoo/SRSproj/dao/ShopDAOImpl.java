@@ -10,26 +10,24 @@ import org.springframework.stereotype.Repository;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
 @Repository
-public class ShopDAOImpl implements ShopDAO{
+public class ShopDAOImpl implements ShopDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory; 
-	
+	private SessionFactory sessionFactory;
+
 	@Override
 	public List<ShopItem> getItems() {
-		
+
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		////
-		List<String> type =currentSession.createQuery("select itemName from ShopItem groupBy itemName").getResultList();
-		
-		////
-		
-		
-		List<ShopItem> items = currentSession.createQuery("from ShopItem", ShopItem.class).getResultList(); 
+
+		List<ShopItem> items = currentSession.createQuery("from ShopItem", ShopItem.class).getResultList();
 		return items;
 	}
 
-	
-	
+	@Override
+	public void addItem(ShopItem shopItem) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.save(shopItem);
+	}
+
 }

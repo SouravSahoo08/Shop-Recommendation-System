@@ -7,4 +7,6 @@ import com.souravsahoo.SRSproj.entity.ShopItem;
 public interface ShopService {
 
 	List<ShopItem> getItems();
+
+	void addItem(ShopItem shopItem);
 }
