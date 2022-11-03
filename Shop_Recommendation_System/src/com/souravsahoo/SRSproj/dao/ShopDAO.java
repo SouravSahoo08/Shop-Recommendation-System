@@ -8,5 +8,8 @@ public interface ShopDAO {
 
 	List<ShopItem> getItems();
 
-	void addItem(ShopItem shopItem);
+	void saveItem(ShopItem shopItem);
+
+	ShopItem getItemDetail(int itemId);
+
 }

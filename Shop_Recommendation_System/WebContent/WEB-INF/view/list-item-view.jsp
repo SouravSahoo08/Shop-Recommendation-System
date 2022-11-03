@@ -10,29 +10,32 @@
 <body>
 
 	<h2>Available items</h2>
-	
+
 	<input type="button" value="Add item"
-		onClick = "window.location.href='addItemForm'; return false;"/>
-	
-	<table border = "1">
-	
+		onClick="window.location.href='addItemForm'; return false;" />
+
+	<table border="1">
+
 		<tr>
 			<th>Item Name</th>
 			<th>Price</th>
 			<th>Expiry date</th>
+			<th>Action</th>
 		</tr>
-		
-		<c:forEach var="item" items = "${shopList}">
-		
+
+		<c:forEach var="item" items="${shopList}">
+
 			<tr>
 				<td>${item.itemName}</td>
 				<td>Rs. ${item.price}</td>
 				<td>${item.expDate}</td>
+				<td><a href="showItem?id=${item.itemId}" >Update</a> / <a href="remove?id=${item.itemId}">Remove</a></td>
 			</tr>
-			
+
+
 		</c:forEach>
-	
-	</table> 
+
+	</table>
 
 </body>
 </html>

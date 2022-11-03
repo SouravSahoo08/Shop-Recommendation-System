@@ -24,8 +24,14 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	@Transactional
-	public void addItem(ShopItem shopItem) {
-		shopDao.addItem(shopItem);
+	public void saveItem(ShopItem shopItem) {
+		shopDao.saveItem(shopItem);
+	}
+
+	@Override
+	@Transactional
+	public ShopItem getItemDetail(int itemId) {
+		return shopDao.getItemDetail(itemId);
 	}
 
 }

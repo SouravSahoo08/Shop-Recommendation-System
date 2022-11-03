@@ -46,6 +46,12 @@ public class ShopItem {
 
 	}
 
+	
+	public ShopItem(int itemId) {
+		this.itemId = itemId;
+	}
+
+
 	public ShopItem(String itemType, String itemName, double price, String expDate) {
 		super();
 		this.itemType = itemType;

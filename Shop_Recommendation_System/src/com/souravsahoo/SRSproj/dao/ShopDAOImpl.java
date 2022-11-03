@@ -15,19 +15,46 @@ public class ShopDAOImpl implements ShopDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	/**
+	 * Returns the list of all items in the db
+	 * @return list of items 
+	 */
 	@Override
 	public List<ShopItem> getItems() {
 
 		Session currentSession = sessionFactory.getCurrentSession();
-
 		List<ShopItem> items = currentSession.createQuery("from ShopItem", ShopItem.class).getResultList();
 		return items;
 	}
 
+	
+	/**
+	 * if new primary key, then save(insert) else if previous id, update
+	 * 
+	 * @param @ShopItem object
+	 */
 	@Override
-	public void addItem(ShopItem shopItem) {
+	public void saveItem(ShopItem shopItem) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		currentSession.save(shopItem);
+		
+		//if new primary key, then save(insert) else if previous id, update
+		currentSession.saveOrUpdate(shopItem);
+	}
+
+	/**
+	 * returns the details of a particular item
+	 * 
+	 * @return @ShopItem object
+	 */
+	@Override
+	public ShopItem getItemDetail(int itemId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		// List<ShopItem> item = currentSession.createQuery("from ShopItem s where
+		// s.itemId = " + itemId, ShopItem.class).getResultList();
+		// return item.get(0);
+
+		ShopItem item = currentSession.get(ShopItem.class, itemId);
+		return item;
 	}
 
 }

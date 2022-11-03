@@ -5,21 +5,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Add Item</title>
-
-<style>
-.error {
-	color: red
-}
-</style>
-
+<title>Item modification</title>
 </head>
 <body>
 
-	<h2>Enter details of new item.</h2>
+	<h2>Update item.</h2>
 
 	<form:form action="saveItem" modelAttribute="item" method="POST">
 
+		<form:hidden path="itemId"/>
 		<table>
 
 			<tbody>
@@ -50,7 +44,7 @@
 
 				<tr>
 					<td><label></label></td>
-					<td><input type="submit" value="Save" /></td>
+					<td><input type="submit" value="Update" /></td>
 				</tr>
 
 			</tbody>
