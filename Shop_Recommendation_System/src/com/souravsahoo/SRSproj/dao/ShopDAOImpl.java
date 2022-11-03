@@ -19,7 +19,13 @@ public class ShopDAOImpl implements ShopDAO{
 	public List<ShopItem> getItems() {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
-				
+		
+		////
+		List<String> type =currentSession.createQuery("select itemName from ShopItem groupBy itemName").getResultList();
+		
+		////
+		
+		
 		List<ShopItem> items = currentSession.createQuery("from ShopItem", ShopItem.class).getResultList(); 
 		return items;
 	}
