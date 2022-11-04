@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,17 @@
 <title>Shopping</title>
 </head>
 <body>
-
 	<h2>Available items</h2>
 
 	<input type="button" value="Add item"
 		onClick="window.location.href='addItemForm'; return false;" />
+
+	<!-- search dialogue -->
+	<form:form action="search" method="get">
+		Search item: <input type="text" name="searchItemName"/>
+		<input type="submit" value="Search" class=""/>
+	</form:form>
+
 
 	<table border="1">
 
@@ -23,15 +30,14 @@
 			<th>Action</th>
 		</tr>
 
-		<c:forEach var="item" items="${shopList}">
+		<c:forEach var="item" items="${shopList}"> <!-- How to check for value in shopList ???? -->
 
 			<tr>
 				<td>${item.itemName}</td>
 				<td>Rs. ${item.price}</td>
 				<td>${item.expDate}</td>
-				<td><a href="showItem?id=${item.itemId}" >Update</a> 
-				/ 
-				<a href="removeItem?id=${item.itemId}"
+				<td><a href="showItem?id=${item.itemId}">Update</a> / <a
+					href="removeItem?id=${item.itemId}"
 					onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td>
 			</tr>
 

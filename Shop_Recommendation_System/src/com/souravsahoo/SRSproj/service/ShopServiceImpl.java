@@ -40,4 +40,10 @@ public class ShopServiceImpl implements ShopService{
 		shopDao.deleteItem(itemId);
 	}
 
+	@Override
+	@Transactional
+	public List<ShopItem> searchItem(String searchItemName) {
+		return shopDao.searchItem(searchItemName);
+	}
+
 }

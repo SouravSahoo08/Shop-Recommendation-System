@@ -28,11 +28,11 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 
-	@InitBinder
-	public void initBinder(WebDataBinder dataBinder) {
-		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-	}
+	/*
+	 * @InitBinder public void initBinder(WebDataBinder dataBinder) {
+	 * StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+	 * dataBinder.registerCustomEditor(String.class, stringTrimmerEditor); }
+	 */
 
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
@@ -98,4 +98,11 @@ public class ShopController {
 		return "redirect:/home/items";
 	}
 
+	@GetMapping("search")
+	public String searchItems(@RequestParam("searchItemName") String searchItemName, Model model) {
+		List<ShopItem> shopItems = shopService.searchItem(searchItemName);
+		model.addAttribute("shopList", shopItems);
+		
+		return "list-item-view";
+	}
 }
