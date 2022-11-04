@@ -12,4 +12,6 @@ public interface ShopDAO {
 
 	ShopItem getItemDetail(int itemId);
 
+	void deleteItem(int itemId);
+
 }

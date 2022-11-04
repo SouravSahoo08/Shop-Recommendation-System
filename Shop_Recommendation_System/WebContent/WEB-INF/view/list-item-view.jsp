@@ -29,7 +29,7 @@
 				<td>${item.itemName}</td>
 				<td>Rs. ${item.price}</td>
 				<td>${item.expDate}</td>
-				<td><a href="showItem?id=${item.itemId}" >Update</a> / <a href="remove?id=${item.itemId}">Remove</a></td>
+				<td><a href="showItem?id=${item.itemId}" >Update</a> / <a href="removeItem?id=${item.itemId}">Remove</a></td>
 			</tr>
 
 

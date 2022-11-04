@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.service.ShopService;
@@ -87,6 +88,14 @@ public class ShopController {
 
 		model.addAttribute("item", itemDetail);
 		return "update-item-form";
+	}
+	
+	@GetMapping("removeItem")
+	public String removeItem(@RequestParam("id")int itemId, Model model) {
+		
+		ShopItem itemDetail = shopService.getItemDetail(itemId);
+		shopService.deleteItem(itemId);
+		return "redirect:/home/items";
 	}
 
 }

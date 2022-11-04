@@ -57,4 +57,11 @@ public class ShopDAOImpl implements ShopDAO {
 		return item;
 	}
 
+
+	@Override
+	public void deleteItem(int itemId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.delete(currentSession.get(ShopItem.class, itemId));
+	}
+
 }

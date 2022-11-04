@@ -12,4 +12,6 @@ public interface ShopService {
 
 	ShopItem getItemDetail(int itemId);
 
+	void deleteItem(int itemId);
+
 }
