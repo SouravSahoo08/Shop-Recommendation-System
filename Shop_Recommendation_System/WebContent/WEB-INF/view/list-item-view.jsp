@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Shopping</title>
+<title>Store</title>
 </head>
 <body>
 	<h2>Available items</h2>

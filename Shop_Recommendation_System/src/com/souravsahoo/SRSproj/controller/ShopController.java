@@ -22,7 +22,7 @@ import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.service.ShopService;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/owner/home")
 public class ShopController {
 
 	@Autowired

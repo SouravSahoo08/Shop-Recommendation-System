@@ -1,1 +1,1 @@
-<% response.sendRedirect("home/items"); %>
+<% response.sendRedirect("user/home/items"); %>

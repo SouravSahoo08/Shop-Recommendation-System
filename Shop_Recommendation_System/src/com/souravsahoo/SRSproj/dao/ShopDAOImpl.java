@@ -79,7 +79,7 @@ public class ShopDAOImpl implements ShopDAO {
 					"from ShopItem where " + "lower(itemName) like :sName " + "or lower(itemType) like :sName",
 					ShopItem.class);
 			searchItemQuery.setParameter("sName", "%" + searchItemName.toLowerCase() + "%");
-		} else {
+		} else if(searchItemName == null) {
 			searchItemQuery = currentSession.createQuery("from ShopItem", ShopItem.class);
 		}
 
