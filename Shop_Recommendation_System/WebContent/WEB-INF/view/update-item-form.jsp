@@ -13,7 +13,7 @@
 
 	<form:form action="saveItem" modelAttribute="item" method="POST">
 
-		<form:hidden path="itemId"/>
+		<form:hidden path="itemId" />
 		<table>
 
 			<tbody>
@@ -40,6 +40,12 @@
 					<td><label>Expiry Date: </label></td>
 					<td><form:input path="expDate" /></td>
 					<%-- <form:errors path="expDate" cssClass="error" /> --%>
+				</tr>
+
+				<tr>
+					<td><label>Owner id: </label></td>
+					<td><form:input path="ownerId" /></td>
+					<!-- <form:errors path="expDate" cssClass="error" /> -->
 				</tr>
 
 				<tr>

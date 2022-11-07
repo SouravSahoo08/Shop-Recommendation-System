@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-
 @Entity
 @Table(name = "shop1_list")
 public class ShopItem {
@@ -26,31 +25,32 @@ public class ShopItem {
 	@Column(name = "item_id")
 	private int itemId;
 
-	@NotNull(message="Cannot be empty")
+	@NotNull(message = "Cannot be empty")
 	@Column(name = "item_type")
 	private String itemType;
 
-	@NotNull(message="Cannot be empty")
+	@NotNull(message = "Cannot be empty")
 	@Column(name = "item_name")
 	private String itemName;
 
-	@Positive(message="price cannot be zero")
+	@Positive(message = "price cannot be zero")
 	@Column(name = "price")
 	private double price;
 
-	@NotNull(message="Cannot be empty")
+	@NotNull(message = "Cannot be empty")
 	@Column(name = "exp_date")
 	private String expDate;
+
+	@Column(name = "owner_id")
+	private String ownerId;
 
 	public ShopItem() {
 
 	}
 
-	
 	public ShopItem(int itemId) {
 		this.itemId = itemId;
 	}
-
 
 	public ShopItem(String itemType, String itemName, double price, String expDate) {
 		super();
@@ -100,10 +100,18 @@ public class ShopItem {
 		this.expDate = expDate;
 	}
 
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	@Override
 	public String toString() {
 		return "Shop_1_Item [itemId=" + itemId + ", itemType=" + itemType + ", itemName=" + itemName + ", price="
-				+ price + ", expDate=" + expDate + "]";
+				+ price + ", expDate=" + expDate + ", ownerId=" + ownerId + "]";
 	}
 
 }

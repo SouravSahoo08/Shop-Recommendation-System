@@ -27,25 +27,33 @@
 				<tr>
 					<td><label>Item type: </label></td>
 					<td><form:input path="itemType" /></td>
-					<%-- <form:errors path="itemName" cssClass="error" /> --%>
+					<form:errors path="itemType" cssClass="error" />
 				</tr>
 
 				<tr>
 					<td><label>Item name: </label></td>
 					<td><form:input path="itemName" /></td>
-					<%-- <form:errors path="itemType" cssClass="error" /> --%>
+					<form:errors path="itemName" cssClass="error" />
 				</tr>
 
 				<tr>
 					<td><label>Price: </label></td>
 					<td><form:input path="price" /></td>
-					<%-- <form:errors path="price" cssClass="error" /> --%>
+					<form:errors path="price" cssClass="error" />
 				</tr>
 
 				<tr>
 					<td><label>Expiry Date: </label></td>
 					<td><form:input path="expDate" /></td>
-					<%-- <form:errors path="expDate" cssClass="error" /> --%>
+					<form:errors path="expDate" cssClass="error" />
+				</tr>
+
+
+				<!-- Owner id should be generated at authentication.. -->
+				<tr>
+					<td><label>Owner id: </label></td>
+					<td><form:input path="ownerId" /></td>
+					<!-- <form:errors path="expDate" cssClass="error" /> -->
 				</tr>
 
 				<tr>

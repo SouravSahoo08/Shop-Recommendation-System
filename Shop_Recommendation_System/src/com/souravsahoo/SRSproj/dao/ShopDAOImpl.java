@@ -63,10 +63,14 @@ public class ShopDAOImpl implements ShopDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.delete(currentSession.get(ShopItem.class, itemId));
 	}
-
+	
+	/**
+	 * Search a particular item in list
+	 * @return searched items
+	 */
 	@Override
 	public List<ShopItem> searchItem(String searchItemName) {
-		System.out.println("in search");
+
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<ShopItem> searchItemQuery = null;
 
@@ -75,13 +79,13 @@ public class ShopDAOImpl implements ShopDAO {
 					"from ShopItem where " + "lower(itemName) like :sName " + "or lower(itemType) like :sName",
 					ShopItem.class);
 			searchItemQuery.setParameter("sName", "%" + searchItemName.toLowerCase() + "%");
-		}else {
+		} else {
 			searchItemQuery = currentSession.createQuery("from ShopItem", ShopItem.class);
 		}
-		
-		List<ShopItem> resultList = searchItemQuery.getResultList();
-		System.out.println(resultList);
-		return resultList;
+
+		List<ShopItem> searchedItemList = searchItemQuery.getResultList();
+
+		return searchedItemList;
 	}
 
 }

@@ -28,11 +28,11 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 
-	/*
-	 * @InitBinder public void initBinder(WebDataBinder dataBinder) {
-	 * StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-	 * dataBinder.registerCustomEditor(String.class, stringTrimmerEditor); }
-	 */
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
 
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
@@ -58,20 +58,22 @@ public class ShopController {
 	 */
 	@PostMapping("/saveItem")
 	public String saveItem(@Valid @ModelAttribute("item") ShopItem shopItem, BindingResult bindingResult) {
+
+		System.out.println(shopItem);
+
 		if (bindingResult.hasErrors()) {
-			System.out.println("errors");
+			System.out.println("found error");
 			return "add-item-form";
-		} else {
-			System.out.println("WTF!!!!!!!!");
-			shopService.saveItem(shopItem);
-			return "redirect:/home/items";
 		}
+		System.out.println("WTF!!!!!!!!");
+		shopService.saveItem(shopItem);
+		return "redirect:/home/items";
+
 	}
 
-	
 	/**
 	 * Using id from the request parameter, get the details of item and associates
-	 * it to the @ShopItem object for pre-population in updation form page  
+	 * it to the @ShopItem object for pre-population in updation form page
 	 * 
 	 * @param request
 	 * @param model
@@ -89,11 +91,11 @@ public class ShopController {
 		model.addAttribute("item", itemDetail);
 		return "update-item-form";
 	}
-	
+
 	@GetMapping("removeItem")
-	public String removeItem(@RequestParam("id")int itemId, Model model) {
-		
-		ShopItem itemDetail = shopService.getItemDetail(itemId);
+	public String removeItem(@RequestParam("id") int itemId, Model model) {
+
+		// ShopItem itemDetail = shopService.getItemDetail(itemId);
 		shopService.deleteItem(itemId);
 		return "redirect:/home/items";
 	}
@@ -102,7 +104,6 @@ public class ShopController {
 	public String searchItems(@RequestParam("searchItemName") String searchItemName, Model model) {
 		List<ShopItem> shopItems = shopService.searchItem(searchItemName);
 		model.addAttribute("shopList", shopItems);
-		
 		return "list-item-view";
 	}
 }
