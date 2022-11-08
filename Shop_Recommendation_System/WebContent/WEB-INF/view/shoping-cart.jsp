@@ -19,12 +19,12 @@
 			<th>Expiry date</th>
 			<th>Total</th>
 		</tr>
-		
+
 		<c:forEach var="it" items="${cartItems}">
 			<tr>
-				<td><button id="removeFromCart" type="button">Remove item</button>
-						<!-- onclick="window.location.href='cart?itemId=${item.itemId}'; return false;" -->
-						
+				<td><button id="removeFromCart" type="button">Remove
+						item</button> <!-- onclick="window.location.href='cart?itemId=${item.itemId}'; return false;" -->
+
 				</td>
 				<td>${it.itemType}</td>
 				<td>${it.itemName}</td>
@@ -35,7 +35,7 @@
 			</tr>
 		</c:forEach>
 	</table>
-	
+	<br>
 	<a href="items">Shop more</a>
 
 </body>

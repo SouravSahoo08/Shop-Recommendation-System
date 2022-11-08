@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -56,11 +57,33 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 		cartItem.setItemType(itemDetail.getItemType());
 		cartItem.setItemName(itemDetail.getItemName());
 		cartItem.setItemPrice(itemDetail.getPrice());
+		cartItem.setQuantity(isItemPresent(currentSession, userId, itemDetail.getItemId()));
 		cartItem.setExpDate(itemDetail.getExpDate());
 		
 		System.out.println("UserShoppingDao: addItemToCart ====> " +cartItem);
 		
 		currentSession.saveOrUpdate(cartItem);
+	}
+	
+	private int isItemPresent(Session currentSession, String userId, int itemId) {
+		int quantity=1;
+		Query<UserCartItem> checkItemQuery = currentSession.createQuery("from UserCartItem where " + 
+					"lower(userId) = :uId " +
+					"and itemId = :uItemId", UserCartItem.class);
+		checkItemQuery.setParameter("uId", userId.toLowerCase());
+		checkItemQuery.setParameter("uItemId", itemId);
+		List<UserCartItem> foundItemInCart = checkItemQuery.getResultList();
+		
+		if(foundItemInCart.isEmpty())
+			return 1;
+		else {
+			
+			UserCartItem item = foundItemInCart.get(0);
+			quantity =item.getQuantity() + 1;
+			
+		}
+		
+		return quantity;
 	}
 
 	@Override
