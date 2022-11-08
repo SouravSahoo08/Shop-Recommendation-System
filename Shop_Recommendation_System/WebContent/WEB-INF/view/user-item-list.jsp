@@ -8,20 +8,6 @@
 <meta charset="ISO-8859-1">
 <title>Shopping</title>
 </head>
-<script>
-  function toggle() {
-
-    let element = document.getElementById("removeButton");
-    let hidden = element.getAttribute("hidden");
-
-    if (hidden) {
-       element.removeAttribute("hidden");
-    } else {
-       element.setAttribute("hidden", "hidden");
-    }
-  }
-</script>
-
 <body>
 
 	<!-- search dialogue -->
@@ -48,21 +34,8 @@
 				<td>Rs. ${item.price}</td>
 				<td>${item.expDate}</td>
 				<td>
-					<div>
-						<!--  <input type="button" value="Add"
-					onClick="window.location.href='addItemForm'; return false;" /> -->
-
-
-						<button onclick="toggle();">Add</button>
-
-
-						<!--<input type="button" value="Remove"
-					onClick="window.location.href='addItemForm'; return false;" />  -->
-
-						<button id="removeButton" type="button"
-							onclick="alert('Button was clicked!');" hidden="hidden">Remove</button>
-
-					</div>
+					<button id="addToCartButton" type="button"
+						onclick="window.location.href='cart?itemId=${item.itemId}'; return false;">Add to cart</button>
 				</td>
 
 			</tr>

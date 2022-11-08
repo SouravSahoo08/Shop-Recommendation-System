@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import com.souravsahoo.SRSproj.service.ShopService;
 public class ShopController {
 
 	@Autowired
+	//@Qualifier("shopServiceImpl")
 	private ShopService shopService;
 
 	@InitBinder

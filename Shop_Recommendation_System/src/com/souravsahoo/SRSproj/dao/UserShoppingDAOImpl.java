@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.souravsahoo.SRSproj.entity.ShopItem;
+import com.souravsahoo.SRSproj.entity.UserCartItem;
 
 @Repository
 public class UserShoppingDAOImpl implements UserShoppingDAO {
@@ -26,5 +27,45 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		List<ShopItem> items = currentSession.createQuery("from ShopItem", ShopItem.class).getResultList();
 		return items;
+	}
+	
+	/**
+	 * returns the details of a particular item
+	 * 
+	 * @return @ShopItem object
+	 */
+	@Override
+	public ShopItem getItemDetail(int itemId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		// List<ShopItem> item = currentSession.createQuery("from ShopItem s where
+		// s.itemId = " + itemId, ShopItem.class).getResultList();
+		// return item.get(0);
+
+		ShopItem item = currentSession.get(ShopItem.class, itemId);
+		return item;
+	}
+
+	@Override
+	public void addItemToCart(ShopItem itemDetail, String userId) {
+		// TODO Auto-generated method stub
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		UserCartItem cartItem = new UserCartItem();
+		cartItem.setUserId(userId);
+		cartItem.setItemId(itemDetail.getItemId());
+		cartItem.setItemType(itemDetail.getItemType());
+		cartItem.setItemName(itemDetail.getItemName());
+		cartItem.setItemPrice(itemDetail.getPrice());
+		cartItem.setExpDate(itemDetail.getExpDate());
+		
+		System.out.println("UserShoppingDao: addItemToCart ====> " +cartItem);
+		
+		currentSession.saveOrUpdate(cartItem);
+	}
+
+	@Override
+	public List<UserCartItem> getCartItems() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
