@@ -33,12 +33,14 @@ public class UserShopServiceImpl implements UserShopService {
 	}
 
 	@Override
+	@Transactional
 	public void addItemToCart(ShopItem itemDetail, String userId) {
 		// TODO Auto-generated method stub
 		userShoppingDao.addItemToCart(itemDetail, userId);
 	}
 
 	@Override
+	@Transactional
 	public List<UserCartItem> getCartItems() {
 		// TODO Auto-generated method stub
 		return userShoppingDao.getCartItems();

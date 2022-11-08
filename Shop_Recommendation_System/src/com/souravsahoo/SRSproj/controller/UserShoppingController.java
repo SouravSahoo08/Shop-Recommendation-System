@@ -19,7 +19,7 @@ import com.souravsahoo.SRSproj.service.UserShopService;
 public class UserShoppingController {
 
 	@Autowired
-	@Qualifier("userShopServiceImpl")
+	// @Qualifier("userShopServiceImpl")
 	private UserShopService userService;
 
 	@RequestMapping("/items")

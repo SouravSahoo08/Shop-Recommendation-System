@@ -2,12 +2,17 @@ package com.souravsahoo.SRSproj.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user_cart")
 public class UserCartItem {
 
+	@Id
+	@Column(name = "sl_no")
+	private int slNo;
+	
 	@Column(name = "user_id")
 	private String userId;
 	

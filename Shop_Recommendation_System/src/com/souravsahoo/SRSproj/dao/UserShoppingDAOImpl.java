@@ -66,6 +66,10 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	@Override
 	public List<UserCartItem> getCartItems() {
 		// TODO Auto-generated method stub
-		return null;
+		Session currentSession = sessionFactory.getCurrentSession();
+		List<UserCartItem> itemList = currentSession.createQuery("from UserCartItem", UserCartItem.class).getResultList();
+		
+		System.out.println("UserShoppingDAO: getCartItems ====> " + itemList);
+		return itemList;
 	}
 }

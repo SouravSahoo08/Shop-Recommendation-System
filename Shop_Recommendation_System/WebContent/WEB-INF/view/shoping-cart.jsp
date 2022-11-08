@@ -22,17 +22,21 @@
 		
 		<c:forEach var="it" items="${cartItems}">
 			<tr>
-				<td>${cartItems.itemType}</td>
-				<td>${cartItems.itemName}</td>
-				<td>${cartItems.itemPrice}</td>
-				<td>${cartItems.quantity}</td>
-				<td>${cartItems.expDate}</td>
-				<td>${cartItems.itemPrice * cartItems.quantity}</td>
+				<td><button id="removeFromCart" type="button">Remove item</button>
+						<!-- onclick="window.location.href='cart?itemId=${item.itemId}'; return false;" -->
+						
+				</td>
+				<td>${it.itemType}</td>
+				<td>${it.itemName}</td>
+				<td>${it.itemPrice}</td>
+				<td>${it.quantity}</td>
+				<td>${it.expDate}</td>
+				<td>${it.itemPrice * it.quantity}</td>
 			</tr>
 		</c:forEach>
 	</table>
 	
-	<a herf="items">Shop more</a>
+	<a href="items">Shop more</a>
 
 </body>
 </html>
