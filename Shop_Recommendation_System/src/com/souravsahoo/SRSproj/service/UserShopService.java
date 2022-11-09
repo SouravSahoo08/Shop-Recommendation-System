@@ -13,6 +13,6 @@ public interface UserShopService {
 
 	void addItemToCart(ShopItem itemDetail, String userId);
 
-	List<UserCartItem> getCartItems();
+	List<UserCartItem> getCartItems(String userId);
 
 }

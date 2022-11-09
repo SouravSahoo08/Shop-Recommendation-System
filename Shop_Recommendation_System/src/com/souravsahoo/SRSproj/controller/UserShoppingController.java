@@ -38,7 +38,7 @@ public class UserShoppingController {
 		System.out.println("UserShopController: /cart -> itemDetail ====> " + itemDetail);
 
 		userService.addItemToCart(itemDetail, "userid_1");
-		List<UserCartItem> cartItems = userService.getCartItems();
+		List<UserCartItem> cartItems = userService.getCartItems("userid_1");
 
 		System.out.println("UserShopController: /cart -> cartItems ====> " + cartItems);
 

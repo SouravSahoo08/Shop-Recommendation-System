@@ -69,17 +69,28 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 		int quantity=1;
 		Query<UserCartItem> checkItemQuery = currentSession.createQuery("from UserCartItem where " + 
 					"lower(userId) = :uId " +
-					"and itemId = :uItemId", UserCartItem.class);
+					"and itemId = :uItemId order by quantity", UserCartItem.class);
 		checkItemQuery.setParameter("uId", userId.toLowerCase());
 		checkItemQuery.setParameter("uItemId", itemId);
 		List<UserCartItem> foundItemInCart = checkItemQuery.getResultList();
-		
+		System.out.println("\n\ncart list ===> "+foundItemInCart);
 		if(foundItemInCart.isEmpty())
 			return 1;
 		else {
+			String query = "from UserCartItem where quantity = "
+					+ "(select max(quantity) from UserCartItem where quantity in "
+					+ "(select quantity from UserCartItem where lower(userId) = :uId and itemId = :uItemId order by quantity))";
 			
-			UserCartItem item = foundItemInCart.get(0);
+			Query<UserCartItem> quantityQuery = currentSession.createQuery(query,UserCartItem.class);
+			quantityQuery.setParameter("uId", userId.toLowerCase());
+			quantityQuery.setParameter("uItemId", itemId);
+			
+			List<UserCartItem> itemWithMaxQuantity = quantityQuery.getResultList();
+			System.out.println("\n\nitemWithMaxQuantity ===> "+itemWithMaxQuantity);
+			
+			UserCartItem item = itemWithMaxQuantity.get(0);
 			quantity =item.getQuantity() + 1;
+			System.out.println("Quantity : " + quantity);
 			
 		}
 		
@@ -87,10 +98,13 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	}
 
 	@Override
-	public List<UserCartItem> getCartItems() {
+	public List<UserCartItem> getCartItems(String userId) {
 		// TODO Auto-generated method stub
 		Session currentSession = sessionFactory.getCurrentSession();
-		List<UserCartItem> itemList = currentSession.createQuery("from UserCartItem", UserCartItem.class).getResultList();
+		Query<UserCartItem> getCartItemQuery = 
+				currentSession.createQuery("from UserCartItem where lower(userId) = :uName", UserCartItem.class);
+		getCartItemQuery.setParameter("uName", userId);
+		List<UserCartItem> itemList = getCartItemQuery.getResultList();
 		
 		System.out.println("UserShoppingDAO: getCartItems ====> " + itemList);
 		return itemList;
