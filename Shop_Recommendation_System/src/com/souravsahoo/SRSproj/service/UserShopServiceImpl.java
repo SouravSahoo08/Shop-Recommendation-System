@@ -46,4 +46,16 @@ public class UserShopServiceImpl implements UserShopService {
 		return userShoppingDao.getCartItems(userId);
 	}
 
+	@Override
+	@Transactional
+	public void removeItem(String userId, int itemId) {
+		userShoppingDao.removeItem(userId, itemId);
+	}
+
+	@Override
+	@Transactional
+	public List<UserCartItem> showCart(String userId) {
+		return userShoppingDao.showCart(userId);
+	}
+
 }

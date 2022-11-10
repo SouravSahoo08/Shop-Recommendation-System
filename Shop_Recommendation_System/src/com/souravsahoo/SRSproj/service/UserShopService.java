@@ -15,4 +15,8 @@ public interface UserShopService {
 
 	List<UserCartItem> getCartItems(String userId);
 
+	void removeItem(String string, int itemId);
+
+	List<UserCartItem> showCart(String string);
+
 }

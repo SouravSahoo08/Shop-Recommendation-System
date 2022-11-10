@@ -12,8 +12,8 @@
 	<table border="1">
 		<tr>
 			<th></th>
-			<th>Item Type</th>
 			<th>Item Name</th>
+			<th>Item Type</th>
 			<th>Price</th>
 			<th>Quantity</th>
 			<th>Expiry date</th>
@@ -22,12 +22,12 @@
 
 		<c:forEach var="it" items="${cartItems}">
 			<tr>
-				<td><button id="removeFromCart" type="button">Remove
-						item</button> <!-- onclick="window.location.href='cart?itemId=${item.itemId}'; return false;" -->
+				<td><button id="removeFromCart" type="button"
+				onclick="window.location.href='remove?itemId=${it.itemId}'; return false;">Remove item</button> 
 
 				</td>
-				<td>${it.itemType}</td>
 				<td>${it.itemName}</td>
+				<td>${it.itemType}</td>
 				<td>${it.itemPrice}</td>
 				<td>${it.quantity}</td>
 				<td>${it.expDate}</td>

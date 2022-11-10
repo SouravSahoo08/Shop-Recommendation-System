@@ -3,7 +3,6 @@ package com.souravsahoo.SRSproj.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,20 +29,39 @@ public class UserShoppingController {
 
 		return "user-item-list";
 	}
+	
+	@RequestMapping("/cart")
+	public String displayShoppingCart(Model model) {
+		
+		List<UserCartItem> cartItems = userService.showCart("userid_1");
+		model.addAttribute("cartItems", cartItems);
+		return "shoping-cart";
+	}
 
-	@GetMapping("/cart")
-	public String cart(@RequestParam("itemId") int itemId, Model model) {
+	@GetMapping("/addItem")
+	public String addToCart(@RequestParam("itemId") int itemId) {
 
 		ShopItem itemDetail = userService.getItemDetail(itemId);
 		System.out.println("UserShopController: /cart -> itemDetail ====> " + itemDetail);
 
 		userService.addItemToCart(itemDetail, "userid_1");
-		List<UserCartItem> cartItems = userService.getCartItems("userid_1");
+		/*
+		 * List<UserCartItem> cartItems = userService.getCartItems("userid_1");
+		 * 
+		 * System.out.println("UserShopController: /cart -> cartItems ====> " +
+		 * cartItems);
+		 * 
+		 * model.addAttribute("cartItems", cartItems);
+		 */
+		return "redirect:cart";
+	}
 
-		System.out.println("UserShopController: /cart -> cartItems ====> " + cartItems);
+	@GetMapping("/remove")
+	public String remove(@RequestParam("itemId") int itemId) {
 
-		model.addAttribute("cartItems", cartItems);
-		return "shoping-cart";
+		userService.removeItem("userid_1", itemId);
+
+		return "redirect:cart";
 	}
 
 }

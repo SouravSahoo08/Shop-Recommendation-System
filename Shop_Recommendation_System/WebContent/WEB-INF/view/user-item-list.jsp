@@ -35,7 +35,7 @@
 				<td>${item.expDate}</td>
 				<td>
 					<button id="addToCartButton" type="button"
-						onclick="window.location.href='cart?itemId=${item.itemId}'; return false;">Add to cart</button>
+						onclick="window.location.href='addItem?itemId=${item.itemId}'; return false;">Add to cart</button>
 				</td>
 
 			</tr>
