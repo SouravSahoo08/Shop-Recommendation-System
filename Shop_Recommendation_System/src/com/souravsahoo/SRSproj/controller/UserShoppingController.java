@@ -18,8 +18,9 @@ import com.souravsahoo.SRSproj.service.UserShopService;
 public class UserShoppingController {
 
 	@Autowired
-	// @Qualifier("userShopServiceImpl")
 	private UserShopService userService;
+	
+	private String userId = "userid_1";
 
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
@@ -33,7 +34,7 @@ public class UserShoppingController {
 	@RequestMapping("/cart")
 	public String displayShoppingCart(Model model) {
 		
-		List<UserCartItem> cartItems = userService.showCart("userid_1");
+		List<UserCartItem> cartItems = userService.showCart(userId);
 		model.addAttribute("cartItems", cartItems);
 		return "shoping-cart";
 	}
@@ -44,23 +45,21 @@ public class UserShoppingController {
 		ShopItem itemDetail = userService.getItemDetail(itemId);
 		System.out.println("UserShopController: /cart -> itemDetail ====> " + itemDetail);
 
-		userService.addItemToCart(itemDetail, "userid_1");
-		/*
-		 * List<UserCartItem> cartItems = userService.getCartItems("userid_1");
-		 * 
-		 * System.out.println("UserShopController: /cart -> cartItems ====> " +
-		 * cartItems);
-		 * 
-		 * model.addAttribute("cartItems", cartItems);
-		 */
+		userService.addItemToCart(itemDetail, userId);
 		return "redirect:cart";
 	}
 
 	@GetMapping("/remove")
 	public String remove(@RequestParam("itemId") int itemId) {
 
-		userService.removeItem("userid_1", itemId);
+		userService.removeItem(userId, itemId);
 
+		return "redirect:cart";
+	}
+	
+	@RequestMapping("emptyCart")
+	public String emptyCart() {
+		userService.emptyCart(userId);
 		return "redirect:cart";
 	}
 

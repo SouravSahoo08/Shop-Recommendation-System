@@ -7,7 +7,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Shopping</title>
+
+<style type="text/css">
+	
+	
+</style>
+
 </head>
+
 <body>
 
 	<!-- search dialogue -->
@@ -16,6 +23,8 @@
 		<input type="submit" value="Search" class="" />
 	</form:form>
 
+	<button id="myCart" type="button"
+		onclick="window.location.href='cart'; return false;" class="myCart">My cart</button>
 
 	<table border="1">
 
@@ -35,7 +44,8 @@
 				<td>${item.expDate}</td>
 				<td>
 					<button id="addToCartButton" type="button"
-						onclick="window.location.href='addItem?itemId=${item.itemId}'; return false;">Add to cart</button>
+						onclick="window.location.href='addItem?itemId=${item.itemId}'; return false;">Add
+						to cart</button>
 				</td>
 
 			</tr>

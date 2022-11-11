@@ -58,4 +58,11 @@ public class UserShopServiceImpl implements UserShopService {
 		return userShoppingDao.showCart(userId);
 	}
 
+	@Override
+	@Transactional
+	public void emptyCart(String userId) {
+		// TODO Auto-generated method stub
+		userShoppingDao.emptyCart(userId);
+	}
+
 }

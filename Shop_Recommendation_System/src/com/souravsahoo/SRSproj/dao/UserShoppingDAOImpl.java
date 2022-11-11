@@ -101,16 +101,6 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 		int quantity;
 
 		String query = "from UserCartItem where lower(userId) = :uId and itemId = :uItemId";
-		/*
-		 * String query =
-		 * "from UserCartItem where lower(userId) = :uId and itemId = :uItemId and quantity = "
-		 * +
-		 * "(select max(quantity) from UserCartItem where lower(userId) = :uId and itemId = :uItemId and quantity in "
-		 * +
-		 * "(select quantity from UserCartItem where lower(userId) = :uId and itemId = :uItemId))"
-		 * ;
-		 */
-
 		Query<UserCartItem> quantityQuery = currentSession.createQuery(query, UserCartItem.class);
 		quantityQuery.setParameter("uId", userId.toLowerCase());
 		quantityQuery.setParameter("uItemId", itemId);
@@ -167,5 +157,14 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 		List<UserCartItem> items = createQuery.getResultList();
 
 		return items;
+	}
+
+	@Override
+	public void emptyCart(String userId) {
+		// TODO Auto-generated method stub
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<?> emptyCartQuery = currentSession.createQuery("delete from UserCartItem where lower(userId) = :uId");
+		emptyCartQuery.setParameter("uId", userId);
+		emptyCartQuery.executeUpdate();
 	}
 }

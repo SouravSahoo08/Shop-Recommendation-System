@@ -43,8 +43,8 @@
 				</tr>
 
 				<tr>
-					<td><label>Owner id: </label></td>
-					<td><form:input path="ownerId" /></td>
+					<td><label>Stock available: </label></td>
+					<td><form:input path="stock" /></td>
 					<!-- <form:errors path="expDate" cssClass="error" /> -->
 				</tr>
 

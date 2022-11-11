@@ -19,4 +19,6 @@ public interface UserShopService {
 
 	List<UserCartItem> showCart(String string);
 
+	void emptyCart(String userId);
+
 }

@@ -20,8 +20,8 @@ public class ShopServiceImpl implements ShopService{
 	
 	@Override
 	@Transactional
-	public List<ShopItem> getItems() {
-		return shopDao.getItems();
+	public List<ShopItem> getItems(String ownerId) {
+		return shopDao.getItems(ownerId);
 	}
 
 	@Override
@@ -32,20 +32,20 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	@Transactional
-	public ShopItem getItemDetail(int itemId) {
-		return shopDao.getItemDetail(itemId);
+	public ShopItem getItemDetail(int itemId,String ownerId) {
+		return shopDao.getItemDetail(itemId, ownerId);
 	}
 
 	@Override
 	@Transactional
-	public void deleteItem(int itemId) {
-		shopDao.deleteItem(itemId);
+	public void deleteItem(int itemId, String ownerId) {
+		shopDao.deleteItem(itemId, ownerId);
 	}
 
 	@Override
 	@Transactional
-	public List<ShopItem> searchItem(String searchItemName) {
-		return shopDao.searchItem(searchItemName);
+	public List<ShopItem> searchItem(String searchItemName,String ownerId) {
+		return shopDao.searchItem(searchItemName, ownerId);
 	}
 
 }

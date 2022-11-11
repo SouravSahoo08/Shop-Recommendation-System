@@ -48,13 +48,12 @@
 					<form:errors path="expDate" cssClass="error" />
 				</tr>
 
-
-				<!-- Owner id should be generated at authentication.. -->
+ 
 				<tr>
-					<td><label>Owner id: </label></td>
-					<td><form:input path="ownerId" /></td>
+					<td><label>Stock available: </label></td>
+					<td><form:input path="stock" /></td>
 					<!-- <form:errors path="expDate" cssClass="error" /> -->
-				</tr>
+				</tr> 
 
 				<tr>
 					<td><label></label></td>

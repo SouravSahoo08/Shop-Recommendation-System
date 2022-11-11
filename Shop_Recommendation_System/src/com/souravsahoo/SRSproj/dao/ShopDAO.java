@@ -6,14 +6,14 @@ import com.souravsahoo.SRSproj.entity.ShopItem;
 
 public interface ShopDAO {
 
-	List<ShopItem> getItems();
+	List<ShopItem> getItems(String ownerId);
 
 	void saveItem(ShopItem shopItem);
 
-	ShopItem getItemDetail(int itemId);
+	void deleteItem(int itemId, String ownerId);
 
-	void deleteItem(int itemId);
+	List<ShopItem> searchItem(String searchItemName, String ownerId);
 
-	List<ShopItem> searchItem(String searchItemName);
+	ShopItem getItemDetail(int itemId, String ownerId);
 
 }

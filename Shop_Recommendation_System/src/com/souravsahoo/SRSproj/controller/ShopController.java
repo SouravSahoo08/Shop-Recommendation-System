@@ -29,6 +29,8 @@ public class ShopController {
 	@Autowired
 	//@Qualifier("shopServiceImpl")
 	private ShopService shopService;
+	
+	private String ownerId = "OWN1";
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -39,7 +41,7 @@ public class ShopController {
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
 
-		List<ShopItem> itemList = shopService.getItems();
+		List<ShopItem> itemList = shopService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
 
 		return "list-item-view";
@@ -68,8 +70,10 @@ public class ShopController {
 			return "add-item-form";
 		}
 		System.out.println("WTF!!!!!!!!");
+		
+		shopItem.setOwnerId(ownerId);
 		shopService.saveItem(shopItem);
-		return "redirect:/home/items";
+		return "redirect:/owner/home/items";
 
 	}
 
@@ -87,7 +91,7 @@ public class ShopController {
 		int itemId = Integer.parseInt(idParam);
 		System.out.println(itemId);
 
-		ShopItem itemDetail = shopService.getItemDetail(itemId);
+		ShopItem itemDetail = shopService.getItemDetail(itemId, ownerId);
 		System.out.println(itemDetail.toString());
 
 		model.addAttribute("item", itemDetail);
@@ -98,13 +102,13 @@ public class ShopController {
 	public String removeItem(@RequestParam("id") int itemId, Model model) {
 
 		// ShopItem itemDetail = shopService.getItemDetail(itemId);
-		shopService.deleteItem(itemId);
-		return "redirect:/home/items";
+		shopService.deleteItem(itemId, ownerId);
+		return "redirect:/owner/home/items";
 	}
 
 	@GetMapping("search")
 	public String searchItems(@RequestParam("searchItemName") String searchItemName, Model model) {
-		List<ShopItem> shopItems = shopService.searchItem(searchItemName);
+		List<ShopItem> shopItems = shopService.searchItem(searchItemName, ownerId);
 		model.addAttribute("shopList", shopItems);
 		return "list-item-view";
 	}

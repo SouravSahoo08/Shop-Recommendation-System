@@ -25,6 +25,7 @@
 
 		<tr>
 			<th>Item Name</th>
+			<th>Stock</th>
 			<th>Price</th>
 			<th>Expiry date</th>
 			<th>Action</th>
@@ -34,6 +35,7 @@
 
 			<tr>
 				<td>${item.itemName}</td>
+				<td>${item.stock}</td>
 				<td>Rs. ${item.price}</td>
 				<td>${item.expDate}</td>
 				<td><a href="showItem?id=${item.itemId}">Update</a> / <a

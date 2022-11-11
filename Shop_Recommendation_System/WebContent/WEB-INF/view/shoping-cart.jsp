@@ -5,9 +5,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Shopping Cart</title>
+<title>My Cart</title>
 </head>
 <body>
+
+	<button id="emptyCart" type="button"
+			onclick="window.location.href='emptyCart'; return false;">Empty cart</button>
 
 	<table border="1">
 		<tr>
@@ -20,20 +23,25 @@
 			<th>Total</th>
 		</tr>
 
+		<c:set var="i" value = "0"></c:set>
 		<c:forEach var="it" items="${cartItems}">
+			<c:set var="i" value="${i + it.itemPrice * it.quantity }"></c:set>
 			<tr>
 				<td><button id="removeFromCart" type="button"
-				onclick="window.location.href='remove?itemId=${it.itemId}'; return false;">Remove item</button> 
-
-				</td>
+						onclick="window.location.href='remove?itemId=${it.itemId}'; return false;">Remove
+						item</button></td>
 				<td>${it.itemName}</td>
 				<td>${it.itemType}</td>
 				<td>${it.itemPrice}</td>
 				<td>${it.quantity}</td>
 				<td>${it.expDate}</td>
-				<td>${it.itemPrice * it.quantity}</td>
+				<td>${Math.round(it.itemPrice * it.quantity*100)/100.0}</td>
 			</tr>
 		</c:forEach>
+		<tr>
+			<td colspan="6" align="right">Total to pay: </td>
+			<td>${i}</td>
+		</tr>
 	</table>
 	<br>
 	<a href="items">Shop more</a>

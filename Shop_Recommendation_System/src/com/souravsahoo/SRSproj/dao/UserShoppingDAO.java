@@ -19,4 +19,6 @@ public interface UserShoppingDAO {
 
 	List<UserCartItem> showCart(String userId);
 
+	void emptyCart(String userId);
+
 }
