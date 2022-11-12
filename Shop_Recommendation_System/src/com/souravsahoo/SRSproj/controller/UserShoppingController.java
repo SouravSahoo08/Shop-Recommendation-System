@@ -43,7 +43,7 @@ public class UserShoppingController {
 	@GetMapping("/addItem")
 	public String addToCart(@RequestParam("itemId") int itemId) {
 
-		ShopItem itemDetail = userService.getItemDetail(itemId);
+		ShopItem itemDetail = userService.getItemDetail(itemId, ownerId);
 		System.out.println("UserShopController: /cart -> itemDetail ====> " + itemDetail);
 
 		userService.addItemToCart(itemDetail, userId);

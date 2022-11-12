@@ -26,7 +26,8 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	public List<ShopItem> getItems(String ownerId) {
 
 		Session currentSession = sessionFactory.getCurrentSession();
-		Query<ShopItem> getItemsQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId", ShopItem.class);
+		Query<ShopItem> getItemsQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId",
+				ShopItem.class);
 		getItemsQuery.setParameter("oId", ownerId);
 		List<ShopItem> items = getItemsQuery.getResultList();
 		return items;
@@ -38,14 +39,15 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	 * @return @ShopItem object
 	 */
 	@Override
-	public ShopItem getItemDetail(int itemId) {
+	public ShopItem getItemDetail(int itemId, String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		// List<ShopItem> item = currentSession.createQuery("from ShopItem s where
-		// s.itemId = " + itemId, ShopItem.class).getResultList();
-		// return item.get(0);
-
-		ShopItem item = currentSession.get(ShopItem.class, itemId);
-		return item;
+		
+		Query<ShopItem> getItemDetailQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId and itemId = := itemId", ShopItem.class);
+		getItemDetailQuery.setParameter("oId", ownerId);		
+		getItemDetailQuery.setParameter("itemId", itemId);
+		List<ShopItem> items = getItemDetailQuery.getResultList();
+		
+		return items.get(0);
 	}
 
 	@Override

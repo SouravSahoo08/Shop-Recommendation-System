@@ -28,8 +28,8 @@ public class UserShopServiceImpl implements UserShopService {
 
 	@Override
 	@Transactional
-	public ShopItem getItemDetail(int itemId) {
-		return userShoppingDao.getItemDetail(itemId);
+	public ShopItem getItemDetail(int itemId, String ownerId) {
+		return userShoppingDao.getItemDetail(itemId, ownerId);
 	}
 
 	@Override

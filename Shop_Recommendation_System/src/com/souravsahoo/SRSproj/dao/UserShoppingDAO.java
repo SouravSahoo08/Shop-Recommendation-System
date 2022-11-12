@@ -9,7 +9,7 @@ public interface UserShoppingDAO {
 
 	List<ShopItem> getItems(String ownerId);
 
-	ShopItem getItemDetail(int itemId);
+	ShopItem getItemDetail(int itemId, String ownerId);
 
 	void addItemToCart(ShopItem itemDetail, String userId);
 
