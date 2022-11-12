@@ -7,7 +7,7 @@ import com.souravsahoo.SRSproj.entity.UserCartItem;
 
 public interface UserShopService {
 
-	List<ShopItem> getItems();
+	List<ShopItem> getItems(String ownerId);
 
 	ShopItem getItemDetail(int itemId);
 

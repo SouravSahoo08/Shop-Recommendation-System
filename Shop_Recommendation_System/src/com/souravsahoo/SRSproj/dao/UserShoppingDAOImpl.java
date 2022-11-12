@@ -23,10 +23,12 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	 * @return list of items
 	 */
 	@Override
-	public List<ShopItem> getItems() {
+	public List<ShopItem> getItems(String ownerId) {
 
 		Session currentSession = sessionFactory.getCurrentSession();
-		List<ShopItem> items = currentSession.createQuery("from ShopItem", ShopItem.class).getResultList();
+		Query<ShopItem> getItemsQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId", ShopItem.class);
+		getItemsQuery.setParameter("oId", ownerId);
+		List<ShopItem> items = getItemsQuery.getResultList();
 		return items;
 	}
 

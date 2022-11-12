@@ -21,11 +21,12 @@ public class UserShoppingController {
 	private UserShopService userService;
 	
 	private String userId = "userid_1";
+	private String ownerId = "OWN1";
 
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
 
-		List<ShopItem> itemList = userService.getItems();
+		List<ShopItem> itemList = userService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
 
 		return "user-item-list";

@@ -21,9 +21,9 @@ public class UserShopServiceImpl implements UserShopService {
 
 	@Override
 	@Transactional
-	public List<ShopItem> getItems() {
+	public List<ShopItem> getItems(String ownerId) {
 		// TODO Auto-generated method stub
-		return userShoppingDao.getItems();
+		return userShoppingDao.getItems(ownerId);
 	}
 
 	@Override
