@@ -6,12 +6,33 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>My Cart</title>
+
+<script type="text/javascript">
+	
+	function isCartEmpty(sum){
+		
+		var button = document.getElementById("checkout");
+		if(sum==0){
+			alert("Cart is empty.. add more items.")
+			button.disabled = true;
+		}
+		else{
+			button.disabled = false;
+		}
+		
+	} 
+	
+</script>
+
+
 </head>
 <body>
 
 	<button id="emptyCart" type="button"
-			onclick="window.location.href='emptyCart'; return false;">Empty cart</button>
+		onclick="window.location.href='emptyCart'; return false;">Empty
+		cart</button>
 
+	<c:set var="sum" value="0"></c:set>
 	<table border="1">
 		<tr>
 			<th></th>
@@ -23,7 +44,7 @@
 			<th>Total</th>
 		</tr>
 
-		<c:set var="sum" value = "0"></c:set>
+
 		<c:forEach var="it" items="${cartItems}">
 			<c:set var="sum" value="${sum + it.itemPrice * it.quantity }"></c:set>
 			<tr>
@@ -39,21 +60,21 @@
 			</tr>
 		</c:forEach>
 		<tr>
-			<td colspan="6" align="right">Total to pay: </td>
+			<td colspan="6" align="right">Total to pay:</td>
 			<td>${sum}</td>
 		</tr>
 	</table>
 	<br>
-	
+
 	<table>
 		<tr>
 			<td><a href="items">Shop more</a></td>
-			
-			<td><button id="checkout" type="button"
-						onclick="window.location.href='checkout'; return false;">Checkout</button></td>
+
+			<td><a id="checkout" href="checkout"
+				onclick="isCartEmpty(${sum})"><button type="button">Checkout</button></a></td>
 		</tr>
 	</table>
-	<!--   <a href="items">Shop more</a>  -->
+
 
 </body>
 </html>
