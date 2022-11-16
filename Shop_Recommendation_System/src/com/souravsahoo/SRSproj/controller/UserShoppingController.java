@@ -2,14 +2,18 @@ package com.souravsahoo.SRSproj.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.entity.UserCartItem;
 import com.souravsahoo.SRSproj.service.UserShopService;
@@ -20,9 +24,6 @@ public class UserShoppingController {
 
 	@Autowired
 	private UserShopService userService;
-
-	@Autowired
-	private OrdersController orders;
 
 	private String userId = "userid_1";
 	private String ownerId = "OWN1";
@@ -74,29 +75,22 @@ public class UserShoppingController {
 
 	@RequestMapping("/checkout")
 	public String checkOut(/* @RequestParam int userId, @RequestParam int ownerId, */
-			Model model) {
+			@Valid @ModelAttribute(name = "shipmentModel") ShipmentDetails details, BindingResult bindingResult) {
 
-		// store cart items into model
-		List<UserCartItem> cartItems = userService.showCart(userId);
-
-		if (!cartItems.isEmpty()) {
-			model.addAttribute("cartItems", cartItems);
-
-			// enter the cart item details into orders db
-			userService.add_to_orders(cartItems, ownerId);
-			
-			// remove cart item from UserCartItem Db
+		if (!bindingResult.hasErrors()) {
+			List<UserCartItem> cartItems = userService.showCart(userId);
+			userService.add_to_orders(cartItems, details, ownerId);
 			userService.emptyCart(userId);
-			
 			return "checkout-page";
-		}
-		return "redirect:cart";
+		} else
+			return "shipment-details-form";
+
 	}
 
-	@PostMapping("/addOrder")
-	public String addOrder() {
-
-		return "checkout-page";
+	@GetMapping("/shipping-details")
+	public String addShippingDetails(Model model) {
+		model.addAttribute("shipmentModel", new ShipmentDetails());
+		return "shipment-details-form";
 	}
 
 }

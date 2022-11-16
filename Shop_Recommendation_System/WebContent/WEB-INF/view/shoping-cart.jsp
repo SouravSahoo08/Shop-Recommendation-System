@@ -32,7 +32,7 @@
 <body>
 
 	<c:set var="sum" value="0"></c:set>
-
+	
 	<a id="emptyCart" href="emptyCart" onclick="isCartEmpty(${sum})">
 		<button type="button">Empty cart</button>
 	</a>
@@ -73,8 +73,8 @@
 		<tr>
 			<td><a href="items">Shop more</a></td>
 
-			<td><a id="checkout" href="checkout"
-				onclick="isCartEmpty(${sum})"><button type="button">Checkout</button></a></td>
+			<td><a id="checkout" href="shipping-details"
+				onclick="isCartEmpty(${sum})"><button type="button">Next</button></a></td>
 		</tr>
 	</table>
 

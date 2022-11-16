@@ -97,5 +97,8 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/txw2-2.3.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jacky/Downloads/apache-tomcat-9.0.67/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jakarta.validation-api-2.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-validator-6.2.4.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-validator-annotation-processor-6.2.4.Final.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/hibernate-validator-cdi-6.2.4.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

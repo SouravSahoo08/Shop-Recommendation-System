@@ -35,6 +35,10 @@ public class Orders {
 	@Column(name = "order_date")
 	private String orderDate;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "shipment_id")
+	private ShipmentDetails shipmentDetail;
+
 	public Orders() {
 
 	}
@@ -123,6 +127,22 @@ public class Orders {
 
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
+	}
+
+	public int getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public ShipmentDetails getShipmentDetail() {
+		return shipmentDetail;
+	}
+
+	public void setShipmentDetail(ShipmentDetails shipmentDetail) {
+		this.shipmentDetail = shipmentDetail;
 	}
 
 	@Override

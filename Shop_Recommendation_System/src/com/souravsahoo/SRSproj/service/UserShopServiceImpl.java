@@ -9,14 +9,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.souravsahoo.SRSproj.dao.UserShoppingDAO;
+import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.entity.UserCartItem;
 
-@Service //("userShopServiceImpl")
+@Service // ("userShopServiceImpl")
 public class UserShopServiceImpl implements UserShopService {
 
 	@Autowired
-	//@Qualifier("userShoppingDAOImpl")
+	// @Qualifier("userShoppingDAOImpl")
 	private UserShoppingDAO userShoppingDao;
 
 	@Override
@@ -67,8 +68,8 @@ public class UserShopServiceImpl implements UserShopService {
 
 	@Override
 	@Transactional
-	public void add_to_orders(List<UserCartItem> cartItems,String ownerId) {
-		userShoppingDao.add_to_orders(cartItems, ownerId);
+	public void add_to_orders(List<UserCartItem> cartItems, ShipmentDetails details, String ownerId) {
+		userShoppingDao.add_to_orders(cartItems, details, ownerId);
 	}
 
 }

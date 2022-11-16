@@ -1,6 +1,5 @@
 package com.souravsahoo.SRSproj.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.souravsahoo.SRSproj.entity.Orders;
+import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.entity.UserCartItem;
 
@@ -176,7 +176,7 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	}
 
 	@Override
-	public void add_to_orders(List<UserCartItem> cartItems,String ownerId) {
+	public void add_to_orders(List<UserCartItem> cartItems,ShipmentDetails shipmentDetail, String ownerId) {
 		// TODO Auto-generated method stub
 		Session currentSession = sessionFactory.getCurrentSession();
 		
@@ -193,7 +193,7 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 			order.setQuantity(item.getQuantity());
 			order.setExpDate(item.getExpDate());
 			order.setOrderDate(currentDate.toString());
-			
+			order.setShipmentDetail(shipmentDetail);
 			System.out.println(order);
 			
 			currentSession.save(order);
