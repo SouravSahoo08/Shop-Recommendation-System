@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,9 +20,16 @@ public class UserShoppingController {
 
 	@Autowired
 	private UserShopService userService;
-	
+
+	@Autowired
+	private OrdersController orders;
+
 	private String userId = "userid_1";
 	private String ownerId = "OWN1";
+
+	public UserShoppingController() {
+		System.out.println("========== UserShoppingController constructor call =========");
+	}
 
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
@@ -31,10 +39,10 @@ public class UserShoppingController {
 
 		return "user-item-list";
 	}
-	
+
 	@RequestMapping("/cart")
 	public String displayShoppingCart(Model model) {
-		
+
 		List<UserCartItem> cartItems = userService.showCart(userId);
 		model.addAttribute("cartItems", cartItems);
 		return "shoping-cart";
@@ -57,11 +65,38 @@ public class UserShoppingController {
 
 		return "redirect:cart";
 	}
-	
+
 	@RequestMapping("emptyCart")
 	public String emptyCart() {
 		userService.emptyCart(userId);
 		return "redirect:cart";
+	}
+
+	@RequestMapping("/checkout")
+	public String checkOut(/* @RequestParam int userId, @RequestParam int ownerId, */
+			Model model) {
+
+		// store cart items into model
+		List<UserCartItem> cartItems = userService.showCart(userId);
+
+		if (!cartItems.isEmpty()) {
+			model.addAttribute("cartItems", cartItems);
+
+			// enter the cart item details into orders db
+			userService.add_to_orders(cartItems, ownerId);
+			
+			// remove cart item from UserCartItem Db
+			userService.emptyCart(userId);
+			
+			return "checkout-page";
+		}
+		return "redirect:cart";
+	}
+
+	@PostMapping("/addOrder")
+	public String addOrder() {
+
+		return "checkout-page";
 	}
 
 }

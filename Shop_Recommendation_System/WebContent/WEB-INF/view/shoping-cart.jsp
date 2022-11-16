@@ -23,9 +23,9 @@
 			<th>Total</th>
 		</tr>
 
-		<c:set var="i" value = "0"></c:set>
+		<c:set var="sum" value = "0"></c:set>
 		<c:forEach var="it" items="${cartItems}">
-			<c:set var="i" value="${i + it.itemPrice * it.quantity }"></c:set>
+			<c:set var="sum" value="${sum + it.itemPrice * it.quantity }"></c:set>
 			<tr>
 				<td><button id="removeFromCart" type="button"
 						onclick="window.location.href='remove?itemId=${it.itemId}'; return false;">Remove
@@ -40,11 +40,20 @@
 		</c:forEach>
 		<tr>
 			<td colspan="6" align="right">Total to pay: </td>
-			<td>${i}</td>
+			<td>${sum}</td>
 		</tr>
 	</table>
 	<br>
-	<a href="items">Shop more</a>
+	
+	<table>
+		<tr>
+			<td><a href="items">Shop more</a></td>
+			
+			<td><button id="checkout" type="button"
+						onclick="window.location.href='checkout'; return false;">Checkout</button></td>
+		</tr>
+	</table>
+	<!--   <a href="items">Shop more</a>  -->
 
 </body>
 </html>

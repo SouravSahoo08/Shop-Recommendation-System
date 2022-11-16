@@ -65,4 +65,10 @@ public class UserShopServiceImpl implements UserShopService {
 		userShoppingDao.emptyCart(userId);
 	}
 
+	@Override
+	@Transactional
+	public void add_to_orders(List<UserCartItem> cartItems,String ownerId) {
+		userShoppingDao.add_to_orders(cartItems, ownerId);
+	}
+
 }

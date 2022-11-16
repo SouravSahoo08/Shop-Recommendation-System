@@ -21,4 +21,6 @@ public interface UserShopService {
 
 	void emptyCart(String userId);
 
+	void add_to_orders(List<UserCartItem> cartItems, String ownerId);
+
 }

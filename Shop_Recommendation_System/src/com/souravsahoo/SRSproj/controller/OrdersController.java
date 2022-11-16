@@ -18,7 +18,7 @@ public class OrdersController {
 			@RequestParam int itemId,
 			Model model) { 
 		
-		return "checkout";
+		return "checkout-page";
 	}
 	
 	@RequestMapping("/checkout")

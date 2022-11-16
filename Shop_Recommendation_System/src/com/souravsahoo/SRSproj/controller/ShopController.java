@@ -27,10 +27,14 @@ import com.souravsahoo.SRSproj.service.ShopService;
 public class ShopController {
 
 	@Autowired
-	//@Qualifier("shopServiceImpl")
+	// @Qualifier("shopServiceImpl")
 	private ShopService shopService;
-	
+
 	private String ownerId = "OWN1";
+
+	public ShopController() {
+		System.out.println("========== shop controller constructor call =========");
+	}
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -70,7 +74,7 @@ public class ShopController {
 			return "add-item-form";
 		}
 		System.out.println("WTF!!!!!!!!");
-		
+
 		shopItem.setOwnerId(ownerId);
 		shopService.saveItem(shopItem);
 		return "redirect:/owner/home/items";

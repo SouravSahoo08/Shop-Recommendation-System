@@ -1,5 +1,7 @@
 package com.souravsahoo.SRSproj.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.souravsahoo.SRSproj.entity.Orders;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.entity.UserCartItem;
 
@@ -42,7 +45,7 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 	public ShopItem getItemDetail(int itemId, String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		Query<ShopItem> getItemDetailQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId and itemId = := itemId", ShopItem.class);
+		Query<ShopItem> getItemDetailQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId and itemId = :itemId", ShopItem.class);
 		getItemDetailQuery.setParameter("oId", ownerId);		
 		getItemDetailQuery.setParameter("itemId", itemId);
 		List<ShopItem> items = getItemDetailQuery.getResultList();
@@ -170,5 +173,31 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 		Query<?> emptyCartQuery = currentSession.createQuery("delete from UserCartItem where lower(userId) = :uId");
 		emptyCartQuery.setParameter("uId", userId);
 		emptyCartQuery.executeUpdate();
+	}
+
+	@Override
+	public void add_to_orders(List<UserCartItem> cartItems,String ownerId) {
+		// TODO Auto-generated method stub
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Date date = new Date();
+		java.sql.Date currentDate = new java.sql.Date(date.getTime());
+		
+		for(UserCartItem item :cartItems) {
+			Orders order = new Orders();
+			order.setOwnerId(ownerId);
+			order.setUserId(item.getUserId());
+			order.setItemId(item.getItemId());
+			order.setItemName(item.getItemName());
+			order.setPrice(item.getItemPrice());
+			order.setQuantity(item.getQuantity());
+			order.setExpDate(item.getExpDate());
+			order.setOrderDate(currentDate.toString());
+			
+			System.out.println(order);
+			
+			currentSession.save(order);
+		}
+		
 	}
 }

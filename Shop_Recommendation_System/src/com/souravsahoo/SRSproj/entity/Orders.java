@@ -7,8 +7,9 @@ import javax.persistence.*;
 public class Orders {
 
 	@Id
-	@Column(name = "orer_no")
-	private int orderId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "order_no")
+	private int orderNo;
 
 	@Column(name = "owner_id")
 	private String ownerId;
@@ -41,7 +42,7 @@ public class Orders {
 	public Orders(int orderId, String ownerId, String userId, int itemId, String itemName, double price, int quantity,
 			String expDate, String orderDate) {
 		super();
-		this.orderId = orderId;
+		this.orderNo = orderId;
 		this.ownerId = ownerId;
 		this.userId = userId;
 		this.itemId = itemId;
@@ -53,11 +54,11 @@ public class Orders {
 	}
 
 	public int getOrderId() {
-		return orderId;
+		return orderNo;
 	}
 
 	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+		this.orderNo = orderId;
 	}
 
 	public String getOwnerId() {
@@ -126,7 +127,7 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return "Orders [orderId=" + orderId + ", ownerId=" + ownerId + ", userId=" + userId + ", itemId=" + itemId
+		return "Orders [orderId=" + orderNo + ", ownerId=" + ownerId + ", userId=" + userId + ", itemId=" + itemId
 				+ ", itemName=" + itemName + ", price=" + price + ", quantity=" + quantity + ", expDate=" + expDate
 				+ ", orderDate=" + orderDate + "]";
 	}
