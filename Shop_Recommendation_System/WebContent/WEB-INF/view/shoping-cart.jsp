@@ -11,13 +11,16 @@
 	
 	function isCartEmpty(sum){
 		
-		var button = document.getElementById("checkout");
+		var emptyButton = document.getElementById("emptyCart") 
+		var checkOutButton = document.getElementById("checkout");
 		if(sum==0){
 			alert("Cart is empty.. add more items.")
-			button.disabled = true;
+			emptyButton.disabled = true;
+			checkOutButton.disabled = true;
 		}
 		else{
-			button.disabled = false;
+			emptyButton.disabled = false;
+			checkOutButton.disabled = false;
 		}
 		
 	} 
@@ -28,11 +31,11 @@
 </head>
 <body>
 
-	<button id="emptyCart" type="button"
-		onclick="window.location.href='emptyCart'; return false;">Empty
-		cart</button>
-
 	<c:set var="sum" value="0"></c:set>
+
+	<a id="emptyCart" href="emptyCart" onclick="isCartEmpty(${sum})">
+		<button type="button">Empty cart</button>
+	</a>
 	<table border="1">
 		<tr>
 			<th></th>
