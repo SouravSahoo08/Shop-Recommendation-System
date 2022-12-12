@@ -10,48 +10,34 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.souravsahoo.SRSproj.entity.OwnerList;
 import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.entity.UserCartItem;
 import com.souravsahoo.SRSproj.service.UserShopService;
 
 @Controller
-@RequestMapping("/user")
-public class UserShoppingController {
+@RequestMapping("/user-2/home")
+public class UserShoppingController2 {
 
 	@Autowired
 	private UserShopService userService;
 
-	private String userId="userid_1";
-	private String ownerId="OWN1";
+	private String userId = "userid_1";
+	private String ownerId = "OWN1";
 
-	public UserShoppingController() {
-		System.out.println("========== UserShoppingController constructor call =========");
+	public UserShoppingController2() {
+		System.out.println("========== UserShoppingController2 constructor call =========");
 	}
 
-	@RequestMapping("/home")
-	public String home(@RequestParam("uId") String uId, Model model) {
-		userId = uId;
-		System.out.println(userId);
-		List<OwnerList> owners = userService.getOwners();
-		model.addAttribute("owners", owners);
-		
-		return "owner-list";
-	}
+	@RequestMapping("/items")
+	public String viewListOfItems(Model model) {
 
-	@GetMapping("/items")
-	public String viewListOfItems(@RequestParam("oId") String oId, Model model) {
-
-		ownerId = oId;
-		System.out.println(ownerId);
 		List<ShopItem> itemList = userService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
-		model.addAttribute("ownerId", ownerId);
+
 		return "user-item-list";
 	}
 

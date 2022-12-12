@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.souravsahoo.SRSproj.entity.Orders;
+import com.souravsahoo.SRSproj.entity.OwnerList;
 import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.entity.UserCartItem;
@@ -199,5 +200,13 @@ public class UserShoppingDAOImpl implements UserShoppingDAO {
 			currentSession.save(order);
 		}
 		
+	}
+
+	@Override
+	public List<OwnerList> getOwners() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		List<OwnerList> owners = currentSession.createQuery("from OwnerList", OwnerList.class).getResultList();
+		return owners;
 	}
 }

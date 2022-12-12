@@ -26,14 +26,25 @@
 	} 
 	
 </script>
-
+<style type="text/css">
+.content {
+    max-width: max-content;
+  margin: auto;
+   
+}
+</style>
 
 </head>
 <body>
+<div class="content">
+
+	<h2>Your shopping cart</h2>
+	<hr>
+	<br>
 
 	<c:set var="sum" value="0"></c:set>
 	
-	<a id="emptyCart" href="emptyCart" onclick="isCartEmpty(${sum})">
+	<a id="emptyCart" href="emptyCart" onclick="">
 		<button type="button">Empty cart</button>
 	</a>
 	<table border="1">
@@ -71,13 +82,13 @@
 
 	<table>
 		<tr>
-			<td><a href="items">Shop more</a></td>
+			<td><a href="items?oId=${ownerId}">Shop more</a></td>
 
 			<td><a id="checkout" href="shipping-details"
 				onclick="isCartEmpty(${sum})"><button type="button">Next</button></a></td>
 		</tr>
 	</table>
 
-
+</div>
 </body>
 </html>

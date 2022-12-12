@@ -8,14 +8,22 @@
 <meta charset="ISO-8859-1">
 <title>Shopping</title>
 
-<style type="text/css">
-	
-	
+<style>
+.content {
+    max-width: max-content;
+  margin: auto;
+   
+}
 </style>
 
 </head>
 
 <body>
+<div class="content">
+
+	<h2>Shopping list</h2>
+	<hr>
+	<br>
 
 	<!-- search dialogue -->
 	<form:form action="search" method="get">
@@ -54,6 +62,6 @@
 		</c:forEach>
 
 	</table>
-
+</div>
 </body>
 </html>

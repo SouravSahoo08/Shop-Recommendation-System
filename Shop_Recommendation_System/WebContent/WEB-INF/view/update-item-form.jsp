@@ -6,9 +6,17 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Item modification</title>
+
+<style type="text/css">
+.content {
+    max-width: max-content;
+  margin: auto;
+   
+}
+</style>
 </head>
 <body>
-
+<div class="content">
 	<h2>Update item.</h2>
 
 	<form:form action="saveItem" modelAttribute="item" method="POST">
@@ -62,5 +70,6 @@
 	<p>
 		<a href="items">Back to list</a>
 	</p>
+</div>
 </body>
 </html>

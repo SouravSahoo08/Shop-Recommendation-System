@@ -11,10 +11,15 @@
 .error {
 	color: red
 }
+.content {
+    max-width: max-content;
+  margin: auto;
+   
+}
 </style>
 </head>
 <body>
-
+<div class="content">
 	<h3>Fill your shipment details</h3>
 
 	<form:form action="checkout" modelAttribute="shipmentModel">
@@ -64,5 +69,6 @@
 
 
 	<a href="cart">Back to cart</a>
+</div>
 </body>
 </html>

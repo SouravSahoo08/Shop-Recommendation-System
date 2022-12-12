@@ -7,9 +7,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Store</title>
+<style type="text/css">
+.content {
+    max-width: max-content;
+  margin: auto;
+   
+}
+</style>
 </head>
 <body>
-	<h2>Available items</h2>
+<div class="content">
+	
+	<h2>Available stock</h2>
+	<hr>
+	<br>
 
 	<input type="button" value="Add item"
 		onClick="window.location.href='addItemForm'; return false;" />
@@ -47,6 +58,6 @@
 		</c:forEach>
 
 	</table>
-
+</div>
 </body>
 </html>
