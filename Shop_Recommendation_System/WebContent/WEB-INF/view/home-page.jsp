@@ -10,6 +10,6 @@
 <body>
 	<h1>Home page</h1>
 	
-	<a href="login">Login</a> / <a href="register">Register</a> 
+	<a href="login">Login</a> / <a href="shop-register">Register</a> 
 </body>
 </html>
