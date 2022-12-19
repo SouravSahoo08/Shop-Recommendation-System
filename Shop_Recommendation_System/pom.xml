@@ -5,6 +5,17 @@
 	<groupId>Final_Year_Project</groupId>
 	<artifactId>Shop_Recommendation_System</artifactId>
 	<version>Version 1.0</version>
+	<description>
+		1) This project is developed for Final year project submission.
+		2) Tools used: Spring, Java, Mysql, Hibernate, Tomcat Server.
+		3) Abstract: The objective of this project is to build a Software which will solve the following requirements: 
+						- It should be capable of monitoring stock levels and assisting 
+						  the shopkeeper in keeping track of the items.
+						- It should also be able to provide information on the sales 
+						  of items and help recommend the shopkeeper to plan his/her stocks.
+						- The system should also help the shopkeeper to keep track of the customers and their requirements.
+						- The software could assist individuals in starting a business on a limited budget.
+	</description>
 	<packaging>war</packaging>
 
 	<dependencies>
