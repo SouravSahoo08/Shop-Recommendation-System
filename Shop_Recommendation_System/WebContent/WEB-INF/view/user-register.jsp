@@ -5,13 +5,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Registration-Shop</title>
+<title>Registration-Customer</title>
 </head>
 <body>
 
-<h3> Shop owner Registration</h3>
+<h3> Customer Registration</h3>
 
-	<form:form action="saveOwner" modelAttribute="shop-registration-details" method="POST">
+	<form:form action="saveUser" modelAttribute="customer-registration-details" method="POST">
 		
 		<table>
 		
@@ -19,15 +19,10 @@
 			
 				<tr>
 					<td><label>Name</label></td>
-					<td><form:input path="ownerName"/></td>
+					<td><form:input path="name"/></td>
 					
 				</tr>
-				
-				<tr>
-					<td><label>License No.</label></td>
-					<td><form:input path="licenseNo"/></td>
-				</tr>
-
+		
 				<tr>
 					<td><label>Age</label></td>
 					<td><form:input path="age"/></td>
@@ -37,27 +32,17 @@
 					<td><label>Phone number</label></td>
 					<td><form:input path="phoneNo"/></td>
 				</tr>
-				
-				<tr>
-					<td><label>Shop type</label></td>
-					<td><form:input path="shopType"/></td>
-				</tr>
-				
-				<tr>
-					<td><label>Shop address</label></td>
-					<td><form:input path="shopAddress"/></td>
-				</tr>
-				
+								
 				<tr><td>Login details</td></tr>
 				
 				<tr>
 					<td><label>Username</label></td>
-					<td><form:input path="sUsername"/></td>
+					<td><form:input path="uUsername"/></td>
 				</tr>	
 
 				<tr>
 					<td><label>Password</label></td>
-					<td><form:input path="sPwd"/></td>
+					<td><form:input path="uPwd"/></td>
 				</tr>	
 						
 				<tr>

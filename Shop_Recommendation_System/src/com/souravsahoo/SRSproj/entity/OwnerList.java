@@ -22,6 +22,9 @@ public class OwnerList {
 	@Column(name = "age")
 	private int age;
 	
+	@Column(name = "phone")
+	private int phoneNo;
+	
 	@Column(name = "shop_type")
 	private String shopType;
 	
@@ -37,20 +40,23 @@ public class OwnerList {
 	public OwnerList() {
 
 	}
-	
-	public OwnerList(int slNo, String ownerId, String ownerName, String licenseNo, int age, String shopType,
-			String shopAddress, String sUsername, String sPwd) {
+
+	public OwnerList(int slNo, String ownerId, String ownerName, String licenseNo, int age, int phoneNo,
+			String shopType, String shopAddress, String sUsername, String sPwd) {
 		super();
 		this.slNo = slNo;
 		this.ownerId = ownerId;
 		this.ownerName = ownerName;
 		this.licenseNo = licenseNo;
 		this.age = age;
+		this.phoneNo = phoneNo;
 		this.shopType = shopType;
 		this.shopAddress = shopAddress;
 		this.sUsername = sUsername;
 		this.sPwd = sPwd;
 	}
+
+
 
 	public String getOwnerName() {
 		return ownerName;
@@ -74,6 +80,14 @@ public class OwnerList {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	public int getPhoneNo() {
+		return phoneNo;
+	}
+
+	public void setPhoneNo(int phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 
 	public String getShopType() {
