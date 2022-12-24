@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -26,23 +27,24 @@ import java.util.logging.Logger;
 @EnableTransactionManagement
 @EnableWebMvc
 @ComponentScan(basePackages = "com.souravsahoo.SRSproj")
-@PropertySource("classpasth:persistence-mysql.properties")
-public class ApplicationConfig implements WebMvcConfigurer{
-	
+@PropertySource("classpath:persistence-mysql.properties")
+public class ApplicationConfig implements WebMvcConfigurer {
+
 	@Autowired
 	private Environment env;
 
 	private Logger logger = Logger.getLogger(getClass().getName());
-	
+
 	// bean for ViewResolver
 	@Bean
 	public ViewResolver viewResolver() {
+		System.out.println("in view Resolver");
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setPrefix("/WEB-INF/view/");
 		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
-	
+
 	@Bean(destroyMethod = "close")
 	public ComboPooledDataSource myDataSource() {
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
@@ -51,7 +53,7 @@ public class ApplicationConfig implements WebMvcConfigurer{
 			dataSource.setJdbcUrl(env.getProperty("jdbc.url"));
 			dataSource.setUser(env.getProperty("jdbc.user"));
 			dataSource.setPassword(env.getProperty("jdbc.password"));
-			
+
 			dataSource.setInitialPoolSize(getIntegerValueFromProp("connection.pool.initialPoolSize"));
 			dataSource.setMinPoolSize(getIntegerValueFromProp("connection.pool.minPoolSize"));
 			dataSource.setMaxPoolSize(getIntegerValueFromProp("connection.pool.maxPoolSize"));
@@ -62,11 +64,11 @@ public class ApplicationConfig implements WebMvcConfigurer{
 		}
 		return dataSource;
 	}
-	
+
 	private int getIntegerValueFromProp(String propName) {
 		return Integer.parseInt(env.getProperty(propName));
 	}
-	
+
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -75,22 +77,27 @@ public class ApplicationConfig implements WebMvcConfigurer{
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
 	}
-	
+
 	private final Properties hibernateProperties() {
 		Properties hibernateProperties = new Properties();
-		hibernateProperties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");
 		return hibernateProperties;
 	}
-	
+
 	@Bean
 	public PlatformTransactionManager transactionManager() {
 		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
 		transactionManager.setSessionFactory(sessionFactory().getObject());
 		return transactionManager;
 	}
-	
+
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	}
+/*
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("home-page");
+	}*/
 }
