@@ -19,16 +19,16 @@ public class SystemHomepageController {
 	@Autowired
 	private OwnerUserInfo_Service ownerUserInfo;
 
-	/*
-	 * @GetMapping("/showMyLoginPage") public String showMyLoginPage() {
-	 * 
-	 * // return "plain-login";
-	 * 
-	 * return "fancy-login";
-	 * 
-	 * }
-	 */
-	/* home-page */
+	@GetMapping("/showMyLoginPage")
+	public String showMyLoginPage() {
+		return "loginpage";
+	}
+	
+	@GetMapping("/access-denied")
+	public String accessDenied() {
+		return "access-denied";
+	}
+	
 	@RequestMapping("/home-page")
 	public String homePage() {
 		return "home-page";
