@@ -43,12 +43,15 @@ public class ApplicationSecurityConfig{
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	
+		/*
+		 * .authorizeRequests(configurer -> configurer .anyRequest() .authenticated())
+		 */
+		
     	return http
-		.authorizeRequests(configurer ->
-			configurer
-				.anyRequest()
-				.authenticated())
-
+		.authorizeRequests(configurer->
+			configurer.antMatchers("/home-page").hasAnyRole("EMPLOYEE","MANAGER","ADMIN")
+						.antMatchers("/owner/**").hasRole("MANAGER")
+						.antMatchers("/user-2/**").hasRole("EMPLOYEE"))
 		.formLogin(configurer ->
 			configurer
 				.loginPage("/showMyLoginPage")
@@ -57,6 +60,8 @@ public class ApplicationSecurityConfig{
 		.logout(configurer -> 
 		configurer
 			.permitAll())
+		.exceptionHandling(configurer->
+				configurer.accessDeniedPage("/access-denied"))
 		.build();
     }
 	

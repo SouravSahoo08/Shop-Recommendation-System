@@ -59,7 +59,12 @@
 			<version>${springsecurity.version}</version>
 		</dependency>
 
-
+		<!-- spring-security-taglib -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${springsecurity.version}</version>
+		</dependency>
 
 		<!-- JSP, JSTl, etc -->
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
