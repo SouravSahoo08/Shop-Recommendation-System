@@ -1,4 +1,4 @@
-	package com.souravsahoo.SRSproj.config;
+package com.souravsahoo.SRSproj.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

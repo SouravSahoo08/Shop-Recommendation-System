@@ -2,6 +2,9 @@ package com.souravsahoo.SRSproj.config;
 
 import java.beans.PropertyVetoException;
 import java.util.Properties;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,12 +19,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import java.util.logging.Logger;
 
 @Configuration
 @EnableTransactionManagement
@@ -46,7 +47,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	}
 
 	@Bean(destroyMethod = "close")
-	public ComboPooledDataSource myDataSource() {
+	public DataSource securityDataSource() {
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
 		try {
 			dataSource.setDriverClass(env.getProperty("jdbc.driver"));
@@ -72,7 +73,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	@Bean
 	public LocalSessionFactoryBean sessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-		sessionFactory.setDataSource(myDataSource());
+		sessionFactory.setDataSource(securityDataSource());
 		sessionFactory.setPackagesToScan("com.souravsahoo.SRSproj.entity");
 		sessionFactory.setHibernateProperties(hibernateProperties());
 		return sessionFactory;
