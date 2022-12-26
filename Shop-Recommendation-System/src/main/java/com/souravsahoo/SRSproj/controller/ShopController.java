@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.souravsahoo.SRSproj.config.ApplicationAuthenticationFacade;
+import com.souravsahoo.SRSproj.config.ApplicationAuthenticationSuccessHandler;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.service.ShopService;
 
@@ -27,11 +30,10 @@ import com.souravsahoo.SRSproj.service.ShopService;
 public class ShopController {
 
 	@Autowired
-	// @Qualifier("shopServiceImpl")
 	private ShopService shopService;
 
 	private String ownerId = "OWN1";
-
+	public static String auth;
 	public ShopController() {
 		System.out.println("========== shop controller constructor call =========");
 	}
@@ -42,9 +44,17 @@ public class ShopController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
+	/*
+	@RequestMapping("/home")
+	//@ResponseBody
+	public void instantiateUser() {
+		auth = authenticationFacade.getAuthentication().getName();
+		//return "forward:/items"; 
+	}*/
+	
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
-
+		System.out.println(auth);
 		List<ShopItem> itemList = shopService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
 
