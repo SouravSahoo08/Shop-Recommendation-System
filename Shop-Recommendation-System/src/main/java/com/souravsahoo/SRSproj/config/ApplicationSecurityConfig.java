@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.souravsahoo.SRSproj.service.UserAuthService;
 /**
  * Here we will specify the type of authentication to be done for the application
  * @author jacky
@@ -25,11 +28,23 @@ public class ApplicationSecurityConfig{
 	@Autowired
 	private DataSource securityDataSource;
 	
+	@Autowired
+	private UserAuthService userAuthService;
+	
 	@Bean
 	public UserDetailsManager userDetailsManager() {
 		return new JdbcUserDetailsManager(securityDataSource);
 	}
 		
+	//authenticationProvider bean definition
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+	DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+	auth.setUserDetailsService(userAuthService);
+	//auth.setPasswordEncoder(passwordEncoder());
+	return auth;
+	}
+	
 	@Bean
 	public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
 		return new ApplicationAuthenticationSuccessHandler();
