@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class OwnerList {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sl_no")
 	private int slNo;
 
