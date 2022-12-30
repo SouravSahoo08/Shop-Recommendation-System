@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.souravsahoo.SRSproj.dao.OwnerUserInfoDAO;
+import com.souravsahoo.SRSproj.entity.CustomerList;
 import com.souravsahoo.SRSproj.entity.OwnerList;
-import com.souravsahoo.SRSproj.entity.UserList;
 
 @Service
 public class OwnerUserInfo_Service_Impl implements OwnerUserInfo_Service {
@@ -23,9 +23,9 @@ public class OwnerUserInfo_Service_Impl implements OwnerUserInfo_Service {
 
 	@Override
 	@Transactional
-	public void saveUserDetails(UserList userList) {
+	public void saveUserDetails(CustomerList customerList) {
 		// TODO Auto-generated method stub
-		ownerUserInfoDao.saveUserDetails(userList);
+		ownerUserInfoDao.saveUserDetails(customerList);
 	}
 
 }

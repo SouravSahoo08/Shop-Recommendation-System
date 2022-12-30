@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.souravsahoo.SRSproj.entity.CustomerList;
 import com.souravsahoo.SRSproj.entity.OwnerList;
-import com.souravsahoo.SRSproj.entity.UserList;
 import com.souravsahoo.SRSproj.service.OwnerUserInfo_Service;
 
 @Controller
@@ -48,13 +48,13 @@ public class SystemHomepageController {
 
 	@RequestMapping("/user-register")
 	public String registerUser(Model model) {
-		model.addAttribute("customer-registration-details", new UserList());
+		model.addAttribute("customer-registration-details", new CustomerList());
 		return "user-register";
 	}
 	
 	@PostMapping("/saveUser")
-	public String saveUser(@ModelAttribute("customer-registration-details") UserList userList) {
-		ownerUserInfo.saveUserDetails(userList);
+	public String saveUser(@ModelAttribute("customer-registration-details") CustomerList customerList) {
+		ownerUserInfo.saveUserDetails(customerList);
 		return "redirect:/home-page";
 	}
 }

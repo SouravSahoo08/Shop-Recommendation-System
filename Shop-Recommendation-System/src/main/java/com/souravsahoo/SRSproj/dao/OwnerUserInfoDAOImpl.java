@@ -5,8 +5,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.souravsahoo.SRSproj.entity.CustomerList;
 import com.souravsahoo.SRSproj.entity.OwnerList;
-import com.souravsahoo.SRSproj.entity.UserList;
 
 @Repository
 public class OwnerUserInfoDAOImpl implements OwnerUserInfoDAO {
@@ -22,10 +22,10 @@ public class OwnerUserInfoDAOImpl implements OwnerUserInfoDAO {
 	}
 
 	@Override
-	public void saveUserDetails(UserList userList) {
+	public void saveUserDetails(CustomerList customerList) {
 		// TODO Auto-generated method stub
 		Session currentSession = sessionFactory.getCurrentSession();
-		currentSession.save(userList);
+		currentSession.save(customerList);
 	}
 	
 }

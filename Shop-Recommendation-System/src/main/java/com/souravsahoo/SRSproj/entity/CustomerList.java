@@ -3,8 +3,8 @@ package com.souravsahoo.SRSproj.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_list")
-public class UserList {
+@Table(name = "customer_list")
+public class CustomerList {
 
 	@Id
 	@Column(name = "sl_no")
@@ -31,11 +31,11 @@ public class UserList {
 	@Column(name = "pwd")
 	private String uPwd;
 
-	public UserList() {
+	public CustomerList() {
 
 	}
 
-	public UserList(int slNo, String userId, String name, int age, int phoneNo, String userAddress, String uUsername,
+	public CustomerList(int slNo, String userId, String name, int age, int phoneNo, String userAddress, String uUsername,
 			String uPwd) {
 		super();
 		this.slNo = slNo;
