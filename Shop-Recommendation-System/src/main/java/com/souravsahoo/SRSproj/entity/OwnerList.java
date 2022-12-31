@@ -1,5 +1,7 @@
 package com.souravsahoo.SRSproj.entity;
 
+import java.util.Collection;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,30 +15,34 @@ public class OwnerList {
 
 	@Column(name = "owner_id")
 	private String ownerId;
-	
+
 	@Column(name = "owner_name")
 	private String ownerName;
-	
+
 	@Column(name = "license_no")
 	private String licenseNo;
-	
+
 	@Column(name = "age")
 	private int age;
-	
+
 	@Column(name = "phone")
 	private int phoneNo;
-	
+
 	@Column(name = "shop_type")
 	private String shopType;
-	
+
 	@Column(name = "shop_Address")
 	private String shopAddress;
-	
+
 	@Column(name = "username")
 	private String sUsername;
-	
+
 	@Column(name = "pwd")
 	private String sPwd;
+
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Collection<Role> roles;
 
 	public OwnerList() {
 
@@ -57,7 +63,21 @@ public class OwnerList {
 		this.sPwd = sPwd;
 	}
 
-
+	public OwnerList(int slNo, String ownerId, String ownerName, String licenseNo, int age, int phoneNo,
+			String shopType, String shopAddress, String sUsername, String sPwd, Collection<Role> roles) {
+		super();
+		this.slNo = slNo;
+		this.ownerId = ownerId;
+		this.ownerName = ownerName;
+		this.licenseNo = licenseNo;
+		this.age = age;
+		this.phoneNo = phoneNo;
+		this.shopType = shopType;
+		this.shopAddress = shopAddress;
+		this.sUsername = sUsername;
+		this.sPwd = sPwd;
+		this.roles = roles;
+	}
 
 	public String getOwnerName() {
 		return ownerName;
@@ -82,7 +102,7 @@ public class OwnerList {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
+
 	public int getPhoneNo() {
 		return phoneNo;
 	}
@@ -139,9 +159,19 @@ public class OwnerList {
 		this.ownerId = ownerId;
 	}
 
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	public String toString() {
-		return "OwnerList [slNo=" + slNo + ", ownerId=" + ownerId + "]";
+		return "OwnerList [slNo=" + slNo + ", ownerId=" + ownerId + ", ownerName=" + ownerName + ", licenseNo="
+				+ licenseNo + ", age=" + age + ", phoneNo=" + phoneNo + ", shopType=" + shopType + ", shopAddress="
+				+ shopAddress + ", sUsername=" + sUsername + ", sPwd=" + sPwd + ", roles=" + roles + "]";
 	}
 
 }
