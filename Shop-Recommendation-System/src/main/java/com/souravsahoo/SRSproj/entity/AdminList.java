@@ -5,18 +5,15 @@ import java.util.Collection;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "customer_list")
-public class CustomerList {
+@Table(name = "admin_list")
+public class AdminList {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "sl_no")
 	private int slNo;
 
-	@Column(name = "user_id")
-	private String userId;
-
-	@Column(name = "user_name")
+	@Column(name = "admin_name")
 	private String name;
 
 	@Column(name = "age")
@@ -26,33 +23,32 @@ public class CustomerList {
 	private int phoneNo;
 
 	@Column(name = "address")
-	private String userAddress;
+	private String adminAddress;
 
 	@Column(name = "username")
-	private String cUsername;
+	private String aUsername;
 
 	@Column(name = "pwd")
-	private String cPwd;
+	private String aPwd;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
 
-	public CustomerList() {
+	public AdminList() {
 
 	}
 
-	public CustomerList(int slNo, String userId, String name, int age, int phoneNo, String userAddress,
-			String uUsername, String uPwd, Collection<Role> roles) {
+	public AdminList(int slNo, String name, int age, int phoneNo, String adminAddress, String aUsername, String aPwd,
+			Collection<Role> roles) {
 		super();
 		this.slNo = slNo;
-		this.userId = userId;
 		this.name = name;
 		this.age = age;
 		this.phoneNo = phoneNo;
-		this.userAddress = userAddress;
-		this.cUsername = uUsername;
-		this.cPwd = uPwd;
+		this.adminAddress = adminAddress;
+		this.aUsername = aUsername;
+		this.aPwd = aPwd;
 		this.roles = roles;
 	}
 
@@ -62,14 +58,6 @@ public class CustomerList {
 
 	public void setSlNo(int slNo) {
 		this.slNo = slNo;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getName() {
@@ -96,28 +84,28 @@ public class CustomerList {
 		this.phoneNo = phoneNo;
 	}
 
-	public String getUserAddress() {
-		return userAddress;
+	public String getAdminAddress() {
+		return adminAddress;
 	}
 
-	public void setUserAddress(String userAddress) {
-		this.userAddress = userAddress;
+	public void setAdminAddress(String adminAddress) {
+		this.adminAddress = adminAddress;
 	}
 
-	public String getcUsername() {
-		return cUsername;
+	public String getaUsername() {
+		return aUsername;
 	}
 
-	public void setcUsername(String cUsername) {
-		this.cUsername = cUsername;
+	public void setaUsername(String aUsername) {
+		this.aUsername = aUsername;
 	}
 
-	public String getcPwd() {
-		return cPwd;
+	public String getaPwd() {
+		return aPwd;
 	}
 
-	public void setcPwd(String cPwd) {
-		this.cPwd = cPwd;
+	public void setaPwd(String aPwd) {
+		this.aPwd = aPwd;
 	}
 
 	public Collection<Role> getRoles() {
@@ -130,9 +118,9 @@ public class CustomerList {
 
 	@Override
 	public String toString() {
-		return "CustomerList [slNo=" + slNo + ", userId=" + userId + ", name=" + name + ", age=" + age + ", phoneNo="
-				+ phoneNo + ", userAddress=" + userAddress + ", uUsername=" + cUsername + ", uPwd=" + cPwd + ", roles="
-				+ roles + "]";
+		return "AdminList [slNo=" + slNo + ", name=" + name + ", age=" + age + ", phoneNo=" + phoneNo
+				+ ", adminAddress=" + adminAddress + ", aUsername=" + aUsername + ", aPwd=" + aPwd + ", roles=" + roles
+				+ "]";
 	}
 
 }
