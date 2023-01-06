@@ -17,7 +17,7 @@ public class CustomerList {
 	private String userId;
 
 	@Column(name = "user_name")
-	private String name;
+	private String customerName;
 
 	@Column(name = "age")
 	private int age;
@@ -42,12 +42,12 @@ public class CustomerList {
 
 	}
 
-	public CustomerList(int slNo, String userId, String name, int age, int phoneNo, String userAddress,
+	public CustomerList(int slNo, String userId, String customerName, int age, int phoneNo, String userAddress,
 			String uUsername, String uPwd, Collection<Role> roles) {
 		super();
 		this.slNo = slNo;
 		this.userId = userId;
-		this.name = name;
+		this.customerName = customerName;
 		this.age = age;
 		this.phoneNo = phoneNo;
 		this.userAddress = userAddress;
@@ -72,12 +72,12 @@ public class CustomerList {
 		this.userId = userId;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public int getAge() {
@@ -130,7 +130,7 @@ public class CustomerList {
 
 	@Override
 	public String toString() {
-		return "CustomerList [slNo=" + slNo + ", userId=" + userId + ", name=" + name + ", age=" + age + ", phoneNo="
+		return "CustomerList [slNo=" + slNo + ", userId=" + userId + ", customerName=" + customerName + ", age=" + age + ", phoneNo="
 				+ phoneNo + ", userAddress=" + userAddress + ", uUsername=" + cUsername + ", uPwd=" + cPwd + ", roles="
 				+ roles + "]";
 	}

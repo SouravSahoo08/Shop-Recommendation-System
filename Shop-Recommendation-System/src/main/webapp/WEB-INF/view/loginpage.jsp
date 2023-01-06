@@ -36,7 +36,7 @@
 				<div style="padding-top: 30px" class="panel-body">
 
 					<!-- Login Form -->
-					<form:form action="${pageContext.request.contextPath}/authenticateTheUser" 
+					<form:form action="${pageContext.request.contextPath}/showMyLoginPage" 
 							   method="POST" class="form-horizontal">
 
 					    <!-- Place for messages: error, alert etc ... -->
@@ -89,6 +89,18 @@
 
 				</div>
 
+			</div>
+			
+			<p> New user? Register here.. </p>
+			
+			<div>
+				<a href="${pageContext.request.contextPath}/customer-register" 
+				class="btn btn-primary" role="button" aria-pressed="true">Register <br> as Customer</a>
+				
+				or
+				
+				<a href="${pageContext.request.contextPath}/shop-register" 
+				class="btn btn-primary" role="button" aria-pressed="true">Register <br> as Shop owner</a>
 			</div>
 
 		</div>

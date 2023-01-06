@@ -32,12 +32,15 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
 		OwnerList owner = userAuthDao.findByOwnerName(username);
+		System.out.println(">> owner :  " +owner);
 		if(owner == null) {
 			
 			CustomerList customer = userAuthDao.findByCustomerName(username);
+			System.out.println(">> customer :  " +customer);
 			if(customer == null) {
 				
 				AdminList admin = userAuthDao.findByAdminName(username);
+				System.out.println(">> admin :  " +admin);
 				if(admin == null) {
 					throw new UsernameNotFoundException("Invalid username or password.");
 				}else {
@@ -70,6 +73,20 @@ public class UserAuthServiceImpl implements UserAuthService{
 
 	@Override
 	@Transactional
+	public CustomerList findByCustomerName(String customerName) {
+		// TODO Auto-generated method stub
+		return userAuthDao.findByCustomerName(customerName);
+	}
+	
+	@Override
+	@Transactional
+	public AdminList findByAdminName(String adminName) {
+		// TODO Auto-generated method stub
+		return userAuthDao.findByAdminName(adminName);
+	}
+	
+	@Override
+	@Transactional
 	public void saveOwner(CrmOwner crmOwner) {
 		// TODO Auto-generated method stub
 		OwnerList owner = new OwnerList();
@@ -90,7 +107,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public void saveCustomer(CrmCustomer crmCustomer) {
 		// TODO Auto-generated method stub
 		CustomerList customer = new CustomerList();
-		customer.setName(crmCustomer.getCutomerName());
+		customer.setCustomerName(crmCustomer.getCutomerName());
 		customer.setAge(crmCustomer.getAge());
 		customer.setPhoneNo(crmCustomer.getPhoneNo());
 		customer.setUserAddress(crmCustomer.getUserAddress());
@@ -105,7 +122,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public void saveAdmin(CrmAdmin crmAdmin) {
 		// TODO Auto-generated method stub
 		AdminList admin = new AdminList();
-		admin.setName(crmAdmin.getAdminName());
+		admin.setAdminName(crmAdmin.getAdminName());
 		admin.setAge(crmAdmin.getAge());
 		admin.setPhoneNo(crmAdmin.getPhoneNo());
 		admin.setAdminAddress(crmAdmin.getAdminAddress());

@@ -45,7 +45,7 @@ public class UserAuthDaoImpl implements UserAuthDao {
 	@Override
 	public CustomerList findByCustomerName(String customerName) {
 		Session currSession = sessionFactory.getCurrentSession();
-		Query<CustomerList> query = currSession.createQuery("from CustomerList where ownerName = :customerName",
+		Query<CustomerList> query = currSession.createQuery("from CustomerList where customerName = :customerName",
 				CustomerList.class);
 		query.setParameter("customerName", customerName);
 
@@ -71,7 +71,7 @@ public class UserAuthDaoImpl implements UserAuthDao {
 	@Override
 	public AdminList findByAdminName(String adminName) {
 		Session currSession = sessionFactory.getCurrentSession();
-		Query<AdminList> query = currSession.createQuery("from AdminList where ownerName = :adminName",
+		Query<AdminList> query = currSession.createQuery("from AdminList where adminName = :adminName",
 				AdminList.class);
 		query.setParameter("customerName", adminName);
 
