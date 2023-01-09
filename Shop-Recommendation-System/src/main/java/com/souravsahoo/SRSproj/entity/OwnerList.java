@@ -26,7 +26,7 @@ public class OwnerList {
 	private int age;
 
 	@Column(name = "phone")
-	private int phoneNo;
+	private long phoneNo;
 
 	@Column(name = "shop_type")
 	private String shopType;
@@ -48,7 +48,7 @@ public class OwnerList {
 
 	}
 
-	public OwnerList(int slNo, String ownerId, String ownerName, String licenseNo, int age, int phoneNo,
+	public OwnerList(int slNo, String ownerId, String ownerName, String licenseNo, int age, long phoneNo,
 			String shopType, String shopAddress, String sUsername, String sPwd) {
 		super();
 		this.slNo = slNo;
@@ -103,11 +103,11 @@ public class OwnerList {
 		this.age = age;
 	}
 
-	public int getPhoneNo() {
+	public long getPhoneNo() {
 		return phoneNo;
 	}
 
-	public void setPhoneNo(int phoneNo) {
+	public void setPhoneNo(long phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 

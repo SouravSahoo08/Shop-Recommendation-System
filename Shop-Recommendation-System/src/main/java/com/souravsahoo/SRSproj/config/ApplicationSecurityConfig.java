@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -55,17 +58,30 @@ public class ApplicationSecurityConfig{
 	}
 	*/	
 	
-	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
 	  //authenticationProvider bean definition
 	  
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setUserDetailsService(userAuthService);
-		// auth.setPasswordEncoder(passwordEncoder()); 
+		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
 	 
+	@Bean
+	public UserDetailsManager userDetailsManager() {
+		
+		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+		
+		jdbcUserDetailsManager.setDataSource(securityDataSource);
+		
+		return jdbcUserDetailsManager; 
+	}
 	
 	@Bean
 	public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
@@ -82,7 +98,7 @@ public class ApplicationSecurityConfig{
 						.antMatchers("/user-2/**").hasRole("EMPLOYEE"))
 		.formLogin(configurer ->
 			configurer.loginPage("/showMyLoginPage")
-						/* .loginProcessingUrl("/process-login") */
+					.loginProcessingUrl("/authenticateTheUser") 
 					.successHandler(myAuthenticationSuccessHandler())
 					.permitAll())
 		.logout(configurer -> 

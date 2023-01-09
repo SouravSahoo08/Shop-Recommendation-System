@@ -107,7 +107,7 @@ public class UserAuthServiceImpl implements UserAuthService{
 	public void saveCustomer(CrmCustomer crmCustomer) {
 		// TODO Auto-generated method stub
 		CustomerList customer = new CustomerList();
-		customer.setCustomerName(crmCustomer.getCutomerName());
+		customer.setCustomerName(crmCustomer.getCustomerName());
 		customer.setAge(crmCustomer.getAge());
 		customer.setPhoneNo(crmCustomer.getPhoneNo());
 		customer.setUserAddress(crmCustomer.getUserAddress());

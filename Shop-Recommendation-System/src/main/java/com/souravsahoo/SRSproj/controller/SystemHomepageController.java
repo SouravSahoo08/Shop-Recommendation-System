@@ -1,6 +1,15 @@
 package com.souravsahoo.SRSproj.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +35,11 @@ public class SystemHomepageController {
 	
 	@Autowired
 	private UserAuthService userAuthService;
+	
+	@Autowired
+	private UserDetailsManager userDetailsManager;
+	
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@GetMapping("/showMyLoginPage")
 	public String showMyLoginPage() {
@@ -62,44 +76,69 @@ public class SystemHomepageController {
 	
 	@PostMapping("/saveOwner")
 	public String saveOwner(@ModelAttribute("shop-registration-details") CrmOwner crmOwner, Model model) {
-		
-		OwnerList existingOwner = userAuthService.findByOwnerName(crmOwner.getOwnerName());
-		if(existingOwner != null) {
+
+		String ownerUsername = crmOwner.getOwnerName();
+		String encodedPassword = passwordEncoder.encode(crmOwner.getsPwd());
+		String ownerPwd = "{bcrypt}" + encodedPassword;
+
+		OwnerList existingOwner = userAuthService.findByOwnerName(ownerUsername);
+		if (existingOwner != null) {
 			model.addAttribute("shop-registration-details", new CrmOwner());
 			model.addAttribute("registrationError", "Owner already exists");
 			return "shop-register";
 		}
-		
-		
+
+		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList();
+		authorities.add(new SimpleGrantedAuthority("ROLE_OWNER"));
+		User ownerUser = new User(ownerUsername, ownerPwd, authorities);
+
+		userDetailsManager.createUser(ownerUser);
 		userAuthService.saveOwner(crmOwner);
 		return "redirect:/showMyLoginPage";
 	}
-
 	
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@ModelAttribute("customer-registration-details") CrmCustomer crmCustomer, Model model) {
-		
-		CustomerList existingCustomer = userAuthService.findByCustomerName(crmCustomer.getCutomerName());
-		if(existingCustomer!=null) {
+
+		String customerUsername = crmCustomer.getCustomerName();
+		String encodedPassword = passwordEncoder.encode(crmCustomer.getcPwd());
+		String customerPwd = "{noop}" + encodedPassword;
+
+		CustomerList existingCustomer = userAuthService.findByCustomerName(customerUsername);
+		if (existingCustomer != null) {
 			model.addAttribute("customer-registration-details", new CrmCustomer());
 			model.addAttribute("registrationError", "customer already exists");
 			return "user-register";
 		}
-		
+
+		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList();
+		authorities.add(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+		User customerUser = new User(customerUsername, customerPwd, authorities);
+
+		userDetailsManager.createUser(customerUser);
 		userAuthService.saveCustomer(crmCustomer);
 		return "redirect:/showMyLoginPage";
 	}
 
 	@PostMapping("/saveAdmin")
-	public String saveCustomer(@ModelAttribute("customer-registration-details") CrmAdmin crmAdmin, Model model) {
-		
-		AdminList existingAdmin = userAuthService.findByAdminName(crmAdmin.getAdminName());
-		if(existingAdmin!=null) {
+	public String saveAdmin(@ModelAttribute("customer-registration-details") CrmAdmin crmAdmin, Model model) {
+
+		String adminUsername = crmAdmin.getAdminName();
+		String encodedPassword = passwordEncoder.encode(crmAdmin.getaPwd());
+		String adminPwd = "{bcrypt}" + encodedPassword;
+
+		AdminList existingAdmin = userAuthService.findByAdminName(adminUsername);
+		if (existingAdmin != null) {
 			model.addAttribute("customer-registration-details", new CrmAdmin());
 			model.addAttribute("registrationError", "Admin already exists");
 			return "admin-register";
 		}
-		
+
+		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList();
+		authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		User adminUser = new User(adminUsername, adminPwd, authorities);
+
+		userDetailsManager.createUser(adminUser);
 		userAuthService.saveAdmin(crmAdmin);
 		return "redirect:/showMyLoginPage";
 	}

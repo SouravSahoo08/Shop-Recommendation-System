@@ -12,7 +12,7 @@ public class CrmCustomer {
 	public CrmCustomer() {
 	}
 
-	public String getCutomerName() {
+	public String getCustomerName() {
 		return cutomerName;
 	}
 

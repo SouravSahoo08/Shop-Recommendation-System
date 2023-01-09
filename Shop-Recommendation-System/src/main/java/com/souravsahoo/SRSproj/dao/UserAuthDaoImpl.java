@@ -28,7 +28,8 @@ public class UserAuthDaoImpl implements UserAuthDao {
 		try {
 			owner = query.getSingleResult();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("owner name > > "+owner);
+			e.getLocalizedMessage();
 			owner = null;
 		}
 

@@ -30,7 +30,7 @@ public class ApplicationAuthenticationSuccessHandler implements AuthenticationSu
 		authorities.forEach(authority -> {
 			
 			// Shop owner
-			if(authority.getAuthority().equals("ROLE_MANAGER")) {
+			if(authority.getAuthority().equals("ROLE_OWNER")) {
 				try {
 					redirectStrategy.sendRedirect(request, response, "/owner/home/items");
 				} catch (Exception e) {
