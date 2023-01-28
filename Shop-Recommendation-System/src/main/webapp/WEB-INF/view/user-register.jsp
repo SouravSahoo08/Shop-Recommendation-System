@@ -22,7 +22,7 @@
 		<div class="error">${registrationError}</div>
 	</c:if>
 
-	<form:form action="saveUser" modelAttribute="customer-registration-details" method="POST">
+	<form:form action="saveCustomer" modelAttribute="customer-registration-details" method="POST">
 		
 		<table>
 		
@@ -30,7 +30,7 @@
 			
 				<tr>
 					<td><label>Name</label></td>
-					<td><form:input path="cutomerName"/></td>
+					<td><form:input path="customerName"/></td>
 					
 				</tr>
 		

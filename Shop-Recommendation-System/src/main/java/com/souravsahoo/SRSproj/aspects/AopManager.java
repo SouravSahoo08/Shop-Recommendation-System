@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.souravsahoo.SRSproj.config.ApplicationAuthenticationFacade;
 import com.souravsahoo.SRSproj.controller.ShopController;
+import com.souravsahoo.SRSproj.controller.UserShoppingController;
 
 @Component
 @Aspect
@@ -16,8 +17,12 @@ public class AopManager {
 	private ApplicationAuthenticationFacade authenticationFacade;
 
 	@Before("execution(public String viewListOfItems(..))")
-	public void beforeViewListOfItems() {
-		ShopController.auth = authenticationFacade.getAuthentication().getName();
+	public void beforeViewListOfItemsInShopController() {
+		ShopController.instantiateUser(authenticationFacade.getAuthentication().getName());
 	}
 
+	@Before("execution(public String com.souravsahoo.SRSproj.controller.UserShoppingController.home(..))")
+	public void beforeViewListOfItemsInUserShoppingController() {
+		UserShoppingController.instantiateUser(authenticationFacade.getAuthentication().getName());
+	}
 }

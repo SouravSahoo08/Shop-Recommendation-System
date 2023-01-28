@@ -25,7 +25,8 @@ public class ShopDAOImpl implements ShopDAO {
 	public List<ShopItem> getItems(String ownerId) {
 
 		Session currentSession = sessionFactory.getCurrentSession();
-		Query<ShopItem> getItemQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId" , ShopItem.class);
+		Query<ShopItem> getItemQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId",
+				ShopItem.class);
 		getItemQuery.setParameter("oId", ownerId);
 		List<ShopItem> items = getItemQuery.getResultList();
 		return items;
@@ -63,16 +64,44 @@ public class ShopDAOImpl implements ShopDAO {
 	@Override
 	public void deleteItem(int itemId, String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		Query<?> deleteQuery = currentSession.createQuery("delete from ShopItem where itemId = :itemId and lower(ownerId) = :oId");
-		deleteQuery.setParameter("itemId", itemId);
-		deleteQuery.setParameter("oId", ownerId);
-		deleteQuery.executeUpdate();
-		//currentSession.delete(currentSession.get(ShopItem.class, itemId));
+
+		int stockCount = getStockCount(currentSession, itemId, ownerId);
+		System.out.println("LOG: Stock available >> " + stockCount);
+
+		// if stocks available is more than one then reduce the stock by 1
+		if (stockCount > 1) {
+			Query<?> updateStockQuery = currentSession.createQuery(
+					"update ShopItem set stock = :newStock " + " where itemId = :itemId and lower(ownerId) = :oId");
+			updateStockQuery.setParameter("newStock", stockCount - 1);
+			updateStockQuery.setParameter("itemId", itemId);
+			updateStockQuery.setParameter("oId", ownerId);
+			updateStockQuery.executeUpdate();
+		}
+		// else remove the entire item
+		else {
+			Query<?> deleteQuery = currentSession
+					.createQuery("delete from ShopItem where itemId = :itemId and lower(ownerId) = :oId");
+			deleteQuery.setParameter("itemId", itemId);
+			deleteQuery.setParameter("oId", ownerId);
+			deleteQuery.executeUpdate();
+
+		}
 	}
-	
+
+	private int getStockCount(Session currentSession, int itemId, String ownerId) {
+
+		Query<ShopItem> itemQuery = currentSession
+				.createQuery("from ShopItem where itemId = :itemId and lower(ownerId) = :oId", ShopItem.class);
+		itemQuery.setParameter("itemId", itemId);
+		itemQuery.setParameter("oId", ownerId);
+
+		List<ShopItem> items = itemQuery.getResultList();
+		return items.get(0).getStock();
+	}
+
 	/**
 	 * Search a particular item in list
+	 * 
 	 * @return searched items
 	 */
 	@Override
@@ -86,7 +115,7 @@ public class ShopDAOImpl implements ShopDAO {
 					"from ShopItem where lower(ownerId) = :oId and lower(itemName) like :sName or lower(itemType) like :sName",
 					ShopItem.class);
 			searchItemQuery.setParameter("sName", "%" + searchItemName.toLowerCase() + "%");
-		} else if(searchItemName == null) {
+		} else if (searchItemName == null) {
 			searchItemQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId", ShopItem.class);
 		}
 		searchItemQuery.setParameter("oId", ownerId);

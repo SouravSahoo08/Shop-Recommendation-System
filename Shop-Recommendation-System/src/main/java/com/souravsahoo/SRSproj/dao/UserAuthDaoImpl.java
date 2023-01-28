@@ -28,7 +28,7 @@ public class UserAuthDaoImpl implements UserAuthDao {
 		try {
 			owner = query.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("owner name > > "+owner);
+			System.out.println("owner name > > " + owner);
 			e.getLocalizedMessage();
 			owner = null;
 		}
@@ -62,13 +62,12 @@ public class UserAuthDaoImpl implements UserAuthDao {
 		return customer;
 	}
 
-
 	@Override
 	public void saveCustomer(CustomerList customer) {
 		Session currSession = sessionFactory.getCurrentSession();
 		currSession.saveOrUpdate(customer);
 	}
-	
+
 	@Override
 	public AdminList findByAdminName(String adminName) {
 		Session currSession = sessionFactory.getCurrentSession();
@@ -87,7 +86,6 @@ public class UserAuthDaoImpl implements UserAuthDao {
 
 		return admin;
 	}
-
 
 	@Override
 	public void saveAdmin(AdminList admin) {

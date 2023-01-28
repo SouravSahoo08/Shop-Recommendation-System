@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.souravsahoo.SRSproj.config.ApplicationAuthenticationFacade;
-import com.souravsahoo.SRSproj.config.ApplicationAuthenticationSuccessHandler;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.service.ShopService;
 
@@ -32,10 +28,14 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 
-	private String ownerId = "OWN1";
-	public static String auth;
+	private static String ownerId;
+
 	public ShopController() {
 		System.out.println("========== shop controller constructor call =========");
+	}
+
+	public static void instantiateUser(String ownerId) {
+		ShopController.ownerId = ownerId;
 	}
 
 	@InitBinder
@@ -44,17 +44,9 @@ public class ShopController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
-	/*
-	@RequestMapping("/home")
-	//@ResponseBody
-	public void instantiateUser() {
-		auth = authenticationFacade.getAuthentication().getName();
-		//return "forward:/items"; 
-	}*/
-	
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
-		System.out.println(auth);
+		System.out.println("LOG: Owner name >> " + ownerId);
 		List<ShopItem> itemList = shopService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
 

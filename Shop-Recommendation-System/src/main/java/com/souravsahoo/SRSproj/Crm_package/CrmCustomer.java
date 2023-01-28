@@ -2,7 +2,7 @@ package com.souravsahoo.SRSproj.Crm_package;
 
 public class CrmCustomer {
 
-	private String cutomerName;
+	private String customerName;
 	private int age;
 	private int phoneNo;
 	private String userAddress;
@@ -13,11 +13,11 @@ public class CrmCustomer {
 	}
 
 	public String getCustomerName() {
-		return cutomerName;
+		return customerName;
 	}
 
-	public void setCutomerName(String cutomerName) {
-		this.cutomerName = cutomerName;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
 	public int getAge() {

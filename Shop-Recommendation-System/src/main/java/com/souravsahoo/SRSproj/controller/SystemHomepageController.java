@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -23,39 +22,43 @@ import com.souravsahoo.SRSproj.Crm_package.CrmOwner;
 import com.souravsahoo.SRSproj.entity.AdminList;
 import com.souravsahoo.SRSproj.entity.CustomerList;
 import com.souravsahoo.SRSproj.entity.OwnerList;
-import com.souravsahoo.SRSproj.service.OwnerUserInfo_Service;
 import com.souravsahoo.SRSproj.service.UserAuthService;
 
 @Controller
 @RequestMapping /* ("/") */
 public class SystemHomepageController {
-
-	@Autowired
-	private OwnerUserInfo_Service ownerUserInfo;
+	
 	
 	@Autowired
 	private UserAuthService userAuthService;
-	
+
 	@Autowired
 	private UserDetailsManager userDetailsManager;
-	
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+/*
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+*/	 
+	@RequestMapping("/home")
+	public String homePage() {
+		return "home-page";
+	}
+	 
 	@GetMapping("/showMyLoginPage")
 	public String showMyLoginPage() {
 		return "loginpage";
 	}
-	
+
 	@GetMapping("/access-denied")
 	public String accessDenied() {
 		return "access-denied";
 	}
-	
-	@RequestMapping("/home-page")
-	public String homePage() {
-		return "home-page";
-	}
 
+
+	@RequestMapping("/homelogin")
+	public String homeLogin() {
+		return "home";
+	}
+	
 	@RequestMapping("/shop-register")
 	public String registerOwner(Model model) {
 		model.addAttribute("shop-registration-details", new CrmOwner());
@@ -73,13 +76,13 @@ public class SystemHomepageController {
 		model.addAttribute("customer-registration-details", new CrmAdmin());
 		return "admin-register";
 	}
-	
+
 	@PostMapping("/saveOwner")
 	public String saveOwner(@ModelAttribute("shop-registration-details") CrmOwner crmOwner, Model model) {
 
-		String ownerUsername = crmOwner.getOwnerName();
-		String encodedPassword = passwordEncoder.encode(crmOwner.getsPwd());
-		String ownerPwd = "{bcrypt}" + encodedPassword;
+		String ownerUsername = crmOwner.getsUsername();
+		//String encodedPassword = passwordEncoder.encode(crmOwner.getsPwd());
+		String ownerPwd = "{noop}"+crmOwner.getsPwd();
 
 		OwnerList existingOwner = userAuthService.findByOwnerName(ownerUsername);
 		if (existingOwner != null) {
@@ -96,13 +99,13 @@ public class SystemHomepageController {
 		userAuthService.saveOwner(crmOwner);
 		return "redirect:/showMyLoginPage";
 	}
-	
+
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@ModelAttribute("customer-registration-details") CrmCustomer crmCustomer, Model model) {
 
-		String customerUsername = crmCustomer.getCustomerName();
-		String encodedPassword = passwordEncoder.encode(crmCustomer.getcPwd());
-		String customerPwd = "{noop}" + encodedPassword;
+		String customerUsername = crmCustomer.getcUsername();
+		//String encodedPassword = passwordEncoder.encode(crmCustomer.getcPwd());
+		String customerPwd = "{noop}" + crmCustomer.getcPwd();
 
 		CustomerList existingCustomer = userAuthService.findByCustomerName(customerUsername);
 		if (existingCustomer != null) {
@@ -123,9 +126,9 @@ public class SystemHomepageController {
 	@PostMapping("/saveAdmin")
 	public String saveAdmin(@ModelAttribute("customer-registration-details") CrmAdmin crmAdmin, Model model) {
 
-		String adminUsername = crmAdmin.getAdminName();
-		String encodedPassword = passwordEncoder.encode(crmAdmin.getaPwd());
-		String adminPwd = "{bcrypt}" + encodedPassword;
+		String adminUsername = crmAdmin.getaUsername();
+		//String encodedPassword = passwordEncoder.encode(crmAdmin.getaPwd());
+		String adminPwd = "{noop}" + crmAdmin.getaPwd();
 
 		AdminList existingAdmin = userAuthService.findByAdminName(adminUsername);
 		if (existingAdmin != null) {
@@ -142,4 +145,6 @@ public class SystemHomepageController {
 		userAuthService.saveAdmin(crmAdmin);
 		return "redirect:/showMyLoginPage";
 	}
+	
+	
 }

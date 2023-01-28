@@ -96,7 +96,7 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	}
 
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
 	}
 /*
 	@Override

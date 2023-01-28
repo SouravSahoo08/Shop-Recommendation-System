@@ -74,6 +74,12 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${springsecurity.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.4</version>
+		</dependency>
 
 		<!-- JSP, JSTl, etc -->
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->

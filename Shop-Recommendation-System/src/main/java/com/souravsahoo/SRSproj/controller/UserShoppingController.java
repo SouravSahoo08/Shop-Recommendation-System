@@ -26,17 +26,19 @@ public class UserShoppingController {
 	@Autowired
 	private UserShopService userService;
 
-	private String userId="userid_1";
-	private String ownerId="OWN1";
+	private static String userId;
+	private String ownerId="sourav";
 
 	public UserShoppingController() {
 		System.out.println("========== UserShoppingController constructor call =========");
 	}
+	
+	public static void instantiateUser(String userId) {
+		UserShoppingController.userId = userId;
+	}
 
 	@RequestMapping("/home")
-	public String home(@RequestParam("uId") String uId, Model model) {
-		userId = uId;
-		System.out.println(userId);
+	public String home( Model model) {
 		List<OwnerList> owners = userService.getOwners();
 		model.addAttribute("owners", owners);
 		
@@ -44,10 +46,7 @@ public class UserShoppingController {
 	}
 
 	@GetMapping("/items")
-	public String viewListOfItems(@RequestParam("oId") String oId, Model model) {
-
-		ownerId = oId;
-		System.out.println(ownerId);
+	public String viewListOfItems(Model model) {
 		List<ShopItem> itemList = userService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
 		model.addAttribute("ownerId", ownerId);
@@ -65,6 +64,7 @@ public class UserShoppingController {
 	@GetMapping("/addItem")
 	public String addToCart(@RequestParam("itemId") int itemId) {
 
+		System.out.println("LOG: Username >> " + userId);
 		ShopItem itemDetail = userService.getItemDetail(itemId, ownerId);
 		System.out.println("UserShopController: /cart -> itemDetail ====> " + itemDetail);
 
