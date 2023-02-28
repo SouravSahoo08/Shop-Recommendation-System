@@ -6,7 +6,7 @@
 	<artifactId>Shop-Recommendation-System-v2.0</artifactId>
 	<packaging>war</packaging>
 	<version>Version 2.0</version>
-	<name>Shop-Recommendation-System Maven Webapp</name>
+	<name>Shop-Recommendation-System Maven Webapp-v2.0</name>
 	<description>
 		1) This project is developed for Final year project submission.
 		2) Tools used: Spring, Java, Mysql, Hibernate, Tomcat Server.
