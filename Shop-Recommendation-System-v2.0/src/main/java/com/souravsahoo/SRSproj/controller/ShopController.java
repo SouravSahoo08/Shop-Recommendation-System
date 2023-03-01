@@ -125,13 +125,15 @@ public class ShopController {
 
 		// ShopItem itemDetail = shopService.getItemDetail(itemId);
 		shopService.deleteItem(itemId, ownerId);
-		return "redirect:/owner/home/items";
+		return "redirect:/owner/items";
 	}
 
 	@GetMapping("search")
 	public String searchItems(@RequestParam("searchItemName") String searchItemName, Model model) {
-		List<ShopItem> shopItems = shopService.searchItem(searchItemName, ownerId);
+		List<ShopItem> shopItems = shopService.searchItem(searchItemName.toLowerCase(), ownerId);
 		model.addAttribute("shopList", shopItems);
+		OwnerList owner = userAuthService.findByOwnerName(ownerId);
+		model.addAttribute("ownerName",owner.getOwnerName());
 		return "list-item-view";
 	}
 }

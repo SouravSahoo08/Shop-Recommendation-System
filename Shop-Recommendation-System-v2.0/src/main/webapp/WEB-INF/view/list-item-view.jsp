@@ -129,51 +129,55 @@
 				<div class="my-md-4">
 					<div class="row">
 
-						<div class="col">
-							<!-- search dialogue -->
-							<form:form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
-								action="search" method="get">
-								<input type="search" class="form-control"
-									placeholder="Search item..." aria-label="Search" />
-							</form:form>
-						</div>
+						<div
+							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+							<h1 class="h2">Available stock</h1>
+							<div class="btn-toolbar mb-2 mb-md-0">
+								<form:form class="mb-3 mb-lg-0 me-lg-3" action="search"
+									method="get">
+									<input type="search" class="form-control" name="searchItemName"
+										placeholder="Search item..." aria-label="Search" />
+								</form:form>
 
-						<div class="col d-grid gap-2">
-							<input class="btn btn-primary" type="button" value="Add item"
-								onClick="window.location.href='addItemForm'; return false;" />
+								<div class="col d-grid gap-2">
+									<input class="btn btn-primary" type="button" value="Add item"
+										onClick="window.location.href='addItemForm'; return false;" />
+								</div>
+							</div>
 						</div>
 
 					</div>
 				</div>
 
-				<table class="table table-striped table-hover mt-md-4 text-center">
-
-					<tr>
-						<th>Item Name</th>
-						<th>Stock</th>
-						<th>Price</th>
-						<th>Expiry date</th>
-						<th>Action</th>
-					</tr>
-
-					<c:forEach var="item" items="${shopList}">
-						<!-- How to check for value in shopList ???? -->
+				<div class="table-responsive">
+					<table class="table table-striped table-sm table-hover mt-md-2">
 
 						<tr>
-							<td>${item.itemName}</td>
-							<td>${item.stock}</td>
-							<td>Rs. ${item.price}</td>
-							<td>${item.expDate}</td>
-							<td><a href="showItem?id=${item.itemId}">Update</a>
-								/ 
-								<a href="removeItem?id=${item.itemId}"
-								onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td>
+							<th>Item Name</th>
+							<th>Stock</th>
+							<th>Price</th>
+							<th>Expiry date</th>
+							<th>Action</th>
 						</tr>
 
+						<c:forEach var="item" items="${shopList}">
+							<!-- How to check for value in shopList ???? -->
 
-					</c:forEach>
+							<tr>
+								<td>${item.itemName}</td>
+								<td>${item.stock}</td>
+								<td>Rs. ${item.price}</td>
+								<td>${item.expDate}</td>
+								<td><a href="showItem?id=${item.itemId}">Update</a> / <a
+									href="removeItem?id=${item.itemId}"
+									onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td>
+							</tr>
 
-				</table>
+
+						</c:forEach>
+
+					</table>
+				</div>
 			</div>
 
 		</div>
