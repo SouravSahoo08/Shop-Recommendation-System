@@ -39,6 +39,7 @@ public class ShopController {
 		System.out.println("========== shop controller constructor call =========");
 	}
 
+	// called by AopManager
 	public static void instantiateUser(String ownerId) {
 		System.out.println("LOG: ownerId>> " + ownerId);
 		ShopController.ownerId = ownerId;
@@ -94,7 +95,7 @@ public class ShopController {
 
 		shopItem.setOwnerId(ownerId);
 		shopService.saveItem(shopItem);
-		return "redirect:/owner/home/items";
+		return "redirect:/owner/items";
 
 	}
 

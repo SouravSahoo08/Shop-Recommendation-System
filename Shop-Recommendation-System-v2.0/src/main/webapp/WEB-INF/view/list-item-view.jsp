@@ -82,89 +82,102 @@
 		</div>
 	</div>
 
-	<div class="container-fluid ps-0 mh-100">
+	<!-- main content -->
+	<div class="container-fluid">
 
-		<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-			style="width: 280px; height: 700px">
-			<a href="/"
-				class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-				<span class="fs-4">Welcome<br>${ownerName}!</span>
-			</a>
-			<hr>
-			<ul class="nav nav-pills flex-column mb-auto">
-				<li class="nav-item"><a href="${pageContext.request.contextPath}/owner/home" class="nav-link text-white"
-					aria-current="page"> <svg class="bi me-2" width="16"
-							height="16">
+		<!-- side nav-bar -->
+		<div class="row">
+			<div class="col-md-3 col-lg-2 d-md-block p-3 text-white bg-dark"
+				style="width: 250px; height: 533px;">
+				<a href="/"
+					class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+					<span class="fs-4">Welcome<br>${ownerName}!</span>
+				</a>
+				<hr>
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item"><a
+						href="${pageContext.request.contextPath}/owner/home"
+						class="nav-link text-white" aria-current="page"> <svg
+								class="bi me-2" width="16" height="16">
 							<use xlink:href="#home"></use></svg> Home
-				</a></li>
-				<li><a href="${pageContext.request.contextPath}/owner/items"
-					class="nav-link  active"> <svg class="bi me-2" width="16"
-							height="16">
+					</a></li>
+					<li><a href="${pageContext.request.contextPath}/owner/items"
+						class="nav-link  active"> <svg class="bi me-2" width="16"
+								height="16">
 							<use xlink:href="#speedometer2"></use></svg> Inventory
-				</a></li>
-				<li><a href="#" class="nav-link text-white"> <svg
-							class="bi me-2" width="16" height="16">
+					</a></li>
+					<li><a href="#" class="nav-link text-white"> <svg
+								class="bi me-2" width="16" height="16">
 							<use xlink:href="#table"></use></svg> Orders
-				</a></li>
-				<li><a href="#" class="nav-link text-white"> <svg
-							class="bi me-2" width="16" height="16">
+					</a></li>
+					<li><a href="#" class="nav-link text-white"> <svg
+								class="bi me-2" width="16" height="16">
 							<use xlink:href="#grid"></use></svg> Products
-				</a></li>
-				<li><a href="#" class="nav-link text-white"> <svg
-							class="bi me-2" width="16" height="16">
+					</a></li>
+					<li><a href="#" class="nav-link text-white"> <svg
+								class="bi me-2" width="16" height="16">
 							<use xlink:href="#people-circle"></use></svg> Customers
-				</a></li>
-			</ul>
-			<hr>
+					</a></li>
+				</ul>
+				<hr>
+
+			</div>
+
+			<!-- Content div -->
+			<div class="col-md-9 mx-auto">
+
+				<div class="my-md-4">
+					<div class="row">
+
+						<div class="col">
+							<!-- search dialogue -->
+							<form:form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+								action="search" method="get">
+								<input type="search" class="form-control"
+									placeholder="Search item..." aria-label="Search" />
+							</form:form>
+						</div>
+
+						<div class="col d-grid gap-2">
+							<input class="btn btn-primary" type="button" value="Add item"
+								onClick="window.location.href='addItemForm'; return false;" />
+						</div>
+
+					</div>
+				</div>
+
+				<table class="table table-striped table-hover mt-md-4 text-center">
+
+					<tr>
+						<th>Item Name</th>
+						<th>Stock</th>
+						<th>Price</th>
+						<th>Expiry date</th>
+						<th>Action</th>
+					</tr>
+
+					<c:forEach var="item" items="${shopList}">
+						<!-- How to check for value in shopList ???? -->
+
+						<tr>
+							<td>${item.itemName}</td>
+							<td>${item.stock}</td>
+							<td>Rs. ${item.price}</td>
+							<td>${item.expDate}</td>
+							<td><a href="showItem?id=${item.itemId}">Update</a>
+								/ 
+								<a href="removeItem?id=${item.itemId}"
+								onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td>
+						</tr>
+
+
+					</c:forEach>
+
+				</table>
+			</div>
 
 		</div>
-
 	</div>
-
-
-	<div class="content">
-
-		<h2>Available stock</h2>
-		<hr>
-		<br> <input type="button" value="Add item"
-			onClick="window.location.href='addItemForm'; return false;" />
-
-		<!-- search dialogue -->
-		<form:form action="search" method="get">
-		Search item: <input type="text" name="searchItemName" />
-			<input type="submit" value="Search" class="" />
-		</form:form>
-
-
-		<table border="1">
-
-			<tr>
-				<th>Item Name</th>
-				<th>Stock</th>
-				<th>Price</th>
-				<th>Expiry date</th>
-				<th>Action</th>
-			</tr>
-
-			<c:forEach var="item" items="${shopList}">
-				<!-- How to check for value in shopList ???? -->
-
-				<tr>
-					<td>${item.itemName}</td>
-					<td>${item.stock}</td>
-					<td>Rs. ${item.price}</td>
-					<td>${item.expDate}</td>
-					<td><a href="showItem?id=${item.itemId}">Update</a> / <a
-						href="removeItem?id=${item.itemId}"
-						onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td>
-				</tr>
-
-
-			</c:forEach>
-
-		</table>
-	</div>
-
 
 
 </body>
