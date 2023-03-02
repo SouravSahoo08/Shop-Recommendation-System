@@ -29,7 +29,7 @@ public class ShopController {
 
 	@Autowired
 	private ShopService shopService;
-	
+
 	@Autowired
 	private UserAuthService userAuthService;
 
@@ -50,11 +50,10 @@ public class ShopController {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-	
+
 	@RequestMapping("/home")
 	public String ownerHomePage(Model model) {
-		OwnerList owner = userAuthService.findByOwnerName(ownerId);
-		model.addAttribute("ownerName",owner.getOwnerName());
+		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "owner-home";
 	}
 
@@ -63,15 +62,14 @@ public class ShopController {
 		System.out.println("LOG: Owner name >> " + ownerId);
 		List<ShopItem> itemList = shopService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
-
-		OwnerList owner = userAuthService.findByOwnerName(ownerId);
-		model.addAttribute("ownerName",owner.getOwnerName());
+		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "list-item-view";
 	}
 
 	@GetMapping("/addItemForm")
 	public String addItemForm(Model model) {
 		model.addAttribute("item", new ShopItem());
+		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "add-item-form";
 	}
 
@@ -132,8 +130,12 @@ public class ShopController {
 	public String searchItems(@RequestParam("searchItemName") String searchItemName, Model model) {
 		List<ShopItem> shopItems = shopService.searchItem(searchItemName.toLowerCase(), ownerId);
 		model.addAttribute("shopList", shopItems);
-		OwnerList owner = userAuthService.findByOwnerName(ownerId);
-		model.addAttribute("ownerName",owner.getOwnerName());
+		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "list-item-view";
+	}
+
+	private OwnerList getOwner() {
+		OwnerList owner = userAuthService.findByOwnerName(ownerId);
+		return owner;
 	}
 }
