@@ -81,16 +81,16 @@ public class ShopController {
 	 * @return
 	 */
 	@PostMapping("/saveItem")
-	public String saveItem(@Valid @ModelAttribute("item") ShopItem shopItem, BindingResult bindingResult) {
+	public String saveItem(@Valid @ModelAttribute("item") ShopItem shopItem, BindingResult bindingResult, Model model) {
 
 		System.out.println(shopItem);
 
 		if (bindingResult.hasErrors()) {
 			System.out.println("found error");
+			model.addAttribute("ownerName", getOwner().getOwnerName());
 			return "add-item-form";
 		}
-		System.out.println("WTF!!!!!!!!");
-
+		
 		shopItem.setOwnerId(ownerId);
 		shopService.saveItem(shopItem);
 		return "redirect:/owner/items";
