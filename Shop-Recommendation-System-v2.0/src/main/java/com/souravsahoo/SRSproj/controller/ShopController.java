@@ -90,7 +90,7 @@ public class ShopController {
 			model.addAttribute("ownerName", getOwner().getOwnerName());
 			return "add-item-form";
 		}
-		
+
 		shopItem.setOwnerId(ownerId);
 		shopService.saveItem(shopItem);
 		return "redirect:/owner/items";
@@ -115,6 +115,7 @@ public class ShopController {
 		System.out.println(itemDetail.toString());
 
 		model.addAttribute("item", itemDetail);
+		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "update-item-form";
 	}
 

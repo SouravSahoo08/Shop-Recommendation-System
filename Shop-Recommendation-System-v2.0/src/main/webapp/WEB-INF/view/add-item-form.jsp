@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard</title>
+<title>New Item | Shop Recommendation System</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -160,7 +160,7 @@
 					<div class="form-floating mb-3">
 						<form:input path="stock" type="number" class="form-control"
 							id="stock" placeholder="stock" />
-						<label for="stock">Enter Available stock</label>
+						<label for="stock">Available stock</label>
 					</div>
 					<div class="row gy-2 gx-1 align-items-center">
 						<div class="col-auto">

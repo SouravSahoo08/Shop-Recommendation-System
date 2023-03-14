@@ -3,12 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard</title>
+<title>Dashboard | Shop Recommendation System</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -21,7 +21,7 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-light-subtle">
 		<div class="container-fluid">
 			<a class="navbar-brand"
 				href="${pageContext.request.contextPath}/owner/home">Shop
@@ -87,8 +87,8 @@
 
 		<!-- side nav-bar -->
 		<div class="row">
-			<div class="col-md-3 col-lg-2 d-md-block p-3 text-white bg-dark"
-				style="width: 250px; height: 533px;">
+			<div class="col-md-3 col-lg-2 d-md-block p-3 text-white bg-dark border-end border-bottom"
+				style="width: 250px; height: 600px;">
 				<a href="/"
 					class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 					<span class="fs-4">Welcome<br>${ownerName}!</span>
