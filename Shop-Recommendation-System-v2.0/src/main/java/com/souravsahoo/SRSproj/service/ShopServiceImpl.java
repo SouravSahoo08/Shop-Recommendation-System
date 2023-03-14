@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.souravsahoo.SRSproj.dao.ShopDAO;
+import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
 @Service //("shopServiceImpl")
@@ -45,6 +46,19 @@ public class ShopServiceImpl implements ShopService{
 	@Transactional
 	public List<ShopItem> searchItem(String searchItemName,String ownerId) {
 		return shopDao.searchItem(searchItemName, ownerId);
+	}
+
+	@Override
+	@Transactional
+	public void addItemToCart(ShopItem itemDetail, String ownerId) {
+		shopDao.addItemToCart(itemDetail, ownerId);
+	}
+
+	@Override
+	@Transactional
+	public List<OwnerCartItem> showCart(String ownerId) {
+		// TODO Auto-generated method stub
+		return shopDao.showCart(ownerId);
 	}
 
 }

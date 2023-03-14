@@ -2,6 +2,7 @@ package com.souravsahoo.SRSproj.service;
 
 import java.util.List;
 
+import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
 public interface ShopService {
@@ -15,5 +16,9 @@ public interface ShopService {
 	void deleteItem(int itemId, String ownerId);
 
 	List<ShopItem> searchItem(String searchItemName, String ownerId);
+
+	void addItemToCart(ShopItem itemDetail, String ownerId);
+
+	List<OwnerCartItem> showCart(String ownerId);
 
 }

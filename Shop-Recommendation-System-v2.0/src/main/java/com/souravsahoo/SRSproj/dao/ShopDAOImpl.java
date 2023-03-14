@@ -8,7 +8,9 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.ShopItem;
+import com.souravsahoo.SRSproj.entity.UserCartItem;
 
 @Repository
 public class ShopDAOImpl implements ShopDAO {
@@ -125,4 +127,83 @@ public class ShopDAOImpl implements ShopDAO {
 		return searchedItemList;
 	}
 
+	@Override
+	public void addItemToCart(ShopItem itemDetail, String ownerId) {
+		// TODO Auto-generated method stub
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		boolean isItemPresent = checkIfItemPresent(currentSession, ownerId, itemDetail.getItemId());
+
+		if (isItemPresent) {
+			int quantity = updateQuantity(currentSession, ownerId, itemDetail.getItemId(), 1);
+			Query<?> updateItemQuery = currentSession.createQuery(
+					"update OwnerCartItem set quantity = :oQuant where lower(ownerId) = :oId and itemId = :oItemId");
+
+			updateItemQuery.setParameter("oQuant", quantity);
+			updateItemQuery.setParameter("oId", ownerId.toLowerCase());
+			updateItemQuery.setParameter("oItemId", itemDetail.getItemId());
+			updateItemQuery.executeUpdate();
+
+		} else {
+			OwnerCartItem cartItem = new OwnerCartItem();
+			cartItem.setOwnerId(ownerId);
+			cartItem.setItemId(itemDetail.getItemId());
+			cartItem.setItemType(itemDetail.getItemType());
+			cartItem.setItemName(itemDetail.getItemName());
+			cartItem.setItemPrice(itemDetail.getPrice());
+			cartItem.setQuantity(1);
+			cartItem.setExpDate(itemDetail.getExpDate());
+
+			System.out.println("ShoppingDao: addItemToCart ====> " + cartItem);
+			currentSession.save(cartItem);
+		}
+
+	}
+	
+	private boolean checkIfItemPresent(Session currentSession, String ownerId, int itemId) {
+
+		Query<OwnerCartItem> checkItemQuery = currentSession.createQuery(
+				"from OwnerCartItem where " + "lower(ownerId) = :oId " + "and itemId = :oItemId order by quantity",
+				OwnerCartItem.class);
+		checkItemQuery.setParameter("oId", ownerId.toLowerCase());
+		checkItemQuery.setParameter("oItemId", itemId);
+		List<OwnerCartItem> foundItemInCart = checkItemQuery.getResultList();
+		System.out.println("\n\ncart list ===> " + foundItemInCart);
+		if (foundItemInCart.isEmpty()) {
+			// if same itemId item is not present
+			return false;
+		}
+
+		return true;
+	}
+
+	private int updateQuantity(Session currentSession, String ownerId, int itemId, int changeBy) {
+
+		int quantity;
+
+		String query = "from OwnerCartItem where lower(ownerId) = :oId and itemId = :oItemId";
+		Query<OwnerCartItem> quantityQuery = currentSession.createQuery(query, OwnerCartItem.class);
+		quantityQuery.setParameter("oId", ownerId.toLowerCase());
+		quantityQuery.setParameter("oItemId", itemId);
+
+		List<OwnerCartItem> itemWithMaxQuantity = quantityQuery.getResultList();
+		System.out.println("\n\nitemWithMaxQuantity ===> " + itemWithMaxQuantity);
+
+		OwnerCartItem item = itemWithMaxQuantity.get(0);
+		quantity = item.getQuantity() + changeBy;
+		System.out.println("Quantity : " + quantity);
+
+		return quantity;
+	}
+
+	@Override
+	public List<OwnerCartItem> showCart(String ownerId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<OwnerCartItem> createQuery = currentSession.createQuery("from OwnerCartItem where lower(ownerId) = :oId",
+				OwnerCartItem.class);
+		createQuery.setParameter("oId", ownerId);
+		List<OwnerCartItem> items = createQuery.getResultList();
+
+		return items;
+	}
 }

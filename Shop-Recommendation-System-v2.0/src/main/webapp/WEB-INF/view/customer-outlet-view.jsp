@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
-<html>
+<html lang="en" data-bs-theme="light">
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>New Item | Shop Recommendation System</title>
+<title>Dashboard | Shop Recommendation System</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -110,7 +112,7 @@
 					</a></li>
 
 					<li><a href="${pageContext.request.contextPath}/owner/items"
-						class="nav-link  active"> <svg
+						class="nav-link text-white"> <svg
 								xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-inboxes-fill"
 								viewBox="0 0 16 16">
@@ -118,8 +120,10 @@
 									d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1H4.98zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374L3.81.563zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z" />
 						</svg> Inventory
 					</a></li>
-					
-					<li><a href="${pageContext.request.contextPath}/owner/customer-outlet" class="nav-link text-white"> <svg
+
+					<li><a
+						href="${pageContext.request.contextPath}/owner/customer-outlet"
+						class="nav-link active"> <svg
 								xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
   						<path
@@ -139,53 +143,69 @@
 
 						<div
 							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-							<h1 class="h2">Add new item</h1>
+							<h1 class="h2">Available stock</h1>
+							<div class="btn-toolbar mb-2 mb-md-0">
+								<form:form class="mb-3 mb-lg-0 me-lg-3" action="search"
+									method="get">
+									<input type="search" class="form-control" name="searchItemName"
+										placeholder="Search item..." aria-label="Search" />
+								</form:form>
+
+								<div class="col d-grid gap-2">
+									<input class="btn btn-primary" type="button" value="Cart"
+										onClick="window.location.href='.....'; return false;" />
+								</div>
+							</div>
 						</div>
 
 					</div>
 				</div>
 
-				<!-- add item form -->
-				<form:form action="saveItem" modelAttribute="item" method="POST">
-					<div class="form-floating mb-3">
-						<form:input path="itemType" type="text" class="form-control"
-							id="itemType" placeholder="Milk" />
-						<label for="itemType">Item type</label>
-					</div>
-					<div class="form-floating mb-3">
-						<form:input path="itemName" type="text" class="form-control"
-							id="itemName" placeholder="Omfed" />
-						<label for="itemName">Item Name</label>
-					</div>
-					<div class="form-floating mb-3">
-						<form:input path="price" type="number" class="form-control"
-							id="itemPrice" placeholder="Rs 32.00" />
-						<label for="itemPrice">Item price</label>
-					</div>
-					<div class="form-floating mb-3">
-						<form:input path="expDate" type="date" class="form-control"
-							id="expDate" placeholder="DD-MM-YYYY" />
-						<label for="expDate">Expiry date</label>
-					</div>
-					<div class="form-floating mb-3">
-						<form:input path="stock" type="number" class="form-control"
-							id="stock" placeholder="stock" />
-						<label for="stock">Available stock</label>
-					</div>
-					<div class="row gy-2 gx-1 align-items-center">
-						<div class="col-auto">
-							<button type="submit" class="btn btn-primary">Add</button>
-						</div>
-						<div class="col-auto">
-							<a class="btn btn-danger" href="items">Cancel</a>
-						</div>
-					</div>
-				</form:form>
+				<div class="table-responsive">
+					<table class="table table-striped table-sm table-hover mt-md-2">
 
+						<tr>
+							<th>Item Name</th>
+							<th>Price</th>
+							<th>Expiry date</th>
+							<th>Action</th>
+							<th>Count</th>
+						</tr>
+
+						<c:forEach var="item" items="${shopList}" varStatus="status">
+							<!-- How to check for value in shopList ???? -->
+							<c:set var="cartItem" value="${cartItems[status.index]}" />
+							<tr>
+								<td>${item.itemName}</td>
+								<td>Rs. ${item.price}</td>
+								<td>${item.expDate}</td>
+								<td>
+								<a href="${pageContext.request.contextPath}/owner/addItem?itemId=${item.itemId}"><svg xmlns="http://www.w3.org/2000/svg" width="27"
+											height="27" fill="#23a103" class="bi bi-plus-circle-fill"
+											viewBox="0 0 16 16">
+  										<path
+												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+									</svg> </a>
+
+								</td>
+
+								<%-- <td><a href="showItem?id=${item.itemId}">Update</a> / <a
+									href="removeItem?id=${item.itemId}"
+									onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td> --%>
+									
+								<td>${cartItem.quantity}</td>
+							</tr>
+
+
+						</c:forEach>
+
+					</table>
+				</div>
 			</div>
 
 		</div>
 	</div>
+
 
 </body>
 </html>

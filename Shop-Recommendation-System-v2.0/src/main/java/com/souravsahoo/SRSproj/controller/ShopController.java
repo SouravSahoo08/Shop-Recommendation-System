@@ -1,5 +1,6 @@
 package com.souravsahoo.SRSproj.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.OwnerList;
 import com.souravsahoo.SRSproj.entity.ShopItem;
+import com.souravsahoo.SRSproj.entity.UserCartItem;
 import com.souravsahoo.SRSproj.service.ShopService;
 import com.souravsahoo.SRSproj.service.UserAuthService;
 
@@ -138,5 +141,41 @@ public class ShopController {
 	private OwnerList getOwner() {
 		OwnerList owner = userAuthService.findByOwnerName(ownerId);
 		return owner;
+	}
+
+	// customer outlet functionalities
+
+	@GetMapping("customer-outlet")
+	public String customerOutlet(Model model) {
+		model.addAttribute("ownerName", getOwner().getOwnerName());
+
+		List<ShopItem> itemList = shopService.getItems(ownerId);
+		model.addAttribute("shopList", itemList);
+
+		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
+		model.addAttribute("cartItems", cartItems);
+
+
+		/*
+		 * List<Object[]> combinedModels = new ArrayList<>(); for(ShopItem itemVar :
+		 * itemList) { for(OwnerCartItem cartVar : cartItems) { if(itemVar.getItemId()
+		 * == cartVar.getItemId()) { Object[] combinedData = new Object[4];
+		 * combinedData[0] = itemVar.getItemName(); combinedData[1] =
+		 * itemVar.getPrice(); combinedData[2] = itemVar.getExpDate(); combinedData[3] =
+		 * cartVar.getQuantity(); combinedModels.add(combinedData); } } }
+		 * 
+		 * model.addAttribute("combinedModel", combinedModels);
+		 */
+		return "customer-outlet-view";
+	}
+
+	@GetMapping("/addItem")
+	public String addToCart(@RequestParam("itemId") int itemId) {
+
+		ShopItem itemDetail = shopService.getItemDetail(itemId, ownerId);
+		System.out.println("ShopController: /cart -> itemDetail ====> " + itemDetail);
+
+		shopService.addItemToCart(itemDetail, ownerId);
+		return "redirect:/owner/customer-outlet";
 	}
 }
