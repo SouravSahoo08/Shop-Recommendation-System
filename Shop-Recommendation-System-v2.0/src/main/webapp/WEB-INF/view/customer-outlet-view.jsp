@@ -8,7 +8,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard | Shop Recommendation System</title>
+<title>Customer Outlet | Shop Recommendation System</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -145,22 +145,22 @@
 							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 							<h1 class="h2">Available stock</h1>
 							<div class="btn-toolbar mb-2 mb-md-0">
-								<form:form class="mb-3 mb-lg-0 me-lg-3" action="search"
+								<form:form class="mb-3 mb-lg-0 me-lg-1"
+									style="width: 400px; height: 40px"
+									action="${pageContext.request.contextPath}/owner/search"
 									method="get">
 									<input type="search" class="form-control" name="searchItemName"
 										placeholder="Search item..." aria-label="Search" />
+									<input type="hidden" name="page" value="customer-outlet-view" />
 								</form:form>
 
-								<div class="col d-grid gap-2">
-									<input class="btn btn-primary" type="button" value="Cart"
-										onClick="window.location.href='.....'; return false;" />
-								</div>
 							</div>
 						</div>
 
 					</div>
 				</div>
 
+				<c:set var="sum" value="0"></c:set>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm table-hover mt-md-2">
 
@@ -174,21 +174,21 @@
 
 						<c:forEach var="item" items="${combinedModel}">
 							<!-- How to check for value in shopList ???? -->
-							
+							<c:set var="sum" value="${sum + item.itemPrice * item.quantity }"></c:set>
 							<tr>
 								<td>${item.itemName}</td>
 								<td>Rs. ${item.itemPrice}</td>
 								<td>${item.itemExpiryDate}</td>
-								<td>
-								<a href="${pageContext.request.contextPath}/owner/addItem?itemId=${item.itemId}"><svg xmlns="http://www.w3.org/2000/svg" width="27"
-											height="27" fill="#23a103" class="bi bi-plus-circle-fill"
+								<td><a
+									href="${pageContext.request.contextPath}/owner/cart-addItem?itemId=${item.itemId}"><svg
+											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
+											fill="#23a103" class="bi bi-plus-circle-fill"
 											viewBox="0 0 16 16">
   										<path
 												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-									</svg> </a>
-
-								<a
-									href="${pageContext.request.contextPath}/owner/removeItem?itemId=${item.itemId}"><svg
+									</svg> </a> 
+									<a
+									href="${pageContext.request.contextPath}/owner/cart-removeItem?itemId=${item.itemId}"><svg
 											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
 											fill="#de0202" class="bi bi-dash-circle-fill"
 											viewBox="0 0 16 16">
@@ -200,7 +200,7 @@
 								<%-- <td><a href="showItem?id=${item.itemId}">Update</a> / <a
 									href="removeItem?id=${item.itemId}"
 									onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td> --%>
-									
+
 								<td>${item.quantity}</td>
 							</tr>
 
@@ -209,11 +209,19 @@
 
 					</table>
 				</div>
+
+				<div class="d-flex flex-row justify-content-end p-2">
+					<p class="h3 mx-4 mt-1">Total: Rs ${sum}</p>
+
+					<input class="btn btn-primary" style="width: 100px; height: 40px"
+						type="button" value="Go to Cart"
+						onClick="window.location.href='.....'; return false;" />
+
+				</div>
 			</div>
 
 		</div>
 	</div>
-
 
 </body>
 </html>

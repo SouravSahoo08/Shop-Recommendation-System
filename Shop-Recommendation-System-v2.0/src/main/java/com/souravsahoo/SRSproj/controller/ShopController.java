@@ -23,7 +23,6 @@ import com.souravsahoo.SRSproj.entity.CombinedDataModel;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.OwnerList;
 import com.souravsahoo.SRSproj.entity.ShopItem;
-import com.souravsahoo.SRSproj.entity.UserCartItem;
 import com.souravsahoo.SRSproj.service.ShopService;
 import com.souravsahoo.SRSproj.service.UserAuthService;
 
@@ -43,24 +42,30 @@ public class ShopController {
 		System.out.println("========== shop controller constructor call =========");
 	}
 
-	// called by AopManager
-	public static void instantiateUser(String ownerId) {
-		System.out.println("LOG: ownerId>> " + ownerId);
-		ShopController.ownerId = ownerId;
-	}
-
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 
+	/**
+	 * shows homepage of shopkeeper accont
+	 * 
+	 * @param model
+	 * @return owner-home jsp page
+	 */
 	@RequestMapping("/home")
 	public String ownerHomePage(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "owner-home";
 	}
 
+	/**
+	 * shows list of available items
+	 * 
+	 * @param model
+	 * @return list-item-view jsp page
+	 */
 	@RequestMapping("/items")
 	public String viewListOfItems(Model model) {
 		System.out.println("LOG: Owner name >> " + ownerId);
@@ -70,6 +75,12 @@ public class ShopController {
 		return "list-item-view";
 	}
 
+	/**
+	 * Shows add item form page
+	 * 
+	 * @param model
+	 * @return add-item-form jsp page
+	 */
 	@GetMapping("/addItemForm")
 	public String addItemForm(Model model) {
 		model.addAttribute("item", new ShopItem());
@@ -123,41 +134,110 @@ public class ShopController {
 		return "update-item-form";
 	}
 
+	/**
+	 * removes item from the stock
+	 * 
+	 * @param itemId
+	 * @param model
+	 * @return stock item view page
+	 */
 	@GetMapping("removeItem")
 	public String removeItem(@RequestParam("id") int itemId, Model model) {
-
-		// ShopItem itemDetail = shopService.getItemDetail(itemId);
 		shopService.deleteItem(itemId, ownerId);
 		return "redirect:/owner/items";
 	}
 
+	/**
+	 * searches the particular item from the available stock
+	 * 
+	 * @param searchItemName
+	 * @param page
+	 * @param model
+	 * @return view page according to the page parameter passed.
+	 */
 	@GetMapping("search")
-	public String searchItems(@RequestParam("searchItemName") String searchItemName, Model model) {
+	public String searchItems(@RequestParam("searchItemName") String searchItemName,
+			@RequestParam(value = "page", required = false) String page, Model model) {
 		List<ShopItem> shopItems = shopService.searchItem(searchItemName.toLowerCase(), ownerId);
 		model.addAttribute("shopList", shopItems);
 		model.addAttribute("ownerName", getOwner().getOwnerName());
-		return "list-item-view";
+
+		if ("customer-outlet-view".equals(page)) {
+			manage_combinedModel(model, shopItems);
+			return "customer-outlet-view";
+		} else {
+			return "list-item-view";
+		}
 	}
 
-	private OwnerList getOwner() {
-		OwnerList owner = userAuthService.findByOwnerName(ownerId);
-		return owner;
-	}
+	/* *********** customer outlet functionalities ************ */
 
-	// customer outlet functionalities
-
+	/**
+	 * Shows customer outlet page
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("customer-outlet")
 	public String customerOutlet(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
 		List<ShopItem> itemList = shopService.getItems(ownerId);
-		model.addAttribute("shopList", itemList);
+		manage_combinedModel(model, itemList);
+		return "customer-outlet-view";
+	}
 
+	/**
+	 * adds item to cart of customer outlet
+	 * 
+	 * @param itemId
+	 * @return customer-outlet jsp-page
+	 */
+	@GetMapping("/cart-addItem")
+	public String addToCart(@RequestParam("itemId") int itemId) {
+
+		ShopItem itemDetail = shopService.getItemDetail(itemId, ownerId);
+		System.out.println("ShopController: /cart -> itemDetail ====> " + itemDetail);
+
+		shopService.addItemToCart(itemDetail, ownerId);
+		return "redirect:/owner/customer-outlet";
+	}
+
+	/**
+	 * removes item from cart of customer outlet
+	 * 
+	 * @param itemId
+	 * @return customer-outlet jsp-page
+	 */
+	@GetMapping("cart-removeItem")
+	public String removeItemFromCart(@RequestParam("itemId") int itemId) {
+		shopService.removeItemFromCart(ownerId, itemId);
+		return "redirect:/owner/customer-outlet";
+	}
+
+	/* ************* Utilities ***************** */
+
+	/**
+	 * called by AopManager for initializing ownerid
+	 * 
+	 * @param ownerId
+	 */
+	public static void instantiateUser(String ownerId) {
+		System.out.println("LOG: ownerId>> " + ownerId);
+		ShopController.ownerId = ownerId;
+	}
+
+	/**
+	 * handles merge of datas from ShopItem and OwnerCart and create a combined
+	 * model
+	 * 
+	 * @param model
+	 * @param shopItems
+	 */
+	private void manage_combinedModel(Model model, List<ShopItem> shopItems) {
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
-		model.addAttribute("cartItems", cartItems);
-
 		List<CombinedDataModel> combinedModels = new ArrayList<>();
-		for (ShopItem itemVar : itemList) {
+		for (ShopItem itemVar : shopItems) {
 			CombinedDataModel combinedData = new CombinedDataModel();
 			combinedData.setItemId(itemVar.getItemId());
 			combinedData.setItemName(itemVar.getItemName());
@@ -172,16 +252,16 @@ public class ShopController {
 		}
 
 		model.addAttribute("combinedModel", combinedModels);
-		return "customer-outlet-view";
 	}
 
-	@GetMapping("/addItem")
-	public String addToCart(@RequestParam("itemId") int itemId) {
-
-		ShopItem itemDetail = shopService.getItemDetail(itemId, ownerId);
-		System.out.println("ShopController: /cart -> itemDetail ====> " + itemDetail);
-
-		shopService.addItemToCart(itemDetail, ownerId);
-		return "redirect:/owner/customer-outlet";
+	/**
+	 * returns owner
+	 * 
+	 * @return OwnerList
+	 */
+	private OwnerList getOwner() {
+		OwnerList owner = userAuthService.findByOwnerName(ownerId);
+		return owner;
 	}
+
 }

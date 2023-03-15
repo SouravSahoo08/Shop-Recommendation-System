@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.ShopItem;
-import com.souravsahoo.SRSproj.entity.UserCartItem;
 
 @Repository
 public class ShopDAOImpl implements ShopDAO {
@@ -159,7 +158,49 @@ public class ShopDAOImpl implements ShopDAO {
 		}
 
 	}
+
+	@Override
+	public List<OwnerCartItem> showCart(String ownerId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<OwnerCartItem> createQuery = currentSession.createQuery("from OwnerCartItem where lower(ownerId) = :oId",
+				OwnerCartItem.class);
+		createQuery.setParameter("oId", ownerId);
+		List<OwnerCartItem> items = createQuery.getResultList();
+
+		return items;
+	}
+
+	@Override
+	public void removeItemFromCart(String ownerId, int itemId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		Query<OwnerCartItem> getItemQuery = currentSession.createQuery(
+				"from OwnerCartItem where lower(ownerId) = :oId and itemId = :oItemId", OwnerCartItem.class);
+		getItemQuery.setParameter("oId", ownerId.toLowerCase());
+		getItemQuery.setParameter("oItemId", itemId);
+
+		List<OwnerCartItem> itemList = getItemQuery.getResultList();
+		System.out.println("\n\nitemList ===> " + itemList);
+
+		OwnerCartItem item = itemList.get(0);
+
+		if (item.getQuantity() > 1)
+			item.setQuantity(updateQuantity(currentSession, ownerId, itemId, -1));
+		else
+			currentSession.delete(item);
+	}
+
 	
+	/* ************** Utilities ****************** */
+	
+	/**
+	 * checks if the item is present in @OwnerCartItem
+	 * 
+	 * @param currentSession
+	 * @param ownerId
+	 * @param itemId
+	 * @return boolean
+	 */
 	private boolean checkIfItemPresent(Session currentSession, String ownerId, int itemId) {
 
 		Query<OwnerCartItem> checkItemQuery = currentSession.createQuery(
@@ -177,6 +218,15 @@ public class ShopDAOImpl implements ShopDAO {
 		return true;
 	}
 
+	/**
+	 * updates the quantity of stock based on changeBy value
+	 * 
+	 * @param currentSession
+	 * @param ownerId
+	 * @param itemId
+	 * @param changeBy
+	 * @return changes quantity
+	 */
 	private int updateQuantity(Session currentSession, String ownerId, int itemId, int changeBy) {
 
 		int quantity;
@@ -194,16 +244,5 @@ public class ShopDAOImpl implements ShopDAO {
 		System.out.println("Quantity : " + quantity);
 
 		return quantity;
-	}
-
-	@Override
-	public List<OwnerCartItem> showCart(String ownerId) {
-		Session currentSession = sessionFactory.getCurrentSession();
-		Query<OwnerCartItem> createQuery = currentSession.createQuery("from OwnerCartItem where lower(ownerId) = :oId",
-				OwnerCartItem.class);
-		createQuery.setParameter("oId", ownerId);
-		List<OwnerCartItem> items = createQuery.getResultList();
-
-		return items;
 	}
 }

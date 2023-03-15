@@ -21,4 +21,6 @@ public interface ShopDAO {
 
 	List<OwnerCartItem> showCart(String ownerId);
 
+	void removeItemFromCart(String ownerId, int itemId);
+
 }

@@ -61,4 +61,11 @@ public class ShopServiceImpl implements ShopService{
 		return shopDao.showCart(ownerId);
 	}
 
+	@Override
+	@Transactional
+	public void removeItemFromCart(String ownerId, int itemId) {
+		// TODO Auto-generated method stub
+		shopDao.removeItemFromCart(ownerId, itemId);
+	}
+
 }
