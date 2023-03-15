@@ -172,13 +172,13 @@
 							<th>Count</th>
 						</tr>
 
-						<c:forEach var="item" items="${shopList}" varStatus="status">
+						<c:forEach var="item" items="${combinedModel}">
 							<!-- How to check for value in shopList ???? -->
-							<c:set var="cartItem" value="${cartItems[status.index]}" />
+							
 							<tr>
 								<td>${item.itemName}</td>
-								<td>Rs. ${item.price}</td>
-								<td>${item.expDate}</td>
+								<td>Rs. ${item.itemPrice}</td>
+								<td>${item.itemExpiryDate}</td>
 								<td>
 								<a href="${pageContext.request.contextPath}/owner/addItem?itemId=${item.itemId}"><svg xmlns="http://www.w3.org/2000/svg" width="27"
 											height="27" fill="#23a103" class="bi bi-plus-circle-fill"
@@ -187,13 +187,21 @@
 												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
 									</svg> </a>
 
+								<a
+									href="${pageContext.request.contextPath}/owner/removeItem?itemId=${item.itemId}"><svg
+											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
+											fill="#de0202" class="bi bi-dash-circle-fill"
+											viewBox="0 0 16 16">
+  										<path
+												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+									</svg> </a>
 								</td>
 
 								<%-- <td><a href="showItem?id=${item.itemId}">Update</a> / <a
 									href="removeItem?id=${item.itemId}"
 									onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td> --%>
 									
-								<td>${cartItem.quantity}</td>
+								<td>${item.quantity}</td>
 							</tr>
 
 

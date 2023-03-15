@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.souravsahoo.SRSproj.entity.CombinedDataModel;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.OwnerList;
 import com.souravsahoo.SRSproj.entity.ShopItem;
@@ -155,17 +156,22 @@ public class ShopController {
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 		model.addAttribute("cartItems", cartItems);
 
+		List<CombinedDataModel> combinedModels = new ArrayList<>();
+		for (ShopItem itemVar : itemList) {
+			CombinedDataModel combinedData = new CombinedDataModel();
+			combinedData.setItemId(itemVar.getItemId());
+			combinedData.setItemName(itemVar.getItemName());
+			combinedData.setItemPrice(itemVar.getPrice());
+			combinedData.setItemExpiryDate(itemVar.getExpDate());
+			for (OwnerCartItem cartVar : cartItems) {
+				if (itemVar.getItemId() == cartVar.getItemId()) {
+					combinedData.setQuantity(cartVar.getQuantity());
+				}
+			}
+			combinedModels.add(combinedData);
+		}
 
-		/*
-		 * List<Object[]> combinedModels = new ArrayList<>(); for(ShopItem itemVar :
-		 * itemList) { for(OwnerCartItem cartVar : cartItems) { if(itemVar.getItemId()
-		 * == cartVar.getItemId()) { Object[] combinedData = new Object[4];
-		 * combinedData[0] = itemVar.getItemName(); combinedData[1] =
-		 * itemVar.getPrice(); combinedData[2] = itemVar.getExpDate(); combinedData[3] =
-		 * cartVar.getQuantity(); combinedModels.add(combinedData); } } }
-		 * 
-		 * model.addAttribute("combinedModel", combinedModels);
-		 */
+		model.addAttribute("combinedModel", combinedModels);
 		return "customer-outlet-view";
 	}
 
