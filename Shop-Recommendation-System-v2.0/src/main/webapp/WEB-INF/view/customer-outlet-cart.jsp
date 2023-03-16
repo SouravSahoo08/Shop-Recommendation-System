@@ -18,7 +18,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
-	
+
 </head>
 <body>
 
@@ -139,87 +139,79 @@
 			<!-- Content div -->
 			<div class="col-md-9 mx-auto">
 
-				<div class="my-md-4">
-					<div class="row">
-
-						<div
-							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-							<h1 class="h2">Available stock</h1>
-							<div class="btn-toolbar mb-2 mb-md-0">
-								<form:form class="mb-3 mb-lg-0 me-lg-1"
-									style="width: 400px; height: 40px"
-									action="${pageContext.request.contextPath}/owner/search"
-									method="get">
-									<input type="search" class="form-control" name="searchItemName"
-										placeholder="Search item..." aria-label="Search" />
-									<input type="hidden" name="page" value="customer-outlet-view" />
-								</form:form>
-
-							</div>
-						</div>
-
-					</div>
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+					<h1 class="h2">Customer's cart</h1>
 				</div>
 
-				<c:set var="sum" value="0"></c:set>
-				<div class="table-responsive">
-					<table class="table table-striped table-sm table-hover mt-md-2">
+				<form:form action="${pageContext.request.contextPath}/owner/place-order" modelAttribute="shipmentDataModel" method="POST">
+					<div class="mb-3" style="width: 470px">
+						<label for="customerName">Customer name</label>
+						<form:input id="customerName" path="customerName" type="text"
+							class="form-control" />
+					</div>
+					<div style="width: 470px">
+						<label for="contactNo">Contact number</label>
+						<form:input id="contactNo" path="contactNo" type="number"
+							class="form-control" />
+					</div>
 
-						<tr>
-							<th>Item Name</th>
-							<th>Price</th>
-							<th>Expiry date</th>
-							<th>Action</th>
-							<th>Count</th>
-						</tr>
+					<div
+						class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
+						<h1 class="h5">Ordered Items</h1>
+					</div>
 
-						<c:forEach var="item" items="${combinedModel}">
-							<!-- How to check for value in shopList ???? -->
-							<c:set var="sum" value="${sum + item.itemPrice * item.quantity }"></c:set>
+					<c:set var="sum" value="0"></c:set>
+					<div class="table-responsive">
+
+						<table class="table table-striped table-sm table-hover mt-md-2">
 							<tr>
-								<td>${item.itemName}</td>
-								<td>Rs. ${item.itemPrice}</td>
-								<td>${item.itemExpiryDate}</td>
-								<td><a
-									href="${pageContext.request.contextPath}/owner/cart-addItem?itemId=${item.itemId}"><svg
-											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
-											fill="#23a103" class="bi bi-plus-circle-fill"
-											viewBox="0 0 16 16">
-  										<path
-												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-									</svg> </a> 
-									<a
-									href="${pageContext.request.contextPath}/owner/cart-removeItem?itemId=${item.itemId}"><svg
-											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
-											fill="#de0202" class="bi bi-dash-circle-fill"
-											viewBox="0 0 16 16">
-  										<path
-												d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
-									</svg> </a>
-								</td>
-
-								<%-- <td><a href="showItem?id=${item.itemId}">Update</a> / <a
-									href="removeItem?id=${item.itemId}"
-									onClick="if(!(confirm('Are you sure you want to delete this item?'))) return false">Remove</a></td> --%>
-
-								<td>${item.quantity}</td>
+								<th>Item Name</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Expiry date</th>
+								<th>Amount</th>
 							</tr>
 
+							<c:forEach var="item" items="${cartModel}">
+								<c:set var="sum" value="${sum + item.itemPrice * item.quantity }"></c:set>
+								<tr>
+									<td>${item.itemName}</td>
+									<td>${item.itemPrice}</td>
+									<td>${item.quantity}</td>
+									<td>${item.expDate}</td>
+									<td>${Math.round(item.itemPrice * item.quantity*100)/100.0}</td>
+								</tr>
+							</c:forEach>
+						</table>
 
-						</c:forEach>
+						<div class="d-flex flex-row justify-content-end p-1">
+							<p class="h4 mx-5 mt-2">Total: Rs ${sum}</p>
+						</div>
+					</div>
+					<hr>
+					<div class="mb-4" style="height: 200px; width: 470px">
+						<label for="address">Address</label>
+						<form:input id="address" path="address" type="text"
+							class="form-control h-100" />
+					</div>
+					<div style="width: 470px">
+						<label for="pincode">Pincode</label>
+						<form:input id="pincode" path="pincode" type="number"
+							class="form-control" />
+					</div>
 
-					</table>
-				</div>
+					<hr>
+					<div class="d-flex flex-row justify-content-end mt-2">
+						<p class="h3 mx-5 mt-1">Recieve: Rs ${sum}</p>
 
-				<div class="d-flex flex-row justify-content-end p-2">
-					<p class="h3 mx-4 mt-1">Total: Rs ${sum}</p>
+						<button id="checkout" class="btn btn-success"
+							style="width: 260px; height: 40px" type="submit">
+							Place Order </button>
 
-					<a id="checkout" class="btn btn-primary"
-						style="width: 100px; height: 40px" type="button"
-						href="${pageContext.request.contextPath}/owner/cart-details">
-						Go to cart </a>
+					</div>
+				</form:form>
 
-				</div>
 			</div>
 
 		</div>
@@ -228,20 +220,17 @@
 </body>
 
 <script type="text/javascript">
-	
-	function isCartEmpty(sum){
-		 
+	function isCartEmpty(sum) {
+
 		var checkOutButton = document.getElementById("checkout");
-		if(sum==0){
+		if (sum == 0) {
 			alert("Cart is empty.. add more items.")
 			checkOutButton.disabled = true;
-		}
-		else{
+		} else {
 			checkOutButton.disabled = false;
 		}
-		
-	} 
-	
+
+	}
 </script>
 
 </html>

@@ -20,6 +20,9 @@ public class Orders {
 	@Column(name = "item_id")
 	private int itemId;
 
+	@Column(name = "item_type")
+	private String itemType;
+
 	@Column(name = "item_name")
 	private String itemName;
 
@@ -43,12 +46,13 @@ public class Orders {
 
 	}
 
-	public Orders(int orderId, String ownerId, String userId, int itemId, String itemName, double price, int quantity,
+	public Orders(int orderId, String ownerId, String userId, int itemId, String itemType, String itemName, double price, int quantity,
 			String expDate, String orderDate) {
 		super();
 		this.orderNo = orderId;
 		this.ownerId = ownerId;
 		this.userId = userId;
+		this.itemType = itemType;
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.price = price;
@@ -87,6 +91,14 @@ public class Orders {
 
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(String itemType) {
+		this.itemType = itemType;
 	}
 
 	public String getItemName() {
