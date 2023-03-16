@@ -1,6 +1,5 @@
 package com.souravsahoo.SRSproj.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -9,9 +8,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.souravsahoo.SRSproj.entity.Orders;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
-import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
 @Repository
@@ -193,40 +190,9 @@ public class ShopDAOImpl implements ShopDAO {
 			currentSession.delete(item);
 	}
 
-	@Override
-	public void add_to_orders(List<OwnerCartItem> cartItems, ShipmentDetails shipmentDetails, String ownerId) {
-		Session currentSession = sessionFactory.getCurrentSession();
-
-		Date date = new Date();
-		java.sql.Date currentDate = new java.sql.Date(date.getTime());
-
-		for (OwnerCartItem item : cartItems) {
-			Orders order = new Orders();
-			order.setOwnerId(ownerId);
-			order.setItemId(item.getItemId());
-			order.setItemType(item.getItemType());
-			order.setItemName(item.getItemName());
-			order.setPrice(item.getItemPrice());
-			order.setQuantity(item.getQuantity());
-			order.setExpDate(item.getExpDate());
-			order.setOrderDate(currentDate.toString());
-			order.setShipmentDetail(shipmentDetails);
-			System.out.println(order);
-
-			currentSession.save(order);
-		}
-	}
-
-	@Override
-	public void emptyOwnerCart(String ownerId) {
-		Session currentSession = sessionFactory.getCurrentSession();
-		Query<?> emptyCartQuery = currentSession.createQuery("delete from OwnerCartItem where lower(ownerId) = :oId");
-		emptyCartQuery.setParameter("oId", ownerId);
-		emptyCartQuery.executeUpdate();
-	}
 	
 	/* ************** Utilities ****************** */
-
+	
 	/**
 	 * checks if the item is present in @OwnerCartItem
 	 * 
@@ -279,7 +245,4 @@ public class ShopDAOImpl implements ShopDAO {
 
 		return quantity;
 	}
-
-	
-
 }

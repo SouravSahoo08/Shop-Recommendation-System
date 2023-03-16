@@ -18,7 +18,6 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
-	
 </head>
 <body>
 
@@ -214,10 +213,9 @@
 				<div class="d-flex flex-row justify-content-end p-2">
 					<p class="h3 mx-4 mt-1">Total: Rs ${sum}</p>
 
-					<a id="checkout" class="btn btn-primary"
-						style="width: 100px; height: 40px" type="button"
-						href="${pageContext.request.contextPath}/owner/cart-details">
-						Go to cart </a>
+					<input class="btn btn-primary" style="width: 100px; height: 40px"
+						type="button" value="Go to Cart"
+						onClick="window.location.href='.....'; return false;" />
 
 				</div>
 			</div>
@@ -226,22 +224,4 @@
 	</div>
 
 </body>
-
-<script type="text/javascript">
-	
-	function isCartEmpty(sum){
-		 
-		var checkOutButton = document.getElementById("checkout");
-		if(sum==0){
-			alert("Cart is empty.. add more items.")
-			checkOutButton.disabled = true;
-		}
-		else{
-			checkOutButton.disabled = false;
-		}
-		
-	} 
-	
-</script>
-
 </html>

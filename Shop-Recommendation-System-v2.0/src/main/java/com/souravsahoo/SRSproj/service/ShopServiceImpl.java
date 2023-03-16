@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.souravsahoo.SRSproj.dao.ShopDAO;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
-import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
 @Service //("shopServiceImpl")
@@ -67,20 +66,6 @@ public class ShopServiceImpl implements ShopService{
 	public void removeItemFromCart(String ownerId, int itemId) {
 		// TODO Auto-generated method stub
 		shopDao.removeItemFromCart(ownerId, itemId);
-	}
-
-	@Override
-	@Transactional
-	public void add_to_orders(List<OwnerCartItem> cartItems, ShipmentDetails shipmentDetails, String ownerId) {
-		// TODO Auto-generated method stub
-		shopDao.add_to_orders(cartItems, shipmentDetails, ownerId);
-	}
-
-	@Override
-	@Transactional
-	public void emptyOwnerCart(String ownerId) {
-		// TODO Auto-generated method stub
-		shopDao.emptyOwnerCart(ownerId);
 	}
 
 }
