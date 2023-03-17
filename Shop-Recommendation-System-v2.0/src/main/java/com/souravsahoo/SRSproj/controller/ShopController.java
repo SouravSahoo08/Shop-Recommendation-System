@@ -230,6 +230,7 @@ public class ShopController {
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 		shopService.add_to_orders(cartItems, shipmentDetails, ownerId);
 		shopService.emptyOwnerCart(ownerId);
+		shopService.updateStocks(ownerId,cartItems);
 		return "checkout-page";
 	}
 

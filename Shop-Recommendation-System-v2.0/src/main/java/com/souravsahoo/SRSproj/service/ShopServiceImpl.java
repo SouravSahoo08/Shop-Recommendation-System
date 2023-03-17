@@ -83,4 +83,11 @@ public class ShopServiceImpl implements ShopService{
 		shopDao.emptyOwnerCart(ownerId);
 	}
 
+	@Override
+	@Transactional
+	public void updateStocks(String ownerId, List<OwnerCartItem> cartItems) {
+		// TODO Auto-generated method stub
+		shopDao.updateStocks(ownerId, cartItems);
+	}
+
 }

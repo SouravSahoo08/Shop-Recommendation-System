@@ -27,4 +27,6 @@ public interface ShopService {
 	void add_to_orders(List<OwnerCartItem> cartItems, ShipmentDetails shipmentDetails, String ownerId);
 
 	void emptyOwnerCart(String ownerId);
+
+	void updateStocks(String ownerId, List<OwnerCartItem> cartItems);
 }
