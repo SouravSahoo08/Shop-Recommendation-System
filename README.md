@@ -10,6 +10,7 @@ It is a Recommendation application which can assist shop owner to efficiently ma
  - [Spring Framework](https://spring.io/)
  - [Java](https://www.java.com/)
  - [MySQL](https://www.mysql.com/)
+ - [Bootstrap](https://getbootstrap.com/)
 
 
 ## Abstract
