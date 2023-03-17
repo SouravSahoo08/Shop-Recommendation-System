@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.souravsahoo.SRSproj.entity.CombinedDataModel;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.OwnerList;
+import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 import com.souravsahoo.SRSproj.service.ShopService;
 import com.souravsahoo.SRSproj.service.UserAuthService;
@@ -213,6 +214,23 @@ public class ShopController {
 	public String removeItemFromCart(@RequestParam("itemId") int itemId) {
 		shopService.removeItemFromCart(ownerId, itemId);
 		return "redirect:/owner/customer-outlet";
+	}
+	
+	@GetMapping("/cart-details")
+	public String showCartItemDetails(Model model) {
+		model.addAttribute("ownerName", getOwner().getOwnerName());
+		model.addAttribute("shipmentDataModel", new ShipmentDetails());
+		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
+		model.addAttribute("cartModel", cartItems);
+		return "customer-outlet-cart";
+	}
+	
+	@PostMapping("/place-order")
+	public String placeOrder(@ModelAttribute(name = "shipmentDataModel") ShipmentDetails shipmentDetails) {
+		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
+		shopService.add_to_orders(cartItems, shipmentDetails, ownerId);
+		shopService.emptyOwnerCart(ownerId);
+		return "checkout-page";
 	}
 
 	/* ************* Utilities ***************** */
