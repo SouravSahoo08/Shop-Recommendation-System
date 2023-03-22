@@ -12,11 +12,10 @@ import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
-@Service //("shopServiceImpl")
+@Service
 public class ShopServiceImpl implements ShopService{
 
 	@Autowired
-	//@Qualifier("shopDAOImpl")
 	private ShopDAO shopDao; 
 	
 	@Override

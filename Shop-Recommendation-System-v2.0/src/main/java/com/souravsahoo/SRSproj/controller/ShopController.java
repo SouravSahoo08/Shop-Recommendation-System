@@ -24,6 +24,7 @@ import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.OwnerList;
 import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
+import com.souravsahoo.SRSproj.recommendation_module.recommendation_dao.RecommendationService;
 import com.souravsahoo.SRSproj.service.ShopService;
 import com.souravsahoo.SRSproj.service.UserAuthService;
 
@@ -32,10 +33,11 @@ import com.souravsahoo.SRSproj.service.UserAuthService;
 public class ShopController {
 
 	@Autowired
-	private ShopService shopService;
-
-	@Autowired
 	private UserAuthService userAuthService;
+	@Autowired
+	private ShopService shopService;
+	@Autowired
+	private RecommendationService recommendationService;
 
 	private static String ownerId;
 
@@ -68,12 +70,16 @@ public class ShopController {
 	 * @return list-item-view jsp page
 	 */
 	@RequestMapping("/items")
-	public String viewListOfItems(Model model) {
+	public String viewListOfItems(Model model, @RequestParam(value = "zero-stock", required = false) boolean zero_stock) {
 		System.out.println("LOG: Owner name >> " + ownerId);
 		List<ShopItem> itemList = shopService.getItems(ownerId);
 		model.addAttribute("shopList", itemList);
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 		return "list-item-view";
+		
+		if(recommendationService.zeroStockItems(ownerId)) {
+			
+		}
 	}
 
 	/**
