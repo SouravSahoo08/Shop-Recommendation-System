@@ -92,7 +92,6 @@ public class ShopDAOImpl implements ShopDAO {
 		}
 	}
 
-	
 	/**
 	 * Search a particular item in list
 	 * 
@@ -214,44 +213,37 @@ public class ShopDAOImpl implements ShopDAO {
 		emptyCartQuery.setParameter("oId", ownerId);
 		emptyCartQuery.executeUpdate();
 	}
-	
+
 	@Override
 	public void updateStocks(String ownerId, List<OwnerCartItem> cartItems) {
 		// TODO Auto-generated method stub
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		for(OwnerCartItem item : cartItems) {
+
+		for (OwnerCartItem item : cartItems) {
 			int item_id = item.getItemId();
 			int quantity_purchased = item.getQuantity();
 			int available_stock_quantity = getStockCount(currentSession, item_id, ownerId);
-			
-			
+
+			Query<?> updateStockQuery = currentSession.createQuery(
+					"update ShopItem set stock = :newStock where itemId = :itemId and lower(ownerId) = :oId");
 			// if difference is greater than or equal to 1, then update the stocks
-			if (available_stock_quantity-quantity_purchased >= 1) {
-				Query<?> updateStockQuery = currentSession.createQuery(
-						"update ShopItem set stock = :newStock " + " where itemId = :itemId and lower(ownerId) = :oId");
-				updateStockQuery.setParameter("newStock", available_stock_quantity-quantity_purchased);
-				updateStockQuery.setParameter("itemId", item_id);
-				updateStockQuery.setParameter("oId", ownerId);
-				updateStockQuery.executeUpdate();
+			if (available_stock_quantity - quantity_purchased >= 1) {
+				updateStockQuery.setParameter("newStock", available_stock_quantity - quantity_purchased);
 			}
 			// else remove the entire item
 			else {
-				Query<?> deleteQuery = currentSession
-						.createQuery("delete from ShopItem where itemId = :itemId and lower(ownerId) = :oId");
-				deleteQuery.setParameter("itemId", item_id);
-				deleteQuery.setParameter("oId", ownerId);
-				deleteQuery.executeUpdate();
-
+				updateStockQuery.setParameter("newStock", 0);
 			}
-			
-			
+			updateStockQuery.setParameter("itemId", item_id);
+			updateStockQuery.setParameter("oId", ownerId);
+			updateStockQuery.executeUpdate();
+
 		}
-		
+
 	}
-	
+
 	/* ************** Utilities ****************** */
-	
+
 	private int getStockCount(Session currentSession, int itemId, String ownerId) {
 
 		Query<ShopItem> itemQuery = currentSession
@@ -262,7 +254,7 @@ public class ShopDAOImpl implements ShopDAO {
 		List<ShopItem> items = itemQuery.getResultList();
 		return items.get(0).getStock();
 	}
-	
+
 	/**
 	 * checks if the item is present in @OwnerCartItem
 	 * 
@@ -316,7 +308,4 @@ public class ShopDAOImpl implements ShopDAO {
 		return quantity;
 	}
 
-	
-
-	
 }

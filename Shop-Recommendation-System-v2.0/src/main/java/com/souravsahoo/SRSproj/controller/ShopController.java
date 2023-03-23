@@ -70,16 +70,26 @@ public class ShopController {
 	 * @return list-item-view jsp page
 	 */
 	@RequestMapping("/items")
-	public String viewListOfItems(Model model, @RequestParam(value = "zero-stock", required = false) boolean zero_stock) {
+	public String viewListOfItems(Model model, @RequestParam(value = "zero-stock", required = false) boolean zeroStock) {
 		System.out.println("LOG: Owner name >> " + ownerId);
-		List<ShopItem> itemList = shopService.getItems(ownerId);
-		model.addAttribute("shopList", itemList);
-		model.addAttribute("ownerName", getOwner().getOwnerName());
-		return "list-item-view";
 		
-		if(recommendationService.zeroStockItems(ownerId)) {
+		model.addAttribute("ownerName", getOwner().getOwnerName());
 			
+		// to show toast alert if if any stock is empty
+		List<ShopItem> zeroStockItemList = recommendationService.zeroStockItems(ownerId);
+		// if user clicks to show list of items that have empty stock
+		if(zeroStock==true) {
+			model.addAttribute("shopList", zeroStockItemList);
+		}else {
+			if(!zeroStockItemList.isEmpty()) {
+				model.addAttribute("stockNotAvailable", true);
+			}
+			
+			List<ShopItem> itemList = shopService.getItems(ownerId);
+			model.addAttribute("shopList", itemList);
 		}
+		
+		return "list-item-view";
 	}
 
 	/**
@@ -170,7 +180,7 @@ public class ShopController {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
 		if ("customer-outlet-view".equals(page)) {
-			manage_combinedModel(model, shopItems);
+			manageCombinedModel(model, shopItems);
 			return "customer-outlet-view";
 		} else {
 			return "list-item-view";
@@ -190,7 +200,7 @@ public class ShopController {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
 		List<ShopItem> itemList = shopService.getItems(ownerId);
-		manage_combinedModel(model, itemList);
+		manageCombinedModel(model, itemList);
 		return "customer-outlet-view";
 	}
 
@@ -259,20 +269,24 @@ public class ShopController {
 	 * @param model
 	 * @param shopItems
 	 */
-	private void manage_combinedModel(Model model, List<ShopItem> shopItems) {
+	private void manageCombinedModel(Model model, List<ShopItem> shopItems) {
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 		List<CombinedDataModel> combinedModels = new ArrayList<>();
-		for (ShopItem itemVar : shopItems) {
+
+		for (ShopItem item : shopItems) {
 			CombinedDataModel combinedData = new CombinedDataModel();
-			combinedData.setItemId(itemVar.getItemId());
-			combinedData.setItemName(itemVar.getItemName());
-			combinedData.setItemPrice(itemVar.getPrice());
-			combinedData.setItemExpiryDate(itemVar.getExpDate());
-			for (OwnerCartItem cartVar : cartItems) {
-				if (itemVar.getItemId() == cartVar.getItemId()) {
-					combinedData.setQuantity(cartVar.getQuantity());
-				}
+			combinedData.setItemId(item.getItemId());
+			combinedData.setItemName(item.getItemName());
+			combinedData.setItemPrice(item.getPrice());
+			combinedData.setItemExpiryDate(item.getExpDate());
+
+			OwnerCartItem cartItem = cartItems.stream().filter(c -> c.getItemId() == item.getItemId()).findFirst()
+					.orElse(null);
+
+			if (cartItem != null) {
+				combinedData.setQuantity(cartItem.getQuantity());
 			}
+
 			combinedModels.add(combinedData);
 		}
 

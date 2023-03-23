@@ -1,7 +1,11 @@
 package com.souravsahoo.SRSproj.recommendation_module.recommendation_service;
 
+import java.util.List;
+
+import com.souravsahoo.SRSproj.entity.ShopItem;
+
 public interface RecommendationDAO {
 
-	boolean zeroStockItems(String ownerId);
+	List<ShopItem> zeroStockItems(String ownerId);
 
 }

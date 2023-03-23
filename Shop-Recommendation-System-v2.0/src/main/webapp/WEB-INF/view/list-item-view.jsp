@@ -21,8 +21,7 @@
 </head>
 <body>
 
-	<nav
-		class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<a class="navbar-brand"
 				href="${pageContext.request.contextPath}/owner/home">Shop
@@ -82,27 +81,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- out of stock alert dialog -->
-	<c:if test="${stockAvailable != true}">
-		<div
-			class="alert alert-danger alert-dismissible fade show  d-flex align-items-center m-4"
-			style="width: 450px; height: auto; float: right;" role="alert">
-			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-				fill="#b50404" class="bi bi-exclamation-triangle-fill me-3"
-				viewBox="0 0 16 16">
-            <path
-					d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-        </svg>
-			<div>
-				Some items are out of stocks. <a href="#" class="alert-link">Click
-					here</a> to explore.
-				<button type="button" class="btn-close" data-bs-dismiss="alert"
-					aria-label="Close"></button>
-			</div>
-			<input type="hidden" name="zero-stock" value="true" />
-		</div>
-	</c:if>
 
 	<!-- main content -->
 	<div class="container-fluid">
@@ -142,8 +120,10 @@
 									d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1H4.98zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374L3.81.563zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z" />
 						</svg> Inventory
 					</a></li>
-					
-					<li><a href="${pageContext.request.contextPath}/owner/customer-outlet" class="nav-link text-white"> <svg
+
+					<li><a
+						href="${pageContext.request.contextPath}/owner/customer-outlet"
+						class="nav-link text-white"> <svg
 								xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
   						<path
@@ -156,7 +136,35 @@
 			</div>
 
 			<!-- Content div -->
-			<div class="col-md-9 mx-auto">
+			<div class="col-md-9 mx-auto" style="position: relative;">
+
+				<!-- out of stock item alert toast -->
+				<c:if test="${stockNotAvailable == true}">
+					<div class="toast-container top-0 end-0 mt-4" role="alert"
+						aria-live="assertive" aria-atomic="true">
+						<div class="toast show" style="width: 450px; height: auto;">
+							<div class="toast-header">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+									fill="#b50404" class="bi bi-exclamation-triangle-fill me-3"
+									viewBox="0 0 16 16">
+            						<path
+										d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        						</svg>
+								<strong class="me-auto">Alert</strong>
+								<button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+							</div>
+							<div class="toast-body">
+								<p>Some items are out of stocks!!</p>
+								<div class="mt-2 pt-2 border-top">
+									<a type="button" class="btn btn-primary btn-sm"
+										href="${pageContext.request.contextPath}/owner/items?zero-stock=true">Show
+										items</a> <a type="button" class="btn btn-secondary btn-sm"
+										data-bs-dismiss="toast">Later</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:if>
 
 				<div class="my-md-4">
 					<div class="row">
