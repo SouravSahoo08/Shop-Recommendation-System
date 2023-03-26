@@ -20,6 +20,9 @@ public class Orders {
 	@Column(name = "item_id")
 	private int itemId;
 
+	@Column(name = "product_line")
+	private String productLine;
+
 	@Column(name = "item_type")
 	private String itemType;
 
@@ -46,19 +49,22 @@ public class Orders {
 
 	}
 
-	public Orders(int orderId, String ownerId, String userId, int itemId, String itemType, String itemName, double price, int quantity,
-			String expDate, String orderDate) {
+	public Orders(int orderNo, String ownerId, String userId, int itemId, String productLine, String itemType,
+			String itemName, double price, int quantity, String expDate, String orderDate,
+			ShipmentDetails shipmentDetail) {
 		super();
-		this.orderNo = orderId;
+		this.orderNo = orderNo;
 		this.ownerId = ownerId;
 		this.userId = userId;
-		this.itemType = itemType;
 		this.itemId = itemId;
+		this.productLine = productLine;
+		this.itemType = itemType;
 		this.itemName = itemName;
 		this.price = price;
 		this.quantity = quantity;
 		this.expDate = expDate;
 		this.orderDate = orderDate;
+		this.shipmentDetail = shipmentDetail;
 	}
 
 	public int getOrderId() {
@@ -91,6 +97,14 @@ public class Orders {
 
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getProductLine() {
+		return productLine;
+	}
+
+	public void setProductLine(String productLine) {
+		this.productLine = productLine;
 	}
 
 	public String getItemType() {
@@ -159,9 +173,10 @@ public class Orders {
 
 	@Override
 	public String toString() {
-		return "Orders [orderId=" + orderNo + ", ownerId=" + ownerId + ", userId=" + userId + ", itemId=" + itemId
-				+ ", itemName=" + itemName + ", price=" + price + ", quantity=" + quantity + ", expDate=" + expDate
-				+ ", orderDate=" + orderDate + "]";
+		return "Orders [orderNo=" + orderNo + ", ownerId=" + ownerId + ", userId=" + userId + ", itemId=" + itemId
+				+ ", productLine=" + productLine + ", itemType=" + itemType + ", itemName=" + itemName + ", price="
+				+ price + ", quantity=" + quantity + ", expDate=" + expDate + ", orderDate=" + orderDate
+				+ ", shipmentDetail=" + shipmentDetail + "]";
 	}
 
 }

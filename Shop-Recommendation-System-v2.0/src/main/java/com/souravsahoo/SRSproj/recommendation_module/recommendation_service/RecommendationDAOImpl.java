@@ -1,6 +1,5 @@
 package com.souravsahoo.SRSproj.recommendation_module.recommendation_service;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,14 +31,11 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	public List<ShopItem> expiredProductList(String ownerId) {
 		// TODO Auto-generated method stub
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		//String currentDate = new SimpleDateFormat("yyyy-mm-dd").format(new Date());
-		
 		Query<ShopItem> expiredProductListQuery = currentSession
-				.createQuery("from ShopItem where lower(ownerId) = :oId and expDate < :currDate",ShopItem.class);
+				.createQuery("from ShopItem where lower(ownerId) = :oId and expDate < :currDate", ShopItem.class);
 		expiredProductListQuery.setParameter("oId", ownerId);
-		expiredProductListQuery.setParameter("currDate", new Date(), TimestampType.INSTANCE );
-		
+		expiredProductListQuery.setParameter("currDate", new Date(), TimestampType.INSTANCE);
+
 		return expiredProductListQuery.getResultList();
 	}
 

@@ -24,6 +24,9 @@ public class ShopItem {
 	@Column(name = "item_id")
 	private int itemId;
 
+	@Column(name = "product_line")
+	private String productLine;
+	
 	@NotNull(message = "Cannot be empty")
 	@Column(name = "item_type")
 	private String itemType;
@@ -54,12 +57,13 @@ public class ShopItem {
 		this.itemId = itemId;
 	}
 
-	public ShopItem(int itemId, @NotNull(message = "Cannot be empty") String itemType,
+	public ShopItem(int itemId, String productLine, @NotNull(message = "Cannot be empty") String itemType,
 			@NotNull(message = "Cannot be empty") String itemName,
 			@Positive(message = "price cannot be zero") double price,
 			@NotNull(message = "Cannot be empty") String expDate, String ownerId, int stock) {
 		super();
 		this.itemId = itemId;
+		this.productLine = productLine;
 		this.itemType = itemType;
 		this.itemName = itemName;
 		this.price = price;
@@ -74,6 +78,14 @@ public class ShopItem {
 
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getProductLine() {
+		return productLine;
+	}
+
+	public void setProductLine(String productLine) {
+		this.productLine = productLine;
 	}
 
 	public String getItemType() {
@@ -126,8 +138,9 @@ public class ShopItem {
 
 	@Override
 	public String toString() {
-		return "ShopItem [itemId=" + itemId + ", itemType=" + itemType + ", itemName=" + itemName + ", price=" + price
-				+ ", expDate=" + expDate + ", ownerId=" + ownerId + ", stock=" + stock + "]";
+		return "ShopItem [itemId=" + itemId + ", productLine=" + productLine + ", itemType=" + itemType + ", itemName="
+				+ itemName + ", price=" + price + ", expDate=" + expDate + ", ownerId=" + ownerId + ", stock=" + stock
+				+ "]";
 	}
 
 }

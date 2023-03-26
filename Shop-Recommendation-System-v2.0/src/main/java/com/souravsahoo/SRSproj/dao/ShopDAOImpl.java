@@ -123,9 +123,11 @@ public class ShopDAOImpl implements ShopDAO {
 
 		if (searchItemName != null && searchItemName.trim().length() > 0) {
 			searchItemQuery = currentSession.createQuery(
-					"from ShopItem where lower(ownerId) = :oId and lower(itemName) like :sName or lower(itemType) like :sName",
+					"from ShopItem where lower(ownerId) = :oId and lower(itemName) like :sName or lower(itemType) like :sName "
+					+ "or lower(productLine) like :pLine",
 					ShopItem.class);
 			searchItemQuery.setParameter("sName", "%" + searchItemName.toLowerCase() + "%");
+			searchItemQuery.setParameter("pLine", "%" + searchItemName.toLowerCase() + "%");
 		} else if (searchItemName == null) {
 			searchItemQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId", ShopItem.class);
 		}
@@ -157,6 +159,7 @@ public class ShopDAOImpl implements ShopDAO {
 			OwnerCartItem cartItem = new OwnerCartItem();
 			cartItem.setOwnerId(ownerId);
 			cartItem.setItemId(itemDetail.getItemId());
+			cartItem.setProductLine(itemDetail.getProductLine());
 			cartItem.setItemType(itemDetail.getItemType());
 			cartItem.setItemName(itemDetail.getItemName());
 			cartItem.setItemPrice(itemDetail.getPrice());
@@ -211,6 +214,7 @@ public class ShopDAOImpl implements ShopDAO {
 			Orders order = new Orders();
 			order.setOwnerId(ownerId);
 			order.setItemId(item.getItemId());
+			order.setProductLine(item.getProductLine());
 			order.setItemType(item.getItemType());
 			order.setItemName(item.getItemName());
 			order.setPrice(item.getItemPrice());

@@ -19,6 +19,9 @@ public class OwnerCartItem {
 	@Column(name = "item_id")
 	private int itemId;
 
+	@Column(name = "product_line")
+	private String productLine;
+	
 	@Column(name = "item_type")
 	private String itemType;
 
@@ -37,18 +40,20 @@ public class OwnerCartItem {
 	public OwnerCartItem() {
 	}
 
-	public OwnerCartItem(int slNo, String ownerId, int itemId, String itemType, String itemName, double itemPrice,
-			int quantity, String expDate) {
+	public OwnerCartItem(int slNo, String ownerId, int itemId, String productLine, String itemType, String itemName,
+			double itemPrice, int quantity, String expDate) {
 		super();
 		this.slNo = slNo;
 		this.ownerId = ownerId;
 		this.itemId = itemId;
+		this.productLine = productLine;
 		this.itemType = itemType;
 		this.itemName = itemName;
 		this.itemPrice = itemPrice;
 		this.quantity = quantity;
 		this.expDate = expDate;
 	}
+
 
 	public int getSlNo() {
 		return slNo;
@@ -72,6 +77,14 @@ public class OwnerCartItem {
 
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getProductLine() {
+		return productLine;
+	}
+
+	public void setProductLine(String productLine) {
+		this.productLine = productLine;
 	}
 
 	public String getItemType() {
@@ -116,9 +129,9 @@ public class OwnerCartItem {
 
 	@Override
 	public String toString() {
-		return "OwnerCartItem [slNo=" + slNo + ", ownerId=" + ownerId + ", itemId=" + itemId + ", itemType=" + itemType
-				+ ", itemName=" + itemName + ", itemPrice=" + itemPrice + ", quantity=" + quantity + ", expDate="
-				+ expDate + "]";
+		return "OwnerCartItem [slNo=" + slNo + ", ownerId=" + ownerId + ", itemId=" + itemId + ", productLine="
+				+ productLine + ", itemType=" + itemType + ", itemName=" + itemName + ", itemPrice=" + itemPrice
+				+ ", quantity=" + quantity + ", expDate=" + expDate + "]";
 	}
 
 }

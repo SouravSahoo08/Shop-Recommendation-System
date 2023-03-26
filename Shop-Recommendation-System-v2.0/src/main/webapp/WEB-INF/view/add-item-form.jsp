@@ -148,6 +148,11 @@
 				<!-- add item form -->
 				<form:form action="saveItem" modelAttribute="item" method="POST">
 					<div class="form-floating mb-3">
+						<form:input path="productLine" type="text" class="form-control"
+							id="productLine" placeholder="Health and beauty" />
+						<label for="productLine">Product Line</label>
+					</div>
+					<div class="form-floating mb-3">
 						<form:input path="itemType" type="text" class="form-control"
 							id="itemType" placeholder="Milk" />
 						<label for="itemType">Item type</label>
