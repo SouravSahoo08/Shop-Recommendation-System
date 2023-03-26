@@ -8,4 +8,6 @@ public interface RecommendationDAO {
 
 	List<ShopItem> zeroStockItems(String ownerId);
 
+	List<ShopItem> expiredProductList(String ownerId);
+
 }

@@ -8,4 +8,6 @@ public interface RecommendationService {
 
 	List<ShopItem> zeroStockItems(String ownerId);
 
+	List<ShopItem> expiredProductList(String ownerId);
+
 }

@@ -70,19 +70,30 @@ public class ShopController {
 	 * @return list-item-view jsp page
 	 */
 	@RequestMapping("/items")
-	public String viewListOfItems(Model model, @RequestParam(value = "zero-stock", required = false) boolean zeroStock) {
+	public String viewListOfItems(Model model, @RequestParam(value = "product-prob", required = false) String productProblem) {
 		System.out.println("LOG: Owner name >> " + ownerId);
 		
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 			
 		// to show toast alert if if any stock is empty
 		List<ShopItem> zeroStockItemList = recommendationService.zeroStockItems(ownerId);
+		List<ShopItem> expiredProductList = recommendationService.expiredProductList(ownerId);
 		// if user clicks to show list of items that have empty stock
-		if(zeroStock==true) {
+		if("zeroStock".equals(productProblem)) {
 			model.addAttribute("shopList", zeroStockItemList);
-		}else {
+		}
+		else if("prodExp".equals(productProblem)) {
+			model.addAttribute("shopList", expiredProductList);
+		}
+		else {
+			
+			//for triggering zero Stock toast
 			if(!zeroStockItemList.isEmpty()) {
 				model.addAttribute("stockNotAvailable", true);
+			}
+			//for triggering expired product toast			
+			if(!expiredProductList.isEmpty()) {
+				model.addAttribute("productExpired", true);
 			}
 			
 			List<ShopItem> itemList = shopService.getItems(ownerId);

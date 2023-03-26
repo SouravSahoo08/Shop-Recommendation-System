@@ -21,6 +21,12 @@ public class RecommendationServiceImpl implements RecommendationService {
 	public List<ShopItem> zeroStockItems(String ownerId) {
 		return recommendationDAO.zeroStockItems(ownerId);
 	}
+
+	@Override
+	@Transactional
+	public List<ShopItem> expiredProductList(String ownerId) {
+		return recommendationDAO.expiredProductList(ownerId);
+	}
 	
 	
 }
