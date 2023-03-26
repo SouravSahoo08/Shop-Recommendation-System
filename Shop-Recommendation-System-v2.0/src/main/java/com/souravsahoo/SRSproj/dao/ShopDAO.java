@@ -10,6 +10,8 @@ public interface ShopDAO {
 
 	List<ShopItem> getItems(String ownerId);
 
+	List<ShopItem> getItems(String ownerId, boolean removedZeroStockedAndExpiredItems);
+	
 	void saveItem(ShopItem shopItem);
 
 	void deleteItem(int itemId, String ownerId);
@@ -29,4 +31,6 @@ public interface ShopDAO {
 	void emptyOwnerCart(String ownerId);
 
 	void updateStocks(String ownerId, List<OwnerCartItem> cartItems);
+
+	
 }

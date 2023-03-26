@@ -29,4 +29,6 @@ public interface ShopService {
 	void emptyOwnerCart(String ownerId);
 
 	void updateStocks(String ownerId, List<OwnerCartItem> cartItems);
+
+	List<ShopItem> getItems(String ownerId, boolean removedZeroStockedAndExpiredItems);
 }

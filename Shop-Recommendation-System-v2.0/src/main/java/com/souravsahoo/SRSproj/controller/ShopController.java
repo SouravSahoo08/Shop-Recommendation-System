@@ -210,7 +210,7 @@ public class ShopController {
 	public String customerOutlet(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
-		List<ShopItem> itemList = shopService.getItems(ownerId);
+		List<ShopItem> itemList = shopService.getItems(ownerId,true);
 		manageCombinedModel(model, itemList);
 		return "customer-outlet-view";
 	}

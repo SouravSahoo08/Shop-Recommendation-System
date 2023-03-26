@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.hibernate.type.TimestampType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -32,6 +33,23 @@ public class ShopDAOImpl implements ShopDAO {
 		Query<ShopItem> getItemQuery = currentSession.createQuery("from ShopItem where lower(ownerId) = :oId",
 				ShopItem.class);
 		getItemQuery.setParameter("oId", ownerId);
+		List<ShopItem> items = getItemQuery.getResultList();
+		return items;
+	}
+
+	/**
+	 * Returns the list of all items in the db
+	 * 
+	 * @return list of items
+	 */
+	@Override
+	public List<ShopItem> getItems(String ownerId, boolean removedZeroStockedAndExpiredItems) {
+
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<ShopItem> getItemQuery = currentSession.createQuery(
+				"from ShopItem where lower(ownerId) = :oId and stock != 0 and expDate > :currDate", ShopItem.class);
+		getItemQuery.setParameter("oId", ownerId);
+		getItemQuery.setParameter("currDate", new Date(), TimestampType.INSTANCE);
 		List<ShopItem> items = getItemQuery.getResultList();
 		return items;
 	}

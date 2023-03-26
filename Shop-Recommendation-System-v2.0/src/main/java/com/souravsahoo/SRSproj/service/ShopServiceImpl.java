@@ -23,6 +23,13 @@ public class ShopServiceImpl implements ShopService{
 	public List<ShopItem> getItems(String ownerId) {
 		return shopDao.getItems(ownerId);
 	}
+	
+	@Override
+	@Transactional
+	public List<ShopItem> getItems(String ownerId, boolean removedZeroStockedAndExpiredItems) {
+		// TODO Auto-generated method stub
+		return shopDao.getItems(ownerId,true);
+	}
 
 	@Override
 	@Transactional
@@ -88,5 +95,7 @@ public class ShopServiceImpl implements ShopService{
 		// TODO Auto-generated method stub
 		shopDao.updateStocks(ownerId, cartItems);
 	}
+
+	
 
 }
