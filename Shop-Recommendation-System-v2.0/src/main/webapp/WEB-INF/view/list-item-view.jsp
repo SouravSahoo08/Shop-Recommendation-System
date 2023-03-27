@@ -138,11 +138,12 @@
 			<!-- Content div -->
 			<div class="col-md-9 mx-auto" style="position: relative;">
 
-				<div class="toast-container top-0 end-0 mt-4" role="alert"
-					aria-live="assertive" aria-atomic="true">
+				<!-- alert toast container -->
+				<div class="toast-container bottom-0 start-0 mb-2 ms-3" role="alert"
+					aria-live="assertive" aria-atomic="true" style="position: fixed;">
 					<!-- out of stock item alert toast -->
 					<c:if test="${stockNotAvailable == true}">
-						<div class="toast show" style="width: 450px; height: auto;">
+						<div class="toast show" style="width: 350px; height: auto;">
 							<div class="toast-header">
 								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 									fill="#b50404" class="bi bi-exclamation-triangle-fill me-3"
@@ -167,7 +168,7 @@
 					
 					<!-- product expired toast alert -->
 					<c:if test="${productExpired == true}">
-						<div class="toast mt-2 show" style="width: 450px; height: auto;">
+						<div class="toast mt-2 show" style="width: 350px; height: auto;">
 							<div class="toast-header">
 								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 									fill="#b50404" class="bi bi-exclamation-triangle-fill me-3"
@@ -218,6 +219,7 @@
 					<table class="table table-striped table-sm table-hover mt-md-2">
 
 						<tr>
+							<th>Item Id</th>
 							<th>Item Name</th>
 							<th>Stock</th>
 							<th>Price</th>
@@ -229,6 +231,7 @@
 							<!-- How to check for value in shopList ???? -->
 
 							<tr>
+								<td>${item.itemId}</td>
 								<td>${item.itemName}</td>
 								<td>${item.stock}</td>
 								<td>Rs. ${item.price}</td>

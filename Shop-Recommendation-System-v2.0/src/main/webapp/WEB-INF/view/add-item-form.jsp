@@ -132,9 +132,9 @@
 			</div>
 
 			<!-- Content div -->
-			<div class="col-md-9 mx-auto">
+			<div class="col-md-9 mx-auto mb-4">
 
-				<div class="my-md-4">
+				<div class="my-md-2">
 					<div class="row">
 
 						<div

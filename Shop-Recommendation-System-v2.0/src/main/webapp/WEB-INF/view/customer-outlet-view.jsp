@@ -161,7 +161,16 @@
 					</div>
 				</div>
 
-				<c:set var="sum" value="0"></c:set>
+				<c:set var="sum" value="0.00"></c:set>
+				
+				<div class="d-flex flex-row justify-content-end">
+					<a id="checkout" class="btn btn-primary"
+						style="width: 100px; height: 40px" type="button"
+						href="${pageContext.request.contextPath}/owner/cart-details">
+						Go to cart </a>
+
+				</div>
+				
 				<div class="table-responsive">
 					<table class="table table-striped table-sm table-hover mt-md-2">
 
