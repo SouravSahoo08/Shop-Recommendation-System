@@ -88,8 +88,8 @@
 		<!-- side nav-bar -->
 		<div class="row">
 			<div
-				class="col-md-3 col-lg-2 d-md-block p-3 text-white bg-dark border-end border-bottom"
-				style="width: 250px; height: 600px;">
+				class="col-md-3 col-lg-2 d-md-block p-3 min-vh-100 text-white bg-dark border-end border-bottom"
+				style="width: 250px;">
 				<a href="/"
 					class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 					<span class="fs-4">Welcome<br>${ownerName}!</span>

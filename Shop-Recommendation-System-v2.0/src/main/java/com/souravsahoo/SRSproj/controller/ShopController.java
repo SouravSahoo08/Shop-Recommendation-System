@@ -191,7 +191,9 @@ public class ShopController {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
 		if ("customer-outlet-view".equals(page)) {
-			manageCombinedModel(model, shopItems);
+			//manageCombinedModel(model, shopItems);
+			List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
+			model.addAttribute("ownerCartItems", cartItems);
 			return "customer-outlet-view";
 		} else {
 			return "list-item-view";
@@ -211,7 +213,12 @@ public class ShopController {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
 		List<ShopItem> itemList = shopService.getItems(ownerId,true);
-		manageCombinedModel(model, itemList);
+		model.addAttribute("shopList", itemList);
+		
+		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
+		model.addAttribute("ownerCartItems", cartItems);
+		
+		//manageCombinedModel(model, itemList);
 		return "customer-outlet-view";
 	}
 
