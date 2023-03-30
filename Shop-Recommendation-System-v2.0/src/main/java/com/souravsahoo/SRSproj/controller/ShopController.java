@@ -268,6 +268,17 @@ public class ShopController {
 		return "checkout-page";
 	}
 
+	/**
+	 * removes entire items from cart
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/emptyCart")
+	public String emptyCart(Model model) {
+		shopService.emptyOwnerCart(ownerId);
+		return "redirect:/owner/customer-outlet";
+	}
+	
 	/* ************* Utilities ***************** */
 
 	/**

@@ -202,10 +202,23 @@
 						<div
 							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-2 border-bottom">
 							<h3 class="h3">Cart preview</h3>
-							<a id="checkout" class="btn btn-primary"
-								style="width: 100px; height: 40px" type="button"
-								href="${pageContext.request.contextPath}/owner/cart-details">
-								Go to cart </a>
+							<div class="btn-toolbar mb-2 mb-md-0">
+								<a type="button" class="btn btn-danger me-2"
+									href="${pageContext.request.contextPath}/owner/emptyCart"
+									onclick="isCartEmpty(${sum});return false;"> <svg
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+										fill="currentColor" class="bi bi-trash3-fill"
+										viewBox="0 0 16 16">
+  										<path
+											d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z" />
+									</svg>
+								</a>
+								
+								<a id="checkout" class="btn btn-primary"
+									style="width: 100px; height: 40px" type="button"
+									href="${pageContext.request.contextPath}/owner/cart-details"
+									onclick="isCartEmpty(${sum});return false;"> Go to cart </a>
+							</div>
 						</div>
 
 						<c:set var="sum" value="0.0"></c:set>
@@ -251,8 +264,8 @@
 
 							<a id="checkout" class="btn btn-primary"
 								style="width: 100px; height: 40px" type="button"
-								href="${pageContext.request.contextPath}/owner/cart-details">
-								Go to cart </a>
+								href="${pageContext.request.contextPath}/owner/cart-details"
+								onclick="isCartEmpty(${sum});return false;"> Go to cart </a>
 
 						</div>
 					</div>
@@ -268,8 +281,8 @@
 
 		var checkOutButton = document.getElementById("checkout");
 		if (sum == 0) {
-			alert("Cart is empty.. add more items.")
 			checkOutButton.disabled = true;
+			alert("Cart is empty.. add more items.")
 		} else {
 			checkOutButton.disabled = false;
 		}

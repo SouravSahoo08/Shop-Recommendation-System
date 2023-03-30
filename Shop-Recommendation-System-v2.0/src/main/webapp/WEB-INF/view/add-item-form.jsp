@@ -148,8 +148,15 @@
 				<!-- add item form -->
 				<form:form action="saveItem" modelAttribute="item" method="POST">
 					<div class="form-floating mb-3">
-						<form:input path="productLine" type="text" class="form-control"
-							id="productLine" placeholder="Health and beauty" />
+						<form:select class="form-select" id="floatingSelect"
+							aria-label="Floating label select example"
+							path="productLine">
+							<form:option value="" >--</form:option>
+							<form:option value="Health and beauty" >Health and beauty</form:option>
+							<form:option value="Home and lifestyle" >Home and lifestyle</form:option>
+							<form:option value="Food and beverages" >Food and beverages</form:option>
+							<form:option value="Fashion accessories" >Fashion accessories</form:option>
+						</form:select> <label for="productLine">Product Line</label>
 						<label for="productLine">Product Line</label>
 					</div>
 					<div class="form-floating mb-3">
