@@ -18,6 +18,11 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
+<style>
+::-webkit-scrollbar {
+	display: none;
+}
+</style>
 </head>
 
 <body>
@@ -121,8 +126,10 @@
 									d="M4.98 1a.5.5 0 0 0-.39.188L1.54 5H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0A.5.5 0 0 1 10 5h4.46l-3.05-3.812A.5.5 0 0 0 11.02 1H4.98zM3.81.563A1.5 1.5 0 0 1 4.98 0h6.04a1.5 1.5 0 0 1 1.17.563l3.7 4.625a.5.5 0 0 1 .106.374l-.39 3.124A1.5 1.5 0 0 1 14.117 10H1.883A1.5 1.5 0 0 1 .394 8.686l-.39-3.124a.5.5 0 0 1 .106-.374L3.81.563zM.125 11.17A.5.5 0 0 1 .5 11H6a.5.5 0 0 1 .5.5 1.5 1.5 0 0 0 3 0 .5.5 0 0 1 .5-.5h5.5a.5.5 0 0 1 .496.562l-.39 3.124A1.5 1.5 0 0 1 14.117 16H1.883a1.5 1.5 0 0 1-1.489-1.314l-.39-3.124a.5.5 0 0 1 .121-.393z" />
 						</svg> Inventory
 					</a></li>
-					
-					<li><a href="${pageContext.request.contextPath}/owner/customer-outlet" class="nav-link text-white"> <svg
+
+					<li><a
+						href="${pageContext.request.contextPath}/owner/customer-outlet"
+						class="nav-link text-white"> <svg
 								xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
   						<path
@@ -135,13 +142,222 @@
 			</div>
 
 			<!-- Content div -->
-			<div class="col-md-9 mx-auto">
+			<div class="col mx-3">
 
-			....................
-			
+				<div class="row mb-1">
+					<h3 class="h3 mt-3">Dashboard</h3>
+				</div>
+
+				<div class="row flex-nowrap px-2 py-3"
+					style="width: 1050px; overflow-x: scroll;">
+					<!-- total orders -->
+					<div class="col-3 px-1" style="width: 290px;">
+						<div class="border border-dark border-1 rounded-3 shadow p-3">
+							<div class="row">
+								<div class="col">
+									<h5 class="h5">
+										Total orders<br>today
+									</h5>
+
+								</div>
+								<div class="col">
+									<a type="link" class="rounded-5 float-end" href="${pageContext.request.contextPath}/owner/home/show-total-orders"> <svg
+											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+											fill="#000000" class="bi bi-arrow-right-short"
+											viewBox="0 0 16 16">
+                      						<path fill-rule="evenodd"
+												d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z">
+                      						</path>
+                    					</svg>
+									</a>
+								</div>
+							</div>
+
+							<div class="row">
+								<p class="col h2"
+									style="color: #19B211; font-size: 25px; font-weight: bold;">
+									${totalOrdersModel}</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- revenue -->
+					<div class="col-3 px-1" style="width: 290px;">
+						<div class="border border-dark border-1 rounded-3 shadow p-3">
+							<div class="row">
+								<div class="col">
+									<h5 class="h5">
+										Revenue in<br>${revenueMonthModel}</h5>
+
+								</div>
+								<div class="col">
+									<a type="link" class="rounded-5 float-end" href=""> <svg
+											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
+											fill="#000000" class="bi bi-calendar-date"
+											viewBox="0 0 16 16">
+                      						<path
+												d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z" />
+                      						<path
+												d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                    					</svg>
+
+									</a>
+								</div>
+							</div>
+
+							<div class="row">
+								<p class="col h2"
+									style="color: #19B211; font-size: 25px; font-weight: bold;">
+									Rs. ${revenueAmountOfMonth}</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- peak sale -->
+					<div class="col-3 px-1" style="width: 290px;">
+						<div class="border border-dark border-1 rounded-3 shadow p-3">
+							<div class="row">
+								<div class="col">
+									<h5 class="h5">Peak sale month</h5>
+								</div>
+								<div class="col">
+									<a type="link" class="rounded-5 float-end" href=""> <svg
+											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+											fill="#000000" class="bi bi-arrow-right-short"
+											viewBox="0 0 16 16">
+                      						<path fill-rule="evenodd"
+												d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z">
+                      						</path>
+                   						</svg>
+									</a>
+								</div>
+							</div>
+
+							<div class="row">
+								<p class="col h2"
+									style="color: #19B211; font-size: 25px; font-weight: bold;">
+									${peakSaleMonth}</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Expired products -->
+					<div class="col-3 px-1" style="width: 290px;">
+						<div class="border border-dark border-1 rounded-3 shadow p-3">
+							<div class="row">
+								<div class="col">
+									<h5 class="h5">Expired products</h5>
+
+								</div>
+								<div class="col">
+									<a type="link" class="rounded-5 float-end" href="${pageContext.request.contextPath}/owner/home/show-expired-products"> <svg
+											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+											fill="#000000" class="bi bi-arrow-right-short"
+											viewBox="0 0 16 16">
+                   	   						<path fill-rule="evenodd"
+												d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z">
+                      						</path>
+                    					</svg>
+									</a>
+								</div>
+							</div>
+
+							<div class="row">
+								<p class="col h2"
+									style="color: #f82a23; font-size: 25px; font-weight: bold;">
+									${noOfExpProducts}</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Out of Stock -->
+					<div class="col-3 px-1" style="width: 290px;">
+						<div class="border border-dark border-1 rounded-3 shadow p-3">
+							<div class="row">
+								<div class="col">
+									<h5 class="h5">Out of stock</h5>
+
+								</div>
+								<div class="col">
+									<a type="link" class="rounded-5 float-end" href="${pageContext.request.contextPath}/owner/home/show-out-of-stock-items"> <svg
+											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+											fill="#000000" class="bi bi-arrow-right-short"
+											viewBox="0 0 16 16">
+                      						<path fill-rule="evenodd"
+												d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z">
+                      						</path>
+                    					</svg>
+									</a>
+								</div>
+							</div>
+
+							<div class="row">
+								<p class="col h2 mt-4"
+									style="color: #f82a23; font-size: 25px; font-weight: bold;">
+									${outOfStockCount}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+
+					<!-- graph canvas here -->
+
+				</div>
+
 			</div>
 
 		</div>
+
+		<div class="row px-3 pt-3">
+			<div
+				class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center mb-1 border-bottom">
+				<h2 class="h2">Recommendation module</h2>
+			</div>
+		</div>
+
+		<div class="row px-3 pt-3">
+			<div class="d-flex flex-row mb-1">
+				<h2 class="h4">Least sold products</h2>
+				<p class="mt-1 ms-3" style="color: rgb(247, 72, 41);">
+					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+						fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+            			<path
+							d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            			<path
+							d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+          			</svg>
+					<strong><em> (These item prices needs to be updated
+							or dis-continued temporarily.)</em></strong>
+				</p>
+			</div>
+
+		</div>
+
+		<div class="row px-3">
+			<div class="table-responsive">
+				<table class="table table-striped table-sm table-hover mt-md-2">
+
+					<tr>
+						<th>Item Id</th>
+						<th>Item Name</th>
+						<th>Stock</th>
+						<th>Price</th>
+						<th>Expiry date</th>
+						<th>Action</th>
+					</tr>
+
+					<c:forEach var="item" items="${shopList}">
+						<!-- How to check for value in shopList ???? -->
+
+
+					</c:forEach>
+
+				</table>
+			</div>
+		</div>
+
 	</div>
 
 
