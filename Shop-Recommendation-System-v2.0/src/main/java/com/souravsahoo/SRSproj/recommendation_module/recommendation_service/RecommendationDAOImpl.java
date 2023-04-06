@@ -39,4 +39,18 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 		return expiredProductListQuery.getResultList();
 	}
 
+	@Override
+	public int getTodaysTotalOrders(String ownerId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		Long totalOrders = (Long) currentSession
+				.createQuery("select count(*) from Orders where ownerId = :oId and orderDate = :currDate")
+				.setParameter("oId", ownerId).setParameter("currDate", new Date(), TimestampType.INSTANCE)
+				//.setParameter("currDate", "2019-03-05") // for demo purpose
+				.uniqueResult();
+
+		System.out.println("LOG >> total orders : " + totalOrders);
+		return totalOrders.intValue();
+	}
+
 }

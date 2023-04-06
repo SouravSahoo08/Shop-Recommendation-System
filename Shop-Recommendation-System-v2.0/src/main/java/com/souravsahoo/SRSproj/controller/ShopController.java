@@ -60,6 +60,9 @@ public class ShopController {
 	@RequestMapping("/home")
 	public String ownerHomePage(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
+		
+		model.addAttribute("totalOrdersModel", recommendationService.getTodaysTotalOrders(ownerId));
+		
 		return "owner-home";
 	}
 

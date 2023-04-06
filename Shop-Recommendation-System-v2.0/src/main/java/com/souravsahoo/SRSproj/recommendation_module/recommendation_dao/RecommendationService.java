@@ -10,4 +10,6 @@ public interface RecommendationService {
 
 	List<ShopItem> expiredProductList(String ownerId);
 
+	int getTodaysTotalOrders(String ownerId);
+
 }

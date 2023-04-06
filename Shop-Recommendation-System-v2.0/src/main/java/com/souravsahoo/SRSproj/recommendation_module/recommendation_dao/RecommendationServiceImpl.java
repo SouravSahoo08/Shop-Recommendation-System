@@ -27,6 +27,12 @@ public class RecommendationServiceImpl implements RecommendationService {
 	public List<ShopItem> expiredProductList(String ownerId) {
 		return recommendationDAO.expiredProductList(ownerId);
 	}
+
+	@Override
+	@Transactional
+	public int getTodaysTotalOrders(String ownerId) {
+		return recommendationDAO.getTodaysTotalOrders(ownerId);
+	}
 	
 	
 }
