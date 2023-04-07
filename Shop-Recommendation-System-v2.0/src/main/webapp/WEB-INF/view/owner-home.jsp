@@ -31,7 +31,8 @@
 	rel="stylesheet" type="text/css">
 <script src="https://cdn.jsdelivr.net/npm/datepicker/datepicker.min.js"></script>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <style>
@@ -100,6 +101,102 @@
 							value="Yes, Log me out" />
 
 					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- expiredProductListModal -->
+	<div class="modal fade" id="expiredProductListModal" tabindex="-1"
+		aria-labelledby="expiredProductListModal" aria-hidden="true">
+		<div
+			class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="expiredProductListModal">Expied
+						product list</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm table-hover mt-md-2">
+
+							<tr>
+								<th>Item Id</th>
+								<th>Item Name</th>
+								<th>Stock</th>
+								<th>Price</th>
+								<th>Expiry date</th>
+							</tr>
+
+							<c:forEach var="item" items="${expProd}">
+								<tr>
+									<td>${item.itemId}</td>
+									<td>${item.itemName}</td>
+									<td>${item.stock}</td>
+									<td>Rs. ${item.price}</td>
+									<td>${item.expDate}</td>
+								</tr>
+							</c:forEach>
+
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<a type="button" class="btn btn-primary"
+						href="${pageContext.request.contextPath}/owner/items?product-prob=prodExp">Check
+						items</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- zeroStockListModal -->
+	<div class="modal fade" id="zeroStockListModal" tabindex="-1"
+		aria-labelledby="zeroStockListModal" aria-hidden="true">
+		<div
+			class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="zeroStockListModal">Zero
+						Stock items</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm table-hover mt-md-2">
+
+							<tr>
+								<th>Item Id</th>
+								<th>Item Name</th>
+								<th>Stock</th>
+								<th>Price</th>
+								<th>Expiry date</th>
+							</tr>
+
+							<c:forEach var="item" items="${zeroProd}">
+								<tr>
+									<td>${item.itemId}</td>
+									<td>${item.itemName}</td>
+									<td>${item.stock}</td>
+									<td>Rs. ${item.price}</td>
+									<td>${item.expDate}</td>
+								</tr>
+							</c:forEach>
+
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<a type="button" class="btn btn-primary"
+						href="${pageContext.request.contextPath}/owner/items?product-prob=zeroStock">Check
+						items</a>
 				</div>
 			</div>
 		</div>
@@ -208,8 +305,8 @@
 
 								</div>
 								<div class="col">
-									<a type="link" class="rounded-5 ">
-										<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27"
+									<a type="link" class="rounded-5 "> <svg
+											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
 											fill="#000000" class="bi bi-calendar-date float-end"
 											viewBox="0 0 16 16" id="picker">
                       						<path
@@ -219,9 +316,9 @@
                     					</svg>
 									</a> <input type="text" id="date" readonly>
 									<script>
-									$( function() {
-									    $( "#picker" ).datepicker();
-									  } );
+										$(function() {
+											$("#picker").datepicker();
+										});
 									</script>
 								</div>
 							</div>
@@ -272,8 +369,9 @@
 								</div>
 								<div class="col">
 									<a type="link" class="rounded-5 float-end"
-										href="${pageContext.request.contextPath}/owner/home/show-expired-products">
-										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+										data-bs-toggle="modal"
+										data-bs-target="#expiredProductListModal"> <svg
+											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 											fill="#000000" class="bi bi-arrow-right-short"
 											viewBox="0 0 16 16">
                    	   						<path fill-rule="evenodd"
@@ -302,7 +400,7 @@
 								</div>
 								<div class="col">
 									<a type="link" class="rounded-5 float-end"
-										href="${pageContext.request.contextPath}/owner/home/show-out-of-stock-items">
+										data-bs-toggle="modal" data-bs-target="#zeroStockListModal">
 										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 											fill="#000000" class="bi bi-arrow-right-short"
 											viewBox="0 0 16 16">
@@ -333,6 +431,8 @@
 
 		</div>
 
+
+		<!-- Recommendation module -->
 		<div class="row px-3 pt-3">
 			<div
 				class="d-flex justify-content-center flex-wrap flex-md-nowrap align-items-center mb-1 border-bottom">
@@ -383,7 +483,5 @@
 
 	</div>
 
-
 </body>
-
 </html>

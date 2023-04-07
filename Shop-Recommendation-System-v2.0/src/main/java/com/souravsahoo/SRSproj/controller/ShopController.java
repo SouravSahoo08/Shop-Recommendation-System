@@ -52,7 +52,8 @@ public class ShopController {
 	}
 
 	/**
-	 * shows homepage of shopkeeper accont
+	 * shows homepage of shopkeeper account that includes basic monitoring ui's and 
+	 * recommendation module ui
 	 * 
 	 * @param model
 	 * @return owner-home jsp page
@@ -60,10 +61,18 @@ public class ShopController {
 	@RequestMapping("/home")
 	public String ownerHomePage(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
-		
+
 		model.addAttribute("totalOrdersModel", recommendationService.getTodaysTotalOrders(ownerId));
 		model.addAttribute("peakSaleMonthModel", recommendationService.getPeakSaleMonth(ownerId));
-		
+
+		List<ShopItem> expiredProductList = recommendationService.expiredProductList(ownerId);
+		model.addAttribute("noOfExpProducts", expiredProductList.size());
+		model.addAttribute("expProd", expiredProductList);
+
+		List<ShopItem> zeroStockItems = recommendationService.zeroStockItems(ownerId);
+		model.addAttribute("outOfStockCount", zeroStockItems.size());
+		model.addAttribute("zeroProd", zeroStockItems);
+
 		return "owner-home";
 	}
 
@@ -74,36 +83,35 @@ public class ShopController {
 	 * @return list-item-view jsp page
 	 */
 	@RequestMapping("/items")
-	public String viewListOfItems(Model model, @RequestParam(value = "product-prob", required = false) String productProblem) {
+	public String viewListOfItems(Model model,
+			@RequestParam(value = "product-prob", required = false) String productProblem) {
 		System.out.println("LOG: Owner name >> " + ownerId);
-		
+
 		model.addAttribute("ownerName", getOwner().getOwnerName());
-			
+
 		// to show toast alert if if any stock is empty
 		List<ShopItem> zeroStockItemList = recommendationService.zeroStockItems(ownerId);
 		List<ShopItem> expiredProductList = recommendationService.expiredProductList(ownerId);
 		// if user clicks to show list of items that have empty stock
-		if("zeroStock".equals(productProblem)) {
+		if ("zeroStock".equals(productProblem)) {
 			model.addAttribute("shopList", zeroStockItemList);
-		}
-		else if("prodExp".equals(productProblem)) {
+		} else if ("prodExp".equals(productProblem)) {
 			model.addAttribute("shopList", expiredProductList);
-		}
-		else {
-			
-			//for triggering zero Stock toast
-			if(!zeroStockItemList.isEmpty()) {
+		} else {
+
+			// for triggering zero Stock toast
+			if (!zeroStockItemList.isEmpty()) {
 				model.addAttribute("stockNotAvailable", true);
 			}
-			//for triggering expired product toast			
-			if(!expiredProductList.isEmpty()) {
+			// for triggering expired product toast
+			if (!expiredProductList.isEmpty()) {
 				model.addAttribute("productExpired", true);
 			}
-			
+
 			List<ShopItem> itemList = shopService.getItems(ownerId);
 			model.addAttribute("shopList", itemList);
 		}
-		
+
 		return "list-item-view";
 	}
 
@@ -195,7 +203,7 @@ public class ShopController {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
 		if ("customer-outlet-view".equals(page)) {
-			//manageCombinedModel(model, shopItems);
+			// manageCombinedModel(model, shopItems);
 			List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 			model.addAttribute("ownerCartItems", cartItems);
 			return "customer-outlet-view";
@@ -216,13 +224,13 @@ public class ShopController {
 	public String customerOutlet(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 
-		List<ShopItem> itemList = shopService.getItems(ownerId,true);
+		List<ShopItem> itemList = shopService.getItems(ownerId, true);
 		model.addAttribute("shopList", itemList);
-		
+
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 		model.addAttribute("ownerCartItems", cartItems);
-		
-		//manageCombinedModel(model, itemList);
+
+		// manageCombinedModel(model, itemList);
 		return "customer-outlet-view";
 	}
 
@@ -253,7 +261,7 @@ public class ShopController {
 		shopService.removeItemFromCart(ownerId, itemId);
 		return "redirect:/owner/customer-outlet";
 	}
-	
+
 	@GetMapping("/cart-details")
 	public String showCartItemDetails(Model model) {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
@@ -262,18 +270,19 @@ public class ShopController {
 		model.addAttribute("cartModel", cartItems);
 		return "customer-outlet-cart";
 	}
-	
+
 	@PostMapping("/place-order")
 	public String placeOrder(@ModelAttribute(name = "shipmentDataModel") ShipmentDetails shipmentDetails) {
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 		shopService.add_to_orders(cartItems, shipmentDetails, ownerId);
 		shopService.emptyOwnerCart(ownerId);
-		shopService.updateStocks(ownerId,cartItems);
+		shopService.updateStocks(ownerId, cartItems);
 		return "checkout-page";
 	}
 
 	/**
 	 * removes entire items from cart
+	 * 
 	 * @param model
 	 * @return
 	 */
@@ -282,7 +291,7 @@ public class ShopController {
 		shopService.emptyOwnerCart(ownerId);
 		return "redirect:/owner/customer-outlet";
 	}
-	
+
 	/* ************* Utilities ***************** */
 
 	/**
