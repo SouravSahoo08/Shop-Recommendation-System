@@ -10,6 +10,8 @@ public interface RecommendationDAO {
 
 	List<ShopItem> expiredProductList(String ownerId);
 
-	int getTodaysTotalOrders(String ownerId);
+	Long getTodaysTotalOrders(String ownerId);
+
+	int getPeakSaleMonth(String ownerId);
 
 }

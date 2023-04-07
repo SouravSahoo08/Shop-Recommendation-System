@@ -40,17 +40,30 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	}
 
 	@Override
-	public int getTodaysTotalOrders(String ownerId) {
+	public Long getTodaysTotalOrders(String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
 		Long totalOrders = (Long) currentSession
 				.createQuery("select count(*) from Orders where ownerId = :oId and orderDate = :currDate")
 				.setParameter("oId", ownerId).setParameter("currDate", new Date(), TimestampType.INSTANCE)
-				//.setParameter("currDate", "2019-03-05") // for demo purpose
+				// .setParameter("currDate", "2019-03-05") // for demo purpose
 				.uniqueResult();
 
 		System.out.println("LOG >> total orders : " + totalOrders);
-		return totalOrders.intValue();
+		return totalOrders;
+	}
+
+	@Override
+	public int getPeakSaleMonth(String ownerId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		List<Integer> month = currentSession.createQuery("SELECT MONTH(o.orderDate) " + "FROM Orders o "
+						+ "GROUP BY YEAR(o.orderDate), MONTH(o.orderDate) " + "ORDER BY SUM(o.price * o.quantity) DESC", Integer.class)
+				.setMaxResults(1)
+				.getResultList();
+
+		System.out.println("LOG >> Peak revenue Month : " +month.get(0));
+		return month.get(0);
 	}
 
 }

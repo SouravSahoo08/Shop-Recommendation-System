@@ -14,10 +14,26 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
 	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/datepicker/datepicker.min.css"
+	rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/datepicker/datepicker.min.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <style>
 ::-webkit-scrollbar {
 	display: none;
@@ -161,8 +177,9 @@
 
 								</div>
 								<div class="col">
-									<a type="link" class="rounded-5 float-end" href="${pageContext.request.contextPath}/owner/home/show-total-orders"> <svg
-											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+									<a type="link" class="rounded-5 float-end"
+										href="${pageContext.request.contextPath}/owner/home/show-total-orders">
+										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 											fill="#000000" class="bi bi-arrow-right-short"
 											viewBox="0 0 16 16">
                       						<path fill-rule="evenodd"
@@ -191,17 +208,21 @@
 
 								</div>
 								<div class="col">
-									<a type="link" class="rounded-5 float-end" href=""> <svg
-											xmlns="http://www.w3.org/2000/svg" width="27" height="27"
-											fill="#000000" class="bi bi-calendar-date"
-											viewBox="0 0 16 16">
+									<a type="link" class="rounded-5 ">
+										<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27"
+											fill="#000000" class="bi bi-calendar-date float-end"
+											viewBox="0 0 16 16" id="picker">
                       						<path
 												d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z" />
                       						<path
 												d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
                     					</svg>
-
-									</a>
+									</a> <input type="text" id="date" readonly>
+									<script>
+									$( function() {
+									    $( "#picker" ).datepicker();
+									  } );
+									</script>
 								</div>
 							</div>
 
@@ -236,7 +257,7 @@
 							<div class="row">
 								<p class="col h2"
 									style="color: #19B211; font-size: 25px; font-weight: bold;">
-									${peakSaleMonth}</p>
+									${peakSaleMonthModel}</p>
 							</div>
 						</div>
 					</div>
@@ -250,8 +271,9 @@
 
 								</div>
 								<div class="col">
-									<a type="link" class="rounded-5 float-end" href="${pageContext.request.contextPath}/owner/home/show-expired-products"> <svg
-											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+									<a type="link" class="rounded-5 float-end"
+										href="${pageContext.request.contextPath}/owner/home/show-expired-products">
+										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 											fill="#000000" class="bi bi-arrow-right-short"
 											viewBox="0 0 16 16">
                    	   						<path fill-rule="evenodd"
@@ -279,8 +301,9 @@
 
 								</div>
 								<div class="col">
-									<a type="link" class="rounded-5 float-end" href="${pageContext.request.contextPath}/owner/home/show-out-of-stock-items"> <svg
-											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+									<a type="link" class="rounded-5 float-end"
+										href="${pageContext.request.contextPath}/owner/home/show-out-of-stock-items">
+										<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 											fill="#000000" class="bi bi-arrow-right-short"
 											viewBox="0 0 16 16">
                       						<path fill-rule="evenodd"

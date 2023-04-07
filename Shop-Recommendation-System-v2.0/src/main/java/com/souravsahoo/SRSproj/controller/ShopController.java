@@ -62,6 +62,7 @@ public class ShopController {
 		model.addAttribute("ownerName", getOwner().getOwnerName());
 		
 		model.addAttribute("totalOrdersModel", recommendationService.getTodaysTotalOrders(ownerId));
+		model.addAttribute("peakSaleMonthModel", recommendationService.getPeakSaleMonth(ownerId));
 		
 		return "owner-home";
 	}
