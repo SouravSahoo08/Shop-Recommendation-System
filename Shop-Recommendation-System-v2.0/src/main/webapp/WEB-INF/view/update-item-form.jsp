@@ -185,6 +185,11 @@
 						<label for="itemPrice">Item price</label>
 					</div>
 					<div class="form-floating mb-3">
+						<form:input path="sellingPrice" type="number" class="form-control"
+							id="itemSellingPrice" placeholder="Rs 32.00" />
+						<label for="itemSellingPrice">Selling price</label>
+					</div>
+					<div class="form-floating mb-3">
 						<form:input path="expDate" type="date" class="form-control"
 							id="expDate" placeholder="DD-MM-YYYY" />
 						<label for="expDate">Expiry date</label>

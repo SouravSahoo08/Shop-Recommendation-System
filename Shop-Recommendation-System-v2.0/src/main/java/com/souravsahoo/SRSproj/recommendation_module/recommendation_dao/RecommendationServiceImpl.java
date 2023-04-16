@@ -82,4 +82,32 @@ public class RecommendationServiceImpl implements RecommendationService {
 		return "--";
 	}
 
+	@Override
+	@Transactional
+	public List<Double> getRevenueData(String ownerId, int year) {
+		// TODO Auto-generated method stub
+		return recommendationDAO.getRevenueData(ownerId,year);
+	}
+
+	@Override
+	@Transactional
+	public List<Object[]> getMostSoldProducts(String ownerId) {
+		// TODO Auto-generated method stub
+		return recommendationDAO.getMostSoldProducts(ownerId);
+	}
+
+	@Override
+	@Transactional
+	public List<Object[]> getLeastSoldProducts(String ownerId) {
+		// TODO Auto-generated method stub
+		return recommendationDAO.getLeastSoldProducts(ownerId);
+	}
+
+	@Override
+	@Transactional
+	public List<Object[]> getProfitableProducts(String ownerId) {
+		// TODO Auto-generated method stub
+		return recommendationDAO.getProfitableProducts(ownerId);
+	}
+
 }

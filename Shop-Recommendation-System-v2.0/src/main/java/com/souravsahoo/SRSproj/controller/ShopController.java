@@ -1,5 +1,6 @@
 package com.souravsahoo.SRSproj.controller;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.souravsahoo.SRSproj.entity.CombinedDataModel;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
@@ -72,8 +76,21 @@ public class ShopController {
 		List<ShopItem> zeroStockItems = recommendationService.zeroStockItems(ownerId);
 		model.addAttribute("outOfStockCount", zeroStockItems.size());
 		model.addAttribute("zeroProd", zeroStockItems);
+		
+		model.addAttribute("selectedYear", Year.now().getValue());
+		
+		
+		model.addAttribute("mostSoldProductModel", recommendationService.getMostSoldProducts(ownerId));
+		model.addAttribute("leastSoldProductModel", recommendationService.getLeastSoldProducts(ownerId));
+		model.addAttribute("profitabilityModel", recommendationService.getProfitableProducts(ownerId));
 
 		return "owner-home";
+	}
+	
+	@GetMapping(value="/home/revenue-chart-data", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Double> revenueChartData(@RequestParam("y") int year){
+		return recommendationService.getRevenueData(ownerId, year);
 	}
 
 	/**

@@ -39,6 +39,10 @@ public class ShopItem {
 	@Column(name = "price")
 	private double price;
 
+	@Positive(message = "price cannot be zero")
+	@Column(name = "sp")
+	private double sellingPrice;
+	
 	@NotNull(message = "Cannot be empty")
 	@Column(name = "exp_date")
 	private String expDate;
@@ -60,6 +64,7 @@ public class ShopItem {
 	public ShopItem(int itemId, String productLine, @NotNull(message = "Cannot be empty") String itemType,
 			@NotNull(message = "Cannot be empty") String itemName,
 			@Positive(message = "price cannot be zero") double price,
+			@Positive(message = "price cannot be zero") double sellingPrice,
 			@NotNull(message = "Cannot be empty") String expDate, String ownerId, int stock) {
 		super();
 		this.itemId = itemId;
@@ -67,6 +72,7 @@ public class ShopItem {
 		this.itemType = itemType;
 		this.itemName = itemName;
 		this.price = price;
+		this.sellingPrice = sellingPrice;
 		this.expDate = expDate;
 		this.ownerId = ownerId;
 		this.stock = stock;
@@ -112,6 +118,14 @@ public class ShopItem {
 		this.price = price;
 	}
 
+	public double getSellingPrice() {
+		return sellingPrice;
+	}
+
+	public void setSellingPrice(double sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
+
 	public String getExpDate() {
 		return expDate;
 	}
@@ -139,8 +153,8 @@ public class ShopItem {
 	@Override
 	public String toString() {
 		return "ShopItem [itemId=" + itemId + ", productLine=" + productLine + ", itemType=" + itemType + ", itemName="
-				+ itemName + ", price=" + price + ", expDate=" + expDate + ", ownerId=" + ownerId + ", stock=" + stock
-				+ "]";
+				+ itemName + ", price=" + price + ", sellingPrice=" + sellingPrice + ", expDate=" + expDate
+				+ ", ownerId=" + ownerId + ", stock=" + stock + "]";
 	}
 
 }

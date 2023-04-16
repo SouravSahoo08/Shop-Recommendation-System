@@ -153,7 +153,7 @@
 				<div class="row my-2 gx-5">
 
 					<c:set var="sum" value="0.00"></c:set>
-					<div class="col col-7 shadow rounded p-2 min-vh-100">
+					<div class="col col-7 shadow rounded border border-dark-subtle p-2 min-vh-100">
 
 						<form:form class="mb-3 mb-lg-0 me-lg-1"
 							style="width: 400px; height: 40px"
@@ -177,7 +177,7 @@
 								<c:forEach var="item" items="${shopList}">
 									<tr>
 										<td>${item.itemName}</td>
-										<td>Rs. ${item.price}</td>
+										<td>Rs. ${item.sellingPrice}</td>
 										<td>${item.expDate}</td>
 										<td><a
 											href="${pageContext.request.contextPath}/owner/cart-addItem?itemId=${item.itemId}"><svg
@@ -198,7 +198,7 @@
 					</div>
 
 					<!-- preview cart div -->
-					<div class="col mx-2 shadow rounded p-2">
+					<div class="col mx-2 shadow rounded border border-dark-subtle p-2">
 						<div
 							class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center p-2 border-bottom">
 							<h3 class="h3">Cart preview</h3>
@@ -276,7 +276,7 @@
 	</div>
 </body>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	function isCartEmpty(sum) {
 
 		var checkOutButton = document.getElementById("checkout");
@@ -288,6 +288,6 @@
 		}
 
 	}
-</script>
+</script> -->
 
 </html>

@@ -143,7 +143,7 @@
 					aria-live="assertive" aria-atomic="true" style="position: fixed;">
 					<!-- out of stock item alert toast -->
 					<c:if test="${stockNotAvailable == true}">
-						<div class="toast show" style="width: 350px; height: auto;">
+						<div class="toast show" style="width: 290px; height: auto;">
 							<div class="toast-header">
 								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 									fill="#b50404" class="bi bi-exclamation-triangle-fill me-3"
@@ -168,7 +168,7 @@
 					
 					<!-- product expired toast alert -->
 					<c:if test="${productExpired == true}">
-						<div class="toast mt-2 show" style="width: 350px; height: auto;">
+						<div class="toast mt-2 show" style="width: 290px; height: auto;">
 							<div class="toast-header">
 								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 									fill="#b50404" class="bi bi-exclamation-triangle-fill me-3"
@@ -222,7 +222,8 @@
 							<th>Item Id</th>
 							<th>Item Name</th>
 							<th>Stock</th>
-							<th>Price</th>
+							<th>M.R.P</th>
+							<th>Selling Price</th>
 							<th>Expiry date</th>
 							<th>Action</th>
 						</tr>
@@ -235,6 +236,7 @@
 								<td>${item.itemName}</td>
 								<td>${item.stock}</td>
 								<td>Rs. ${item.price}</td>
+								<td>Rs. ${item.sellingPrice}</td>
 								<td>${item.expDate}</td>
 								<td><a href="showItem?id=${item.itemId}">Update</a> / <a
 									href="removeItem?id=${item.itemId}"
