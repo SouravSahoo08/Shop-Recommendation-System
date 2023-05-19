@@ -49,7 +49,7 @@
 
 	<!-- nav bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
+		<div class="container-fluid me-3">
 			<a class="navbar-brand"
 				href="${pageContext.request.contextPath}/owner/home">Shop
 				Recommendation System</a>
@@ -60,6 +60,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
 				<ul class="navbar-nav ms-auto me-2 mb-2 mb-lg-0">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page"
@@ -69,9 +70,26 @@
 					<li class="nav-item"><a class="nav-link" href="/contact-us">Contact
 							Us</a></li>
 				</ul>
-				<div class="mx-1">
+				<!-- <div class="mx-1">
 					<a class="btn btn-primary btn-sm" role="button"
 						data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+				</div>
+ -->
+ 
+				<div class="dropdown text-end">
+					<a href="#"
+						class="d-block text-white text-decoration-none dropdown-toggle"
+						data-bs-toggle="dropdown" aria-expanded="false"> <img
+						src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+						class="rounded-circle">
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark text-small dropdown-menu-end" style="">
+						<li><a class="dropdown-item" href="#">New project...</a></li>
+						<li><a class="dropdown-item" href="#">Settings</a></li>
+						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/owner/profile">Profile</a></li>
+						<li><hr class="dropdown-divider"></li>
+						<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Sign out</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -210,7 +228,7 @@
 		<!-- side nav-bar -->
 		<div class="row">
 			<div
-				class="col-md-3 col-lg-2 d-md-block p-3 min-vh-100 text-white bg-dark border-end border-bottom"
+				class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark min-vh-100 text-white bg-dark border-end border-bottom"
 				style="width: 250px; height: 600px;">
 				<a href="/"
 					class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
@@ -523,9 +541,9 @@
 
 					<tr>
 						<th>Item Id</th>
+						<th>Item Name</th>
 						<th>Product Line</th>
 						<th>Item type</th>
-						<th>Item Name</th>
 						<th>Total Sold</th>
 					</tr>
 
@@ -568,9 +586,9 @@
 
 					<tr>
 						<th>Item Id</th>
+						<th>Item Name</th>
 						<th>Product Line</th>
 						<th>Item type</th>
-						<th>Item Name</th>
 						<th>Total Sold</th>
 					</tr>
 
@@ -593,7 +611,7 @@
 			class="row rounded-3 shadow border border-dark-subtle my-3 mx-2 p-2">
 			<div class="d-flex flex-row">
 				<h2 class="h4">Profitability</h2>
-				<p class="mt-1 ms-3" style="color: rgb(247, 72, 41);">
+				<!-- <p class="mt-1 ms-3" style="color: rgb(247, 72, 41);">
 					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
 						fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
             			<path
@@ -603,7 +621,7 @@
           			</svg>
 					<strong><em> (These item prices needs to be updated
 							or dis-continued temporarily.)</em></strong>
-				</p>
+				</p> -->
 			</div>
 
 			<div class="table-responsive">
@@ -612,9 +630,9 @@
 
 					<tr>
 						<th>Item Id</th>
+						<th>Item Name</th>
 						<th>Product Line</th>
 						<th>Item type</th>
-						<th>Item Name</th>
 						<th>Profit/loss</th>
 					</tr>
 

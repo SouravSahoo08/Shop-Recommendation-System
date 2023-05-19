@@ -20,7 +20,7 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	private SessionFactory sessionFactory;
 
 	private static final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
-	private static final int CURRENT_MONTH = 3;
+	private static final int CURRENT_MONTH = 2;
 
 	@Override
 	public List<ShopItem> zeroStockItems(String ownerId) {
@@ -88,7 +88,7 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	public List<Object[]> getMostSoldProducts(String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		String hql = "SELECT o.itemId AS itemId, o.productLine AS productLine, o.itemType AS itemType, o.itemName AS itemName, SUM(o.quantity) AS totalQuantity "
+		String hql = "SELECT o.itemId AS itemId, o.itemName AS itemName, o.productLine AS productLine, o.itemType AS itemType, SUM(o.quantity) AS totalQuantity "
 				+ "FROM Orders o where year(o.orderDate) != :year and month(o.orderDate) = :month and ownerId = :oId "
 				+ "GROUP BY itemName ORDER BY totalQuantity DESC";
 
@@ -103,7 +103,7 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	public List<Object[]> getLeastSoldProducts(String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		String hql = "SELECT o.itemId AS itemId, o.productLine AS productLine, o.itemType AS itemType, o.itemName AS itemName, SUM(o.quantity) AS totalQuantity "
+		String hql = "SELECT o.itemId AS itemId, o.itemName AS itemName, o.productLine AS productLine, o.itemType AS itemType, SUM(o.quantity) AS totalQuantity "
 				+ "FROM Orders o where year(o.orderDate) != :year and month(o.orderDate) = :month and ownerId = :oId "
 				+ "GROUP BY itemName ORDER BY totalQuantity ASC";
 
@@ -118,13 +118,22 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	public List<Object[]> getProfitableProducts(String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 
-		String hql = "SELECT o.itemId AS itemId, o.productLine AS productLine, o.itemType AS itemType, o.itemName AS itemName, SUM(o.price * o.quantity - s.price * o.quantity) AS profit "
+		String hql = "SELECT o.itemId AS itemId, o.itemName AS itemName, o.productLine AS productLine, o.itemType AS itemType, SUM(o.price * o.quantity - s.price * o.quantity) AS profit "
 				+ "FROM Orders o JOIN ShopItem s ON o.itemId = s.itemId WHERE o.ownerId = :oId "
 				+ "GROUP BY o.itemId ORDER BY profit DESC";
 
 		List<Object[]> profitableProducts = currentSession.createQuery(hql, Object[].class).setParameter("oId", ownerId)
 				.getResultList();
 		return profitableProducts;
+	}
+
+	@Override
+	public List<Object[]> getSalesData() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		String hql = "SELECT itemName, SUM(quantity), SUM(price) FROM Orders GROUP BY itemName";
+		
+		List<Object[]> salesData = currentSession.createQuery(hql, Object[].class).getResultList();
+		return salesData;
 	}
 
 }

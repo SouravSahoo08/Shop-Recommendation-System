@@ -17,7 +17,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +55,7 @@ public class ShopController {
 	}
 
 	/**
-	 * shows homepage of shopkeeper account that includes basic monitoring ui's and 
+	 * shows homepage of shopkeeper account that includes basic monitoring ui's and
 	 * recommendation module ui
 	 * 
 	 * @param model
@@ -76,21 +75,26 @@ public class ShopController {
 		List<ShopItem> zeroStockItems = recommendationService.zeroStockItems(ownerId);
 		model.addAttribute("outOfStockCount", zeroStockItems.size());
 		model.addAttribute("zeroProd", zeroStockItems);
-		
+
 		model.addAttribute("selectedYear", Year.now().getValue());
-		
-		
+
 		model.addAttribute("mostSoldProductModel", recommendationService.getMostSoldProducts(ownerId));
 		model.addAttribute("leastSoldProductModel", recommendationService.getLeastSoldProducts(ownerId));
 		model.addAttribute("profitabilityModel", recommendationService.getProfitableProducts(ownerId));
 
 		return "owner-home";
 	}
-	
-	@GetMapping(value="/home/revenue-chart-data", produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@GetMapping(value = "/home/revenue-chart-data", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<Double> revenueChartData(@RequestParam("y") int year){
+	public List<Double> revenueChartData(@RequestParam("y") int year) {
 		return recommendationService.getRevenueData(ownerId, year);
+	}
+	
+	
+	@RequestMapping("/profile")
+	public String ownerProfile() {
+		return "owner-profile";
 	}
 
 	/**
@@ -247,7 +251,6 @@ public class ShopController {
 		List<OwnerCartItem> cartItems = shopService.showCart(ownerId);
 		model.addAttribute("ownerCartItems", cartItems);
 
-		// manageCombinedModel(model, itemList);
 		return "customer-outlet-view";
 	}
 

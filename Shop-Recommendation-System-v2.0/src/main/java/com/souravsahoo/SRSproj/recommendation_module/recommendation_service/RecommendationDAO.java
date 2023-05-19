@@ -22,4 +22,6 @@ public interface RecommendationDAO {
 
 	List<Object[]> getProfitableProducts(String ownerId);
 
+	List<Object[]> getSalesData();
+
 }

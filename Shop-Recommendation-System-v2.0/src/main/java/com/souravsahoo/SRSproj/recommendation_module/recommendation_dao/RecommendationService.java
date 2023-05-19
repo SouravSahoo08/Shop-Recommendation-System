@@ -2,6 +2,7 @@ package com.souravsahoo.SRSproj.recommendation_module.recommendation_dao;
 
 import java.util.List;
 
+import com.souravsahoo.SRSproj.entity.ProductRecommendation;
 import com.souravsahoo.SRSproj.entity.ShopItem;
 
 public interface RecommendationService {
@@ -21,5 +22,7 @@ public interface RecommendationService {
 	List<Object[]> getLeastSoldProducts(String ownerId);
 
 	List<Object[]> getProfitableProducts(String ownerId);
+
+	List<ProductRecommendation> getItemsInBudgetRange(double maxBudget);
 
 }
