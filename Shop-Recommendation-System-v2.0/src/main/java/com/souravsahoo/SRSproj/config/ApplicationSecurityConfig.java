@@ -62,7 +62,7 @@ public class ApplicationSecurityConfig{
 	
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    	//.antMatchers("/home").hasAnyRole("EMPLOYEE","MANAGER","ADMIN")
+    	
 		return http
 				.authorizeRequests(configurer->
 				configurer.antMatchers("/owner/**").hasRole("OWNER")

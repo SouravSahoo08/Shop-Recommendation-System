@@ -1,6 +1,7 @@
 package com.souravsahoo.SRSproj.config;
 
 import java.beans.PropertyVetoException;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -99,6 +102,5 @@ public class ApplicationConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
 	}
-	
-	
+
 }

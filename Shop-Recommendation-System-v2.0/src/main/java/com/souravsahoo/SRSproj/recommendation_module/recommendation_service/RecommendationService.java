@@ -1,4 +1,4 @@
-package com.souravsahoo.SRSproj.recommendation_module.recommendation_dao;
+package com.souravsahoo.SRSproj.recommendation_module.recommendation_service;
 
 import java.util.List;
 
@@ -24,5 +24,7 @@ public interface RecommendationService {
 	List<Object[]> getProfitableProducts(String ownerId);
 
 	List<ProductRecommendation> getItemsInBudgetRange(double maxBudget);
+
+	List<Object[]> getPeakSaleMonthItems(String ownerId);
 
 }

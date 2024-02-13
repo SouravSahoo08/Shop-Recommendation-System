@@ -75,7 +75,7 @@
 						data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
 				</div>
  -->
- 
+
 				<div class="dropdown text-end">
 					<a href="#"
 						class="d-block text-white text-decoration-none dropdown-toggle"
@@ -83,12 +83,16 @@
 						src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
 						class="rounded-circle">
 					</a>
-					<ul class="dropdown-menu dropdown-menu-dark text-small dropdown-menu-end" style="">
+					<ul
+						class="dropdown-menu dropdown-menu-dark text-small dropdown-menu-end"
+						style="">
 						<li><a class="dropdown-item" href="#">New project...</a></li>
 						<li><a class="dropdown-item" href="#">Settings</a></li>
-						<li><a class="dropdown-item" href="${pageContext.request.contextPath}/owner/profile">Profile</a></li>
+						<li><a class="dropdown-item"
+							href="${pageContext.request.contextPath}/owner/profile">Profile</a></li>
 						<li><hr class="dropdown-divider"></li>
-						<li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal">Sign out</a></li>
+						<li><a class="dropdown-item" data-bs-toggle="modal"
+							data-bs-target="#logoutModal">Sign out</a></li>
 					</ul>
 				</div>
 			</div>
@@ -175,6 +179,52 @@
 		</div>
 	</div>
 
+	<!-- peak sale month modal -->
+	<div class="modal fade" id="peakSaleMonthModal" tabindex="-1"
+		aria-labelledby="peakSaleMonthModal" aria-hidden="true">
+		<div
+			class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="peakSaleMonthModal">Items sold in ${peakSaleMonthModel}</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm table-hover mt-md-2">
+
+							<tr>
+								<th>Item Id</th>
+								<th>Item Name</th>
+								<th>Quantity sold</th>
+								<th>Price</th>
+								
+							</tr>
+
+							<c:forEach var="item" items="${peakSaleItems}">
+								<tr>
+									<td>${item[0]}</td>
+									<td>${item[1]}</td>
+									<td>${item[2]}</td>
+									<td>Rs. ${item[3]}</td>
+									
+								</tr>
+							</c:forEach>
+
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<a type="button" class="btn btn-primary"
+						href="${pageContext.request.contextPath}/owner/items?product-prob=zeroStock">Check
+						items</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- zeroStockListModal -->
 	<div class="modal fade" id="zeroStockListModal" tabindex="-1"
 		aria-labelledby="zeroStockListModal" aria-hidden="true">
@@ -282,8 +332,8 @@
 					<h3 class="h3 mt-3">Dashboard</h3>
 				</div>
 
-				<div class="row flex-nowrap px-2 py-3"
-					style="width: 1050px; overflow-x: scroll;">
+				<div class="row px-2 py-3" style="width: 1050px;">
+					<!--    flex-nowrap     overflow-x: scroll; -->
 					<!-- total orders -->
 					<div class="col-3 px-1" style="width: 290px;">
 						<div class="border border-dark border-1 rounded-3 shadow p-3">
@@ -316,7 +366,7 @@
 						</div>
 					</div>
 
-					<!-- revenue -->
+					<!-- revenue 
 					<div class="col-3 px-1" style="width: 290px;">
 						<div class="border border-dark border-1 rounded-3 shadow p-3">
 							<div class="row">
@@ -350,7 +400,7 @@
 									Rs. ${revenueAmountOfMonth}</p>
 							</div>
 						</div>
-					</div>
+					</div> -->
 
 					<!-- peak sale -->
 					<div class="col-3 px-1" style="width: 290px;">
@@ -360,7 +410,9 @@
 									<h5 class="h5">Peak sale month</h5>
 								</div>
 								<div class="col">
-									<a type="link" class="rounded-5 float-end" href=""> <svg
+									<a type="link" class="rounded-5 float-end" href=""
+										data-bs-toggle="modal"
+										data-bs-target="#peakSaleMonthModal"> <svg
 											xmlns="http://www.w3.org/2000/svg" width="30" height="30"
 											fill="#000000" class="bi bi-arrow-right-short"
 											viewBox="0 0 16 16">
@@ -412,7 +464,7 @@
 					</div>
 
 					<!-- Out of Stock -->
-					<div class="col-3 px-1" style="width: 290px;">
+					<div class="col-3 px-1 mt-3" style="width: 290px;">
 						<div class="border border-dark border-1 rounded-3 shadow p-3">
 							<div class="row">
 								<div class="col">
@@ -444,7 +496,7 @@
 
 				<div class="row">
 
-					<!-- graph canvas here -->
+					<!-- graph canvas here 
 					<div class="col p-1">
 						<form>
 							<label for="year-select">Select year:</label> <select
@@ -452,7 +504,7 @@
 								<option value="${selectedYear}">${selectedYear}</option>
 								<option value="${selectedYear - 1}">${selectedYear- 1}</option>
 								<option value="${selectedYear- 4}">${selectedYear - 4}</option>
-								<!-- Add more options for previous years -->
+								
 							</select>
 						</form>
 
@@ -511,7 +563,7 @@
 							}
 						</script>
 
-					</div>
+					</div>-->
 
 				</div>
 

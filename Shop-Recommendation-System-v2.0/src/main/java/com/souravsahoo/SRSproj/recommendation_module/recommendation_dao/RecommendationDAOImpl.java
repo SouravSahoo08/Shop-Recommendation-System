@@ -1,4 +1,4 @@
-package com.souravsahoo.SRSproj.recommendation_module.recommendation_service;
+package com.souravsahoo.SRSproj.recommendation_module.recommendation_dao;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -60,13 +60,26 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	@Override
 	public int getPeakSaleMonth(String ownerId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-
+		
 		List<Integer> month = currentSession.createQuery("SELECT MONTH(o.orderDate) " + "FROM Orders o "
 				+ "GROUP BY YEAR(o.orderDate), MONTH(o.orderDate) " + "ORDER BY SUM(o.price * o.quantity) DESC",
 				Integer.class).setMaxResults(1).getResultList();
-
+		
 		System.out.println("LOG >> Peak revenue Month : " + month.get(0));
 		return month.get(0);
+	}
+	
+	@Override
+	public List<Object[]> getPeakSaleMonthItemList(String ownerId, int month) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		List<Object[]> itemList = currentSession.createQuery("SELECT itemId, itemName, quantity, price "
+				+ "FROM Orders WHERE MONTH(orderDate) = :month AND ownerId = :oId",
+				Object[].class)
+				.setParameter("month", month)
+				.setParameter("oId", ownerId).getResultList();
+		
+		return itemList;
 	}
 
 	@Override
@@ -128,11 +141,14 @@ public class RecommendationDAOImpl implements RecommendationDAO {
 	}
 
 	@Override
-	public List<Object[]> getSalesData() {
+	public List<Object[]> getSalesDataForBudgetRecommendation() {
 		Session currentSession = sessionFactory.getCurrentSession();
-		String hql = "SELECT itemName, SUM(quantity), SUM(price) FROM Orders GROUP BY itemName";
-		
-		List<Object[]> salesData = currentSession.createQuery(hql, Object[].class).getResultList();
+		String hql = "SELECT itemType, itemName, price, SUM(quantity) FROM Orders "
+				+ "WHERE YEAR(orderDate) != :year and MONTH(orderDate) = :month GROUP BY itemName "
+				+ "ORDER BY SUM(quantity) DESC";
+
+		List<Object[]> salesData = currentSession.createQuery(hql, Object[].class).setParameter("year", CURRENT_YEAR)
+				.setParameter("month", CURRENT_MONTH).setMaxResults(10).getResultList();
 		return salesData;
 	}
 

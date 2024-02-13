@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.souravsahoo.SRSproj.entity.BudgetConstraint;
 import com.souravsahoo.SRSproj.entity.CombinedDataModel;
 import com.souravsahoo.SRSproj.entity.OwnerCartItem;
 import com.souravsahoo.SRSproj.entity.OwnerList;
+import com.souravsahoo.SRSproj.entity.ProductRecommendation;
 import com.souravsahoo.SRSproj.entity.ShipmentDetails;
 import com.souravsahoo.SRSproj.entity.ShopItem;
-import com.souravsahoo.SRSproj.recommendation_module.recommendation_dao.RecommendationService;
+import com.souravsahoo.SRSproj.recommendation_module.recommendation_service.RecommendationService;
 import com.souravsahoo.SRSproj.service.ShopService;
 import com.souravsahoo.SRSproj.service.UserAuthService;
 
@@ -67,6 +70,7 @@ public class ShopController {
 
 		model.addAttribute("totalOrdersModel", recommendationService.getTodaysTotalOrders(ownerId));
 		model.addAttribute("peakSaleMonthModel", recommendationService.getPeakSaleMonth(ownerId));
+		model.addAttribute("peakSaleItems", recommendationService.getPeakSaleMonthItems(ownerId));
 
 		List<ShopItem> expiredProductList = recommendationService.expiredProductList(ownerId);
 		model.addAttribute("noOfExpProducts", expiredProductList.size());
@@ -93,10 +97,24 @@ public class ShopController {
 	
 	
 	@RequestMapping("/profile")
-	public String ownerProfile() {
+	public String ownerProfile(Model model) {
+		BudgetConstraint budget = new BudgetConstraint();
+		model.addAttribute("maxBudget",	budget);
+		return "owner-profile";
+	}
+	
+	@PostMapping("/searchBudgetItems")
+	public String searchItemsWithBudgetConstraint(@ModelAttribute("maxBudget") BudgetConstraint maxBudget, Model model) {
+
+		System.out.println("max budget: " + maxBudget.getMaxBudget());
+		List<ProductRecommendation> recommendedItems = recommendationService.getItemsInBudgetRange(maxBudget.getMaxBudget());
+		
+		model.addAttribute("maxBudget",	maxBudget);
+		model.addAttribute("recommendedItems", recommendedItems);
 		return "owner-profile";
 	}
 
+	
 	/**
 	 * shows list of available items
 	 * 
